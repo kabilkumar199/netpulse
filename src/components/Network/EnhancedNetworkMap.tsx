@@ -137,18 +137,18 @@ const EnhancedNetworkMap: React.FC<EnhancedNetworkMapProps> = ({ onDeviceSelect,
   };
 
   return (
-    <div className="flex h-full bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="flex h-full bg-gray-800 rounded-lg shadow-md overflow-hidden">
       {/* Left Sidebar for Controls */}
-      <div className="w-80 bg-gray-50 p-4 border-r border-gray-200 overflow-y-auto">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Network Map Controls</h3>
+      <div className="w-80 bg-gray-900 p-4 border-r border-gray-700 overflow-y-auto">
+        <h3 className="text-lg font-semibold text-white mb-4">Network Map Controls</h3>
         
         {/* Layout Controls */}
         <div className="mb-6">
-          <h4 className="text-md font-medium text-gray-900 mb-2">Layout</h4>
+          <h4 className="text-md font-medium text-white mb-2">Layout</h4>
           <select
             value={layoutType}
             onChange={(e) => setLayoutType(e.target.value as typeof layoutType)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="radial">Radial</option>
             <option value="hierarchical">Hierarchical</option>
@@ -159,75 +159,75 @@ const EnhancedNetworkMap: React.FC<EnhancedNetworkMapProps> = ({ onDeviceSelect,
 
         {/* Display Options */}
         <div className="mb-6">
-          <h4 className="text-md font-medium text-gray-900 mb-2">Display Options</h4>
+          <h4 className="text-md font-medium text-white mb-2">Display Options</h4>
           <div className="space-y-2">
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
-                className="form-checkbox"
+                className="form-checkbox w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                 checked={showDeviceNames}
                 onChange={() => setShowDeviceNames(!showDeviceNames)}
               />
-              <span className="ml-2 text-gray-700">Device Names</span>
+              <span className="ml-2 text-gray-300">Device Names</span>
             </label>
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
-                className="form-checkbox"
+                className="form-checkbox w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                 checked={showIPAddresses}
                 onChange={() => setShowIPAddresses(!showIPAddresses)}
               />
-              <span className="ml-2 text-gray-700">IP Addresses</span>
+              <span className="ml-2 text-gray-300">IP Addresses</span>
             </label>
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
-                className="form-checkbox"
+                className="form-checkbox w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                 checked={showLinks}
                 onChange={() => setShowLinks(!showLinks)}
               />
-              <span className="ml-2 text-gray-700">Network Links</span>
+              <span className="ml-2 text-gray-300">Network Links</span>
             </label>
           </div>
         </div>
 
         {/* Overlay Options */}
         <div className="mb-6">
-          <h4 className="text-md font-medium text-gray-900 mb-2">Overlays</h4>
+          <h4 className="text-md font-medium text-white mb-2">Overlays</h4>
           <div className="space-y-2">
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
-                className="form-checkbox"
+                className="form-checkbox w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                 checked={showVLANs}
                 onChange={() => setShowVLANs(!showVLANs)}
               />
-              <span className="ml-2 text-gray-700">VLAN Overlay</span>
+              <span className="ml-2 text-gray-300">VLAN Overlay</span>
             </label>
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
-                className="form-checkbox"
+                className="form-checkbox w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                 checked={showSecurityZones}
                 onChange={() => setShowSecurityZones(!showSecurityZones)}
               />
-              <span className="ml-2 text-gray-700">Security Zones</span>
+              <span className="ml-2 text-gray-300">Security Zones</span>
             </label>
             <label className="inline-flex items-center">
               <input
                 type="checkbox"
-                className="form-checkbox"
+                className="form-checkbox w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                 checked={showDependencies}
                 onChange={() => setShowDependencies(!showDependencies)}
               />
-              <span className="ml-2 text-gray-700">Dependencies</span>
+              <span className="ml-2 text-gray-300">Dependencies</span>
             </label>
           </div>
         </div>
 
         {/* Zoom Controls */}
         <div className="mb-6">
-          <h4 className="text-md font-medium text-gray-900 mb-2">View Controls</h4>
+          <h4 className="text-md font-medium text-white mb-2">View Controls</h4>
           <div className="flex space-x-2">
             <button
               onClick={handleZoomIn}

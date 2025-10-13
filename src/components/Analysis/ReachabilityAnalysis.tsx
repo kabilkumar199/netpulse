@@ -66,8 +66,8 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
 
   const getReachabilityColor = (isReachable: boolean) => {
     return isReachable 
-      ? 'bg-green-100 text-green-800'
-      : 'bg-red-100 text-red-800';
+      ? 'bg-green-900 text-green-300'
+      : 'bg-red-900 text-red-300';
   };
 
   return (
@@ -75,17 +75,17 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-white">
             Reachability Analysis
           </h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-gray-400 mt-1">
             Test and monitor network reachability between devices
           </p>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600:text-gray-300"
+            className="text-gray-400 hover:text-white"
           >
             ✕
           </button>
@@ -93,18 +93,18 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
       </div>
 
       {/* Analysis Form */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">
           Reachability Test Configuration
         </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Source */}
           <div className="space-y-4">
-            <h4 className="font-medium text-gray-900">Source</h4>
+            <h4 className="font-medium text-white">Source</h4>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Source Device
               </label>
               <select
@@ -113,7 +113,7 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
                   const device = mockDevices.find(d => d.id === e.target.value);
                   setSourceDevice(device || null);
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Select source device...</option>
                 {mockDevices.map(device => (
@@ -125,7 +125,7 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Source IP (optional)
               </label>
               <input
@@ -133,17 +133,17 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
                 value={sourceIp}
                 onChange={(e) => setSourceIp(e.target.value)}
                 placeholder="192.168.1.1"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
 
           {/* Target */}
           <div className="space-y-4">
-            <h4 className="font-medium text-gray-900">Target</h4>
+            <h4 className="font-medium text-white">Target</h4>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Target Device
               </label>
               <select
@@ -152,7 +152,7 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
                   const device = mockDevices.find(d => d.id === e.target.value);
                   setTargetDevice(device || null);
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Select target device...</option>
                 {mockDevices.map(device => (
@@ -164,7 +164,7 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Target IP (optional)
               </label>
               <input
@@ -172,7 +172,7 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
                 value={targetIp}
                 onChange={(e) => setTargetIp(e.target.value)}
                 placeholder="192.168.2.1"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -180,7 +180,7 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
 
         {/* Options */}
         <div className="mt-6">
-          <h4 className="font-medium text-gray-900 mb-4">Test Options</h4>
+          <h4 className="font-medium text-white mb-4">Test Options</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex items-center space-x-3">
               <input
@@ -188,9 +188,9 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
                 id="includeDependencies"
                 checked={options.includeDependencies}
                 onChange={(e) => setOptions({...options, includeDependencies: e.target.checked})}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
               />
-              <label htmlFor="includeDependencies" className="text-sm text-gray-700">
+              <label htmlFor="includeDependencies" className="text-sm text-gray-300">
                 Include dependencies
               </label>
             </div>
@@ -201,15 +201,15 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
                 id="includeSuppressed"
                 checked={options.includeSuppressed}
                 onChange={(e) => setOptions({...options, includeSuppressed: e.target.checked})}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
               />
-              <label htmlFor="includeSuppressed" className="text-sm text-gray-700">
+              <label htmlFor="includeSuppressed" className="text-sm text-gray-300">
                 Include suppressed alerts
               </label>
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Check Interval (seconds)
               </label>
               <input
@@ -218,12 +218,12 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
                 max="3600"
                 value={options.checkInterval}
                 onChange={(e) => setOptions({...options, checkInterval: parseInt(e.target.value)})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Timeout (seconds)
               </label>
               <input
@@ -232,7 +232,7 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
                 max="300"
                 value={options.timeout}
                 onChange={(e) => setOptions({...options, timeout: parseInt(e.target.value)})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -290,8 +290,8 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
 
       {/* Results */}
       {results.length > 0 && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">
             Reachability Test Results
           </h3>
           
@@ -359,21 +359,21 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
       )}
 
       {/* Recent Queries */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">
           Recent Reachability Queries
         </h3>
         
         <div className="space-y-3">
           {queries.map((query) => (
-            <div key={query.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div key={query.id} className="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
               <div className="flex items-center space-x-3">
                 <span className="text-lg">🔍</span>
                 <div>
-                  <div className="font-medium text-gray-900">
+                  <div className="font-medium text-white">
                     {mockDevices.find(d => d.id === query.sourceDeviceId)?.hostname} → {mockDevices.find(d => d.id === query.targetDeviceId)?.hostname}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-400">
                     {query.results.length} result(s) • {new Date(query.createdAt).toLocaleDateString()}
                   </div>
                 </div>
@@ -381,8 +381,8 @@ const ReachabilityAnalysis: React.FC<ReachabilityAnalysisProps> = ({ onClose }) 
               <div className="flex items-center space-x-2">
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                   query.results[query.results.length - 1]?.isReachable 
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-red-100 text-red-800'
+                    ? 'bg-green-900 text-green-300'
+                    : 'bg-red-900 text-red-300'
                 }`}>
                   {query.results[query.results.length - 1]?.isReachable ? 'REACHABLE' : 'UNREACHABLE'}
                 </span>

@@ -121,29 +121,29 @@ const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) 
 
   const getBackupTypeColor = (type: string) => {
     switch (type) {
-      case 'scheduled': return 'text-green-600';
-      case 'manual': return 'text-blue-600';
-      case 'change-triggered': return 'text-yellow-600';
-      default: return 'text-gray-600';
+      case 'scheduled': return 'text-green-400';
+      case 'manual': return 'text-blue-400';
+      case 'change-triggered': return 'text-yellow-400';
+      default: return 'text-gray-400';
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'current': return 'text-green-600';
-      case 'backup': return 'text-blue-600';
-      case 'gold-standard': return 'text-purple-600';
-      default: return 'text-gray-600';
+      case 'current': return 'text-green-400';
+      case 'backup': return 'text-blue-400';
+      case 'gold-standard': return 'text-purple-400';
+      default: return 'text-gray-400';
     }
   };
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'text-red-600';
-      case 'error': return 'text-red-500';
-      case 'warning': return 'text-yellow-600';
-      case 'info': return 'text-blue-600';
-      default: return 'text-gray-600';
+      case 'critical': return 'text-red-400';
+      case 'error': return 'text-red-400';
+      case 'warning': return 'text-yellow-400';
+      case 'info': return 'text-blue-400';
+      default: return 'text-gray-400';
     }
   };
 
@@ -175,21 +175,21 @@ const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) 
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-gray-800 rounded-lg shadow-lg p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-white">
             Configuration Manager
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-400">
             Manage device configurations, backups, and compliance
           </p>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600:text-gray-300"
+            className="text-gray-400 hover:text-white"
           >
             <span className="text-2xl">×</span>
           </button>
@@ -211,7 +211,7 @@ const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) 
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               selectedView === key
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200:bg-gray-600'
+                : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
             }`}
           >
             {label}
@@ -224,7 +224,7 @@ const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) 
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-2 text-gray-600">Loading configuration data...</p>
+            <p className="mt-2 text-gray-300">Loading configuration data...</p>
           </div>
         </div>
       )}
@@ -235,74 +235,74 @@ const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) 
           {/* Overview */}
           {selectedView === 'overview' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Total Devices
                 </h3>
-                <div className="text-2xl font-bold text-blue-600">
+                <div className="text-2xl font-bold text-blue-400">
                   {configStats.totalDevices}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Managed devices
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Configured Devices
                 </h3>
-                <div className="text-2xl font-bold text-green-600">
+                <div className="text-2xl font-bold text-green-400">
                   {configStats.configuredDevices}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   With backups
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Total Backups
                 </h3>
-                <div className="text-2xl font-bold text-purple-600">
+                <div className="text-2xl font-bold text-purple-400">
                   {configStats.totalBackups}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Configuration backups
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Policy Violations
                 </h3>
-                <div className="text-2xl font-bold text-red-600">
+                <div className="text-2xl font-bold text-red-400">
                   {configStats.policyViolations}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Compliance issues
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Recent Changes
                 </h3>
-                <div className="text-2xl font-bold text-orange-600">
+                <div className="text-2xl font-bold text-orange-400">
                   {configStats.recentChanges}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Last 24 hours
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-800 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Last Backup
                 </h3>
-                <div className="text-2xl font-bold text-indigo-600">
+                <div className="text-2xl font-bold text-indigo-400">
                   {formatTimeAgo(configStats.lastBackup)}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   {formatTimestamp(configStats.lastBackup)}
                 </div>
               </div>
@@ -311,42 +311,42 @@ const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) 
 
           {/* Backups */}
           {selectedView === 'backups' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Configuration Backups
               </h3>
               <div className="space-y-4">
                 {deviceConfigs.map((config) => {
                   const device = getDeviceByName(config.deviceId);
                   return (
-                    <div key={config.deviceId} className="bg-white rounded-lg p-4">
+                    <div key={config.deviceId} className="bg-gray-700 rounded-lg p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <div className="text-2xl mr-3">🖥️</div>
                           <div>
-                            <div className="font-medium text-gray-900">
+                            <div className="font-medium text-white">
                               {device?.hostname || 'Unknown Device'}
                             </div>
-                            <div className="text-sm text-gray-500">
+                            <div className="text-sm text-gray-400">
                               {device?.vendor} {device?.model} • {config.version}
                             </div>
                           </div>
                         </div>
                         <div className="flex items-center space-x-4">
                           <div className="text-right">
-                            <div className="text-sm text-gray-500">Last Backup</div>
-                            <div className="font-medium text-gray-900">
+                            <div className="text-sm text-gray-400">Last Backup</div>
+                            <div className="font-medium text-white">
                               {formatTimeAgo(config.timestamp)}
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="text-sm text-gray-500">Type</div>
+                            <div className="text-sm text-gray-400">Type</div>
                             <div className={`font-medium ${getBackupTypeColor(config.backupType)}`}>
                               {config.backupType}
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="text-sm text-gray-500">Status</div>
+                            <div className="text-sm text-gray-400">Status</div>
                             <div className={`font-medium ${getStatusColor(config.status)}`}>
                               {config.status}
                             </div>
@@ -367,7 +367,7 @@ const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) 
                           </div>
                         </div>
                       </div>
-                      <div className="mt-3 text-sm text-gray-500">
+                      <div className="mt-3 text-sm text-gray-400">
                         Checksum: {config.checksum}
                       </div>
                     </div>
@@ -379,21 +379,21 @@ const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) 
 
           {/* Policies */}
           {selectedView === 'policies' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Configuration Policies
               </h3>
               <div className="space-y-4">
                 {policies.map((policy) => (
-                  <div key={policy.id} className="bg-white rounded-lg p-4">
+                  <div key={policy.id} className="bg-gray-700 rounded-lg p-4">
                     <div className="flex items-center justify-between mb-3">
                       <div>
-                        <div className="font-medium text-gray-900">{policy.name}</div>
-                        <div className="text-sm text-gray-500">{policy.description}</div>
+                        <div className="font-medium text-white">{policy.name}</div>
+                        <div className="text-sm text-gray-400">{policy.description}</div>
                       </div>
                       <div className="flex items-center space-x-2">
                         <span className={`px-2 py-1 rounded text-xs font-medium ${
-                          policy.enabled ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                          policy.enabled ? 'bg-green-900 text-green-300' : 'bg-gray-600 text-gray-300'
                         }`}>
                           {policy.enabled ? 'ENABLED' : 'DISABLED'}
                         </span>
@@ -404,10 +404,10 @@ const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) 
                     </div>
                     <div className="space-y-2">
                       {policy.rules.map((rule, index) => (
-                        <div key={index} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-b-0">
+                        <div key={index} className="flex items-center justify-between py-2 border-b border-gray-600 last:border-b-0">
                           <div>
-                            <div className="font-medium text-gray-900">{rule.message}</div>
-                            <div className="text-sm text-gray-500">
+                            <div className="font-medium text-white">{rule.message}</div>
+                            <div className="text-sm text-gray-400">
                               {rule.type} • Pattern: {rule.pattern}
                             </div>
                           </div>
@@ -417,7 +417,7 @@ const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) 
                         </div>
                       ))}
                     </div>
-                    <div className="mt-3 text-sm text-gray-500">
+                    <div className="mt-3 text-sm text-gray-400">
                       Applies to {policy.devices.length} devices
                     </div>
                   </div>
@@ -428,16 +428,16 @@ const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) 
 
           {/* Changes */}
           {selectedView === 'changes' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Configuration Changes
               </h3>
               <div className="text-center py-8">
                 <div className="text-gray-400 text-6xl mb-4">📝</div>
-                <div className="text-lg font-medium text-gray-900 mb-2">
+                <div className="text-lg font-medium text-white mb-2">
                   Change Tracking
                 </div>
-                <div className="text-gray-500">
+                <div className="text-gray-400">
                   Track and audit configuration changes across devices
                 </div>
                 <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
@@ -449,16 +449,16 @@ const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) 
 
           {/* Compliance */}
           {selectedView === 'compliance' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Compliance Report
               </h3>
               <div className="text-center py-8">
                 <div className="text-gray-400 text-6xl mb-4">✅</div>
-                <div className="text-lg font-medium text-gray-900 mb-2">
+                <div className="text-lg font-medium text-white mb-2">
                   Compliance Dashboard
                 </div>
-                <div className="text-gray-500">
+                <div className="text-gray-400">
                   Monitor policy compliance and generate audit reports
                 </div>
                 <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">

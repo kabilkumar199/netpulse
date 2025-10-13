@@ -227,10 +227,10 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
 
   const getProviderColor = (provider: string) => {
     switch (provider) {
-      case 'aws': return 'text-orange-600';
-      case 'azure': return 'text-blue-600';
-      case 'gcp': return 'text-green-600';
-      default: return 'text-gray-600';
+      case 'aws': return 'text-orange-400';
+      case 'azure': return 'text-blue-400';
+      case 'gcp': return 'text-green-400';
+      default: return 'text-gray-400';
     }
   };
 
@@ -247,19 +247,19 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'running': return 'text-green-600';
-      case 'stopped': return 'text-gray-600';
-      case 'terminated': return 'text-red-600';
-      default: return 'text-gray-600';
+      case 'running': return 'text-green-400';
+      case 'stopped': return 'text-gray-400';
+      case 'terminated': return 'text-red-400';
+      default: return 'text-gray-400';
     }
   };
 
   const getStatusBgColor = (status: string) => {
     switch (status) {
-      case 'running': return 'bg-green-100 text-green-800';
-      case 'stopped': return 'bg-gray-100 text-gray-800';
-      case 'terminated': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'running': return 'bg-green-900 text-green-300';
+      case 'stopped': return 'bg-gray-700 text-gray-300';
+      case 'terminated': return 'bg-red-900 text-red-300';
+      default: return 'bg-gray-700 text-gray-300';
     }
   };
 
@@ -276,21 +276,21 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
     : cloudResources.filter(r => r.provider === selectedProvider);
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-gray-800 rounded-lg shadow-lg p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-white">
             Cloud Resources Monitor
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-400">
             Monitor cloud infrastructure across AWS, Azure, and GCP
           </p>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600:text-gray-300"
+            className="text-gray-400 hover:text-white"
           >
             <span className="text-2xl">×</span>
           </button>
@@ -306,7 +306,7 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               selectedProvider === provider
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200:bg-gray-600'
+                : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
             }`}
           >
             {provider === 'all' ? 'All Providers' : provider.toUpperCase()}
@@ -328,7 +328,7 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               selectedView === key
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200:bg-gray-600'
+                : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
             }`}
           >
             {label}
@@ -341,7 +341,7 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-2 text-gray-600">Loading cloud data...</p>
+            <p className="mt-2 text-gray-300">Loading cloud data...</p>
           </div>
         </div>
       )}
@@ -352,50 +352,50 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
           {/* Overview */}
           {selectedView === 'overview' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Total Resources
                 </h3>
-                <div className="text-2xl font-bold text-blue-600">
+                <div className="text-2xl font-bold text-blue-400">
                   {cloudStats.totalResources}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Across all providers
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Running Resources
                 </h3>
-                <div className="text-2xl font-bold text-green-600">
+                <div className="text-2xl font-bold text-green-400">
                   {cloudStats.runningResources}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Active
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Monthly Cost
                 </h3>
-                <div className="text-2xl font-bold text-purple-600">
+                <div className="text-2xl font-bold text-purple-400">
                   {formatCost(cloudStats.totalCost)}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Total
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Utilization
                 </h3>
-                <div className="text-2xl font-bold text-orange-600">
+                <div className="text-2xl font-bold text-orange-400">
                   {((cloudStats.runningResources / cloudStats.totalResources) * 100).toFixed(1)}%
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Resources active
                 </div>
               </div>
@@ -404,29 +404,29 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
 
           {/* Resources */}
           {selectedView === 'resources' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Cloud Resources ({filteredResources.length})
               </h3>
               <div className="space-y-4">
                 {filteredResources.map((resource) => (
-                  <div key={resource.id} className="bg-white rounded-lg p-4">
+                  <div key={resource.id} className="bg-gray-700 rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
                         <div className="text-2xl mr-3">
                           {getResourceIcon(resource.type)}
                         </div>
                         <div>
-                          <div className="font-medium text-gray-900">{resource.name}</div>
-                          <div className="text-sm text-gray-500">
+                          <div className="font-medium text-white">{resource.name}</div>
+                          <div className="text-sm text-gray-400">
                             {resource.provider.toUpperCase()} • {resource.region} • {resource.type}
                           </div>
                         </div>
                       </div>
                       <div className="flex items-center space-x-4">
                         <div className="text-right">
-                          <div className="text-sm text-gray-500">Monthly Cost</div>
-                          <div className="font-medium text-gray-900">
+                          <div className="text-sm text-gray-400">Monthly Cost</div>
+                          <div className="font-medium text-white">
                             {formatCost(resource.cost.monthly)}
                           </div>
                         </div>
@@ -438,32 +438,32 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
                     <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-4">
                       {resource.metrics.cpuUtilization !== undefined && (
                         <div>
-                          <div className="text-sm text-gray-500">CPU</div>
-                          <div className="font-medium text-gray-900">
+                          <div className="text-sm text-gray-400">CPU</div>
+                          <div className="font-medium text-white">
                             {formatUtilization(resource.metrics.cpuUtilization)}
                           </div>
                         </div>
                       )}
                       {resource.metrics.memoryUtilization !== undefined && (
                         <div>
-                          <div className="text-sm text-gray-500">Memory</div>
-                          <div className="font-medium text-gray-900">
+                          <div className="text-sm text-gray-400">Memory</div>
+                          <div className="font-medium text-white">
                             {formatUtilization(resource.metrics.memoryUtilization)}
                           </div>
                         </div>
                       )}
                       {resource.metrics.diskUtilization !== undefined && (
                         <div>
-                          <div className="text-sm text-gray-500">Disk</div>
-                          <div className="font-medium text-gray-900">
+                          <div className="text-sm text-gray-400">Disk</div>
+                          <div className="font-medium text-white">
                             {formatUtilization(resource.metrics.diskUtilization)}
                           </div>
                         </div>
                       )}
                       {resource.metrics.requestCount !== undefined && (
                         <div>
-                          <div className="text-sm text-gray-500">Requests</div>
-                          <div className="font-medium text-gray-900">
+                          <div className="text-sm text-gray-400">Requests</div>
+                          <div className="font-medium text-white">
                             {resource.metrics.requestCount.toLocaleString()}
                           </div>
                         </div>
@@ -473,7 +473,7 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
                       {Object.entries(resource.tags).map(([key, value]) => (
                         <span
                           key={key}
-                          className="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded"
+                          className="px-2 py-1 bg-gray-600 text-gray-300 text-xs rounded"
                         >
                           {key}: {value}
                         </span>
@@ -489,8 +489,8 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
           {selectedView === 'costs' && (
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                <div className="bg-gray-800 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-white mb-4">
                     Cost by Provider
                   </h3>
                   <div className="space-y-3">
@@ -501,17 +501,17 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
                             {getProviderIcon(provider.provider.toLowerCase())}
                           </span>
                           <div>
-                            <div className="font-medium text-gray-900">{provider.provider}</div>
-                            <div className="text-sm text-gray-500">
+                            <div className="font-medium text-white">{provider.provider}</div>
+                            <div className="text-sm text-gray-400">
                               {((provider.cost / cloudStats.totalCost) * 100).toFixed(1)}% of total
                             </div>
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="font-medium text-gray-900">
+                          <div className="font-medium text-white">
                             {formatCost(provider.cost)}
                           </div>
-                          <div className="w-32 bg-gray-200 rounded-full h-2 mt-1">
+                          <div className="w-32 bg-gray-700 rounded-full h-2 mt-1">
                             <div
                               className="bg-blue-600 h-2 rounded-full"
                               style={{ width: `${(provider.cost / cloudStats.totalCost) * 100}%` }}
@@ -523,8 +523,8 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
                   </div>
                 </div>
 
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                <div className="bg-gray-800 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-white mb-4">
                     Resources by Type
                   </h3>
                   <div className="space-y-3">
@@ -535,17 +535,17 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
                             {getResourceIcon(type.type.toLowerCase().replace(' ', '-'))}
                           </span>
                           <div>
-                            <div className="font-medium text-gray-900">{type.type}</div>
-                            <div className="text-sm text-gray-500">
+                            <div className="font-medium text-white">{type.type}</div>
+                            <div className="text-sm text-gray-400">
                               {((type.count / cloudStats.totalResources) * 100).toFixed(1)}% of total
                             </div>
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="font-medium text-gray-900">
+                          <div className="font-medium text-white">
                             {type.count}
                           </div>
-                          <div className="w-32 bg-gray-200 rounded-full h-2 mt-1">
+                          <div className="w-32 bg-gray-700 rounded-full h-2 mt-1">
                             <div
                               className="bg-green-600 h-2 rounded-full"
                               style={{ width: `${(type.count / cloudStats.totalResources) * 100}%` }}
@@ -562,16 +562,16 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
 
           {/* Performance */}
           {selectedView === 'performance' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Performance Metrics
               </h3>
               <div className="text-center py-8">
                 <div className="text-gray-400 text-6xl mb-4">📊</div>
-                <div className="text-lg font-medium text-gray-900 mb-2">
+                <div className="text-lg font-medium text-white mb-2">
                   Performance Analytics
                 </div>
-                <div className="text-gray-500">
+                <div className="text-gray-400">
                   Detailed performance metrics and trends for cloud resources
                 </div>
                 <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">

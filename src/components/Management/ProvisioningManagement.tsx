@@ -101,15 +101,15 @@ const ProvisioningManagement: React.FC<ProvisioningManagementProps> = ({ onClose
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "provisioned":
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircle className="h-4 w-4 text-green-400" />;
       case "failed":
-        return <XCircle className="h-4 w-4 text-red-500" />;
+        return <XCircle className="h-4 w-4 text-red-400" />;
       case "provisioning":
-        return <Clock className="h-4 w-4 text-blue-500" />;
+        return <Clock className="h-4 w-4 text-blue-400" />;
       case "pending":
-        return <AlertCircle className="h-4 w-4 text-yellow-500" />;
+        return <AlertCircle className="h-4 w-4 text-yellow-400" />;
       default:
-        return <AlertCircle className="h-4 w-4 text-gray-500" />;
+        return <AlertCircle className="h-4 w-4 text-gray-400" />;
     }
   };
 
@@ -132,18 +132,18 @@ const ProvisioningManagement: React.FC<ProvisioningManagementProps> = ({ onClose
   });
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-900">
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+        <div className="bg-gray-800 shadow-sm border-b border-gray-700 px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-semibold text-gray-900">Device Provisioning</h1>
-              <p className="text-sm text-gray-500">Deploy and provision network devices</p>
+              <h1 className="text-xl font-semibold text-white">Device Provisioning</h1>
+              <p className="text-sm text-gray-400">Deploy and provision network devices</p>
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-400 hover:text-white"
             >
               ✕
             </button>
@@ -154,43 +154,43 @@ const ProvisioningManagement: React.FC<ProvisioningManagementProps> = ({ onClose
 
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Total Devices</p>
-                  <p className="text-2xl font-bold">146</p>
+                  <p className="text-sm font-medium text-gray-400">Total Devices</p>
+                  <p className="text-2xl font-bold text-white">146</p>
                 </div>
-                <Cpu className="h-8 w-8 text-blue-500" />
+                <Cpu className="h-8 w-8 text-blue-400" />
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Provisioned</p>
-                  <p className="text-2xl font-bold text-green-500">142</p>
+                  <p className="text-sm font-medium text-gray-400">Provisioned</p>
+                  <p className="text-2xl font-bold text-green-400">142</p>
                 </div>
-                <CheckCircle className="h-8 w-8 text-green-500" />
+                <CheckCircle className="h-8 w-8 text-green-400" />
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Templates</p>
-                  <p className="text-2xl font-bold">8</p>
+                  <p className="text-sm font-medium text-gray-400">Templates</p>
+                  <p className="text-2xl font-bold text-white">8</p>
                 </div>
-                <Package className="h-8 w-8 text-purple-500" />
+                <Package className="h-8 w-8 text-purple-400" />
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Pending</p>
-                  <p className="text-2xl font-bold text-yellow-500">4</p>
+                  <p className="text-sm font-medium text-gray-400">Pending</p>
+                  <p className="text-2xl font-bold text-yellow-400">4</p>
                 </div>
-                <Clock className="h-8 w-8 text-yellow-500" />
+                <Clock className="h-8 w-8 text-yellow-400" />
               </div>
             </div>
           </div>
@@ -200,9 +200,9 @@ const ProvisioningManagement: React.FC<ProvisioningManagementProps> = ({ onClose
             <div className="flex items-center gap-4">
               <input 
                 placeholder="Search devices..." 
-                className="w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                className="w-64 px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
               />
-              <select className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              <select className="px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 <option value="all">All Status</option>
                 <option value="provisioned">Provisioned</option>
                 <option value="pending">Pending</option>
@@ -220,29 +220,29 @@ const ProvisioningManagement: React.FC<ProvisioningManagementProps> = ({ onClose
           </div>
 
           {/* Devices Table */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+          <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 overflow-hidden mb-6">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-700">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Template</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Provision</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Device</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Template</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Last Provision</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-gray-800 divide-y divide-gray-700">
                   {devices.map((device) => (
-                    <tr key={device.id} className="hover:bg-gray-50">
+                    <tr key={device.id} className="hover:bg-gray-700">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{device.name}</div>
-                          <div className="text-sm text-gray-500">{device.type} - {device.ip}</div>
+                          <div className="text-sm font-medium text-white">{device.name}</div>
+                          <div className="text-sm text-gray-400">{device.type} - {device.ip}</div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-900 text-purple-300">
                           {device.template}
                         </span>
                       </td>
@@ -254,15 +254,15 @@ const ProvisioningManagement: React.FC<ProvisioningManagementProps> = ({ onClose
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                         {device.lastProvision}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex items-center space-x-2">
-                          <button className="text-blue-600 hover:text-blue-900">
+                          <button className="text-blue-400 hover:text-blue-300">
                             <Play className="h-4 w-4" />
                           </button>
-                          <button className="text-gray-400 hover:text-gray-600">
+                          <button className="text-gray-400 hover:text-gray-300">
                             <MoreHorizontal className="h-4 w-4" />
                           </button>
                         </div>
@@ -275,23 +275,23 @@ const ProvisioningManagement: React.FC<ProvisioningManagementProps> = ({ onClose
           </div>
 
           {/* Templates Section */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900">Provisioning Templates</h3>
+          <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-700">
+              <h3 className="text-lg font-semibold text-white">Provisioning Templates</h3>
             </div>
             
             <div className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {templates.map((template) => (
-                  <div key={template.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                  <div key={template.id} className="border border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow bg-gray-700">
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium text-gray-900">{template.name}</h4>
-                      <button className="text-blue-600 hover:text-blue-900">
+                      <h4 className="font-medium text-white">{template.name}</h4>
+                      <button className="text-blue-400 hover:text-blue-300">
                         <Settings className="h-4 w-4" />
                       </button>
                     </div>
-                    <p className="text-sm text-gray-600 mb-3">{template.description}</p>
-                    <div className="flex items-center justify-between text-xs text-gray-500">
+                    <p className="text-sm text-gray-300 mb-3">{template.description}</p>
+                    <div className="flex items-center justify-between text-xs text-gray-400">
                       <span>{template.devices} devices</span>
                       <span>{template.lastUsed}</span>
                     </div>

@@ -109,20 +109,20 @@ const TopologyDiagram: React.FC<TopologyDiagramProps> = ({ onDeviceSelect }) => 
   return (
     <div className="space-y-6">
       {/* Controls */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-white">
             Network Topology Diagram
           </h3>
           
           <div className="flex items-center space-x-4">
             {/* Layout Options */}
             <div className="flex items-center space-x-2">
-              <label className="text-sm font-medium text-gray-700">Layout:</label>
+              <label className="text-sm font-medium text-gray-300">Layout:</label>
               <select
                 value={layout}
                 onChange={(e) => setLayout(e.target.value as any)}
-                className="px-3 py-1 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-1 border border-gray-600 rounded-lg bg-gray-700 text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="radial">Radial</option>
                 <option value="hierarchical">Hierarchical</option>
@@ -137,9 +137,9 @@ const TopologyDiagram: React.FC<TopologyDiagramProps> = ({ onDeviceSelect }) => 
                   type="checkbox"
                   checked={showDeviceNames}
                   onChange={(e) => setShowDeviceNames(e.target.checked)}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                 />
-                <span className="text-sm text-gray-700">Device Names</span>
+                <span className="text-sm text-gray-300">Device Names</span>
               </label>
               
               <label className="flex items-center space-x-2">
@@ -147,9 +147,9 @@ const TopologyDiagram: React.FC<TopologyDiagramProps> = ({ onDeviceSelect }) => 
                   type="checkbox"
                   checked={showDeviceIPs}
                   onChange={(e) => setShowDeviceIPs(e.target.checked)}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                 />
-                <span className="text-sm text-gray-700">IP Addresses</span>
+                <span className="text-sm text-gray-300">IP Addresses</span>
               </label>
               
               <label className="flex items-center space-x-2">
@@ -157,9 +157,9 @@ const TopologyDiagram: React.FC<TopologyDiagramProps> = ({ onDeviceSelect }) => 
                   type="checkbox"
                   checked={showLinks}
                   onChange={(e) => setShowLinks(e.target.checked)}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                 />
-                <span className="text-sm text-gray-700">Links</span>
+                <span className="text-sm text-gray-300">Links</span>
               </label>
             </div>
           </div>
@@ -167,19 +167,19 @@ const TopologyDiagram: React.FC<TopologyDiagramProps> = ({ onDeviceSelect }) => 
       </div>
 
       {/* Topology Diagram */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
         <div className="relative">
           <svg
             ref={svgRef}
             width="100%"
             height="600"
             viewBox="0 0 800 600"
-            className="border border-gray-200 rounded-lg bg-gray-50"
+            className="border border-gray-600 rounded-lg bg-gray-900"
           >
             {/* Background Grid */}
             <defs>
               <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#E5E7EB" strokeWidth="0.5" className="dark:stroke-gray-700"/>
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#374151" strokeWidth="0.5"/>
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#grid)" />
@@ -240,8 +240,8 @@ const TopologyDiagram: React.FC<TopologyDiagramProps> = ({ onDeviceSelect }) => 
                     y={y + 45}
                     textAnchor="middle"
                     fontSize="12"
-                    fill="#374151"
-                    className="dark:fill-gray-300 pointer-events-none select-none"
+                    fill="#D1D5DB"
+                    className="pointer-events-none select-none"
                   >
                     {device.hostname}
                   </text>
@@ -254,8 +254,8 @@ const TopologyDiagram: React.FC<TopologyDiagramProps> = ({ onDeviceSelect }) => 
                     y={y + 60}
                     textAnchor="middle"
                     fontSize="10"
-                    fill="#6B7280"
-                    className="dark:fill-gray-400 pointer-events-none select-none"
+                    fill="#9CA3AF"
+                    className="pointer-events-none select-none"
                   >
                     {device.ipAddresses[0]}
                   </text>
@@ -267,38 +267,38 @@ const TopologyDiagram: React.FC<TopologyDiagramProps> = ({ onDeviceSelect }) => 
       </div>
 
       {/* Legend */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-        <h4 className="font-medium text-gray-900 mb-3">Status Legend</h4>
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-4">
+        <h4 className="font-medium text-white mb-3">Status Legend</h4>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 rounded-full bg-green-500"></div>
-            <span className="text-gray-700">Up</span>
+            <span className="text-gray-300">Up</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 rounded-full bg-red-500"></div>
-            <span className="text-gray-700">Down</span>
+            <span className="text-gray-300">Down</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 rounded-full bg-yellow-500"></div>
-            <span className="text-gray-700">Warning</span>
+            <span className="text-gray-300">Warning</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 rounded-full bg-gray-500"></div>
-            <span className="text-gray-700">Unknown</span>
+            <span className="text-gray-300">Unknown</span>
           </div>
         </div>
       </div>
 
       {/* Selected Device Info */}
       {selectedDevice && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-white">
               Selected Device
             </h3>
             <button
               onClick={() => setSelectedDevice(null)}
-              className="text-gray-400 hover:text-gray-600:text-gray-300"
+              className="text-gray-400 hover:text-white"
             >
               ✕
             </button>
@@ -309,13 +309,13 @@ const TopologyDiagram: React.FC<TopologyDiagramProps> = ({ onDeviceSelect }) => 
               {getDeviceIcon(selectedDevice)}
             </div>
             <div>
-              <div className="font-medium text-gray-900">
+              <div className="font-medium text-white">
                 {selectedDevice.hostname}
               </div>
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-400">
                 {selectedDevice.vendor} {selectedDevice.model}
               </div>
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-400">
                 IP: {selectedDevice.ipAddresses[0]} • Status: {selectedDevice.status.toUpperCase()}
               </div>
             </div>
@@ -324,41 +324,41 @@ const TopologyDiagram: React.FC<TopologyDiagramProps> = ({ onDeviceSelect }) => 
       )}
 
       {/* Discovery Summary */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">
           Discovery Summary
         </h3>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
-            <div className="text-2xl font-bold text-gray-900">
+            <div className="text-2xl font-bold text-white">
               {devices.length}
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-400">
               Total Devices
             </div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">
+            <div className="text-2xl font-bold text-green-400">
               {devices.filter(d => d.status === 'up').length}
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-400">
               Online Devices
             </div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-red-600">
+            <div className="text-2xl font-bold text-red-400">
               {devices.filter(d => d.status === 'down').length}
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-400">
               Offline Devices
             </div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">
+            <div className="text-2xl font-bold text-blue-400">
               {links.length}
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-400">
               Network Links
             </div>
           </div>

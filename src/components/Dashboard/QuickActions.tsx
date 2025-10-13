@@ -47,15 +47,15 @@ const QuickActions: React.FC = () => {
   ];
 
   const colorClasses = {
-    blue: 'bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-700:bg-blue-800',
-    green: 'bg-green-50 hover:bg-green-100 border-green-200 text-green-700:bg-green-800',
-    purple: 'bg-purple-50 hover:bg-purple-100 border-purple-200 text-purple-700:bg-purple-800',
-    orange: 'bg-orange-50 hover:bg-orange-100 border-orange-200 text-orange-700:bg-orange-800'
+    blue: 'bg-blue-900/20 hover:bg-blue-900/30 border-blue-700 text-blue-300 hover:text-blue-200',
+    green: 'bg-green-900/20 hover:bg-green-900/30 border-green-700 text-green-300 hover:text-green-200',
+    purple: 'bg-purple-900/20 hover:bg-purple-900/30 border-purple-700 text-purple-300 hover:text-purple-200',
+    orange: 'bg-orange-900/20 hover:bg-orange-900/30 border-orange-700 text-orange-300 hover:text-orange-200'
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+    <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6 hover:shadow-lg transition-shadow">
+      <h3 className="text-lg font-semibold text-white mb-4">
         Quick Actions
       </h3>
       

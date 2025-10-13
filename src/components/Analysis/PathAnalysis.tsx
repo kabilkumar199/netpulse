@@ -55,17 +55,17 @@ const PathAnalysis: React.FC<PathAnalysisProps> = ({ onClose }) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-white">
             Path Analysis
           </h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-gray-400 mt-1">
             Analyze network paths and connectivity between devices
           </p>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600:text-gray-300"
+            className="text-gray-400 hover:text-white"
           >
             ✕
           </button>
@@ -73,18 +73,18 @@ const PathAnalysis: React.FC<PathAnalysisProps> = ({ onClose }) => {
       </div>
 
       {/* Analysis Form */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">
           Path Analysis Configuration
         </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Source */}
           <div className="space-y-4">
-            <h4 className="font-medium text-gray-900">Source</h4>
+            <h4 className="font-medium text-white">Source</h4>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Source Device
               </label>
               <select
@@ -93,7 +93,7 @@ const PathAnalysis: React.FC<PathAnalysisProps> = ({ onClose }) => {
                   const device = mockDevices.find(d => d.id === e.target.value);
                   setSourceDevice(device || null);
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Select source device...</option>
                 {mockDevices.map(device => (
@@ -105,7 +105,7 @@ const PathAnalysis: React.FC<PathAnalysisProps> = ({ onClose }) => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Source IP (optional)
               </label>
               <input
@@ -113,17 +113,17 @@ const PathAnalysis: React.FC<PathAnalysisProps> = ({ onClose }) => {
                 value={sourceIp}
                 onChange={(e) => setSourceIp(e.target.value)}
                 placeholder="192.168.1.1"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
 
           {/* Target */}
           <div className="space-y-4">
-            <h4 className="font-medium text-gray-900">Target</h4>
+            <h4 className="font-medium text-white">Target</h4>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Target Device
               </label>
               <select
@@ -132,7 +132,7 @@ const PathAnalysis: React.FC<PathAnalysisProps> = ({ onClose }) => {
                   const device = mockDevices.find(d => d.id === e.target.value);
                   setTargetDevice(device || null);
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Select target device...</option>
                 {mockDevices.map(device => (
@@ -144,7 +144,7 @@ const PathAnalysis: React.FC<PathAnalysisProps> = ({ onClose }) => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Target IP (optional)
               </label>
               <input
@@ -152,7 +152,7 @@ const PathAnalysis: React.FC<PathAnalysisProps> = ({ onClose }) => {
                 value={targetIp}
                 onChange={(e) => setTargetIp(e.target.value)}
                 placeholder="192.168.2.1"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -202,7 +202,7 @@ const PathAnalysis: React.FC<PathAnalysisProps> = ({ onClose }) => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Max Hops
               </label>
               <input
@@ -211,7 +211,7 @@ const PathAnalysis: React.FC<PathAnalysisProps> = ({ onClose }) => {
                 max="50"
                 value={options.maxHops}
                 onChange={(e) => setOptions({...options, maxHops: parseInt(e.target.value)})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -241,61 +241,61 @@ const PathAnalysis: React.FC<PathAnalysisProps> = ({ onClose }) => {
 
       {/* Results */}
       {results.length > 0 && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">
             Analysis Results
           </h3>
           
           <div className="space-y-4">
             {results.map((result, index) => (
-              <div key={result.id} className="border border-gray-200 rounded-lg p-4">
+              <div key={result.id} className="border border-gray-600 rounded-lg p-4 bg-gray-700">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-2">
-                    <span className="font-medium text-gray-900">
+                    <span className="font-medium text-white">
                       Path {index + 1}
                     </span>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                       result.isReachable 
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
+                        ? 'bg-green-900 text-green-300'
+                        : 'bg-red-900 text-red-300'
                     }`}>
                       {result.isReachable ? 'REACHABLE' : 'UNREACHABLE'}
                     </span>
                   </div>
-                  <div className="text-sm text-gray-600">
+                  <div className="text-sm text-gray-400">
                     {result.totalHops} hops • {formatLatency(result.totalLatency)} total latency
                   </div>
                 </div>
                 
                 {result.isReachable ? (
                   <div className="space-y-2">
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
+                    <div className="flex items-center space-x-2 text-sm text-gray-400">
                       <span>Confidence: {(result.confidence * 100).toFixed(1)}%</span>
                     </div>
                     
-                    <div className="bg-gray-50 rounded-lg p-3">
-                      <h5 className="font-medium text-gray-900 mb-2">Path Details</h5>
+                    <div className="bg-gray-800 rounded-lg p-3">
+                      <h5 className="font-medium text-white mb-2">Path Details</h5>
                       <div className="space-y-1">
                         {result.path.map((hop, hopIndex) => (
                           <div key={hopIndex} className="flex items-center space-x-2 text-sm">
-                            <span className="w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-xs font-medium">
+                            <span className="w-6 h-6 rounded-full bg-blue-900 text-blue-300 flex items-center justify-center text-xs font-medium">
                               {hopIndex + 1}
                             </span>
                             <span className="flex-1">
-                              <span className="font-medium text-gray-900">
+                              <span className="font-medium text-white">
                                 {hop.deviceName}
                               </span>
-                              <span className="text-gray-500 ml-2">
+                              <span className="text-gray-400 ml-2">
                                 ({hop.interfaceName})
                               </span>
                               {hop.ipAddress && (
-                                <span className="text-gray-500 ml-2">
+                                <span className="text-gray-400 ml-2">
                                   {hop.ipAddress}
                                 </span>
                               )}
                             </span>
                             <div className="flex items-center space-x-2">
-                              <span className="text-gray-500">
+                              <span className="text-gray-400">
                                 {formatLatency(hop.latency)}
                               </span>
                               <span className="text-lg">
@@ -334,21 +334,21 @@ const PathAnalysis: React.FC<PathAnalysisProps> = ({ onClose }) => {
       )}
 
       {/* Recent Queries */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">
           Recent Path Queries
         </h3>
         
         <div className="space-y-3">
           {queries.map((query) => (
-            <div key={query.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div key={query.id} className="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
               <div className="flex items-center space-x-3">
                 <span className="text-lg">🛣️</span>
                 <div>
-                  <div className="font-medium text-gray-900">
+                  <div className="font-medium text-white">
                     {mockDevices.find(d => d.id === query.sourceDeviceId)?.hostname} → {mockDevices.find(d => d.id === query.targetDeviceId)?.hostname}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-400">
                     {query.results.length} result(s) • {new Date(query.createdAt).toLocaleDateString()}
                   </div>
                 </div>

@@ -124,29 +124,29 @@ const FirmwareManagement: React.FC<FirmwareManagementProps> = ({ onClose }) => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":
-        return <CheckCircle className="h-4 w-4 text-green-500" />
+        return <CheckCircle className="h-4 w-4 text-green-400" />
       case "failed":
-        return <AlertTriangle className="h-4 w-4 text-red-500" />
+        return <AlertTriangle className="h-4 w-4 text-red-400" />
       case "in-progress":
-        return <Clock className="h-4 w-4 text-blue-500" />
+        return <Clock className="h-4 w-4 text-blue-400" />
       default:
-        return <CheckCircle className="h-4 w-4 text-green-500" />
+        return <CheckCircle className="h-4 w-4 text-green-400" />
     }
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-900">
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+        <div className="bg-gray-800 shadow-sm border-b border-gray-700 px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-semibold text-gray-900">Firmware Management</h1>
-              <p className="text-sm text-gray-500">Manage device firmware images and deployments</p>
+              <h1 className="text-xl font-semibold text-white">Firmware Management</h1>
+              <p className="text-sm text-gray-400">Manage device firmware images and deployments</p>
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-400 hover:text-white"
             >
               ✕
             </button>
@@ -156,43 +156,43 @@ const FirmwareManagement: React.FC<FirmwareManagementProps> = ({ onClose }) => {
         <div className="flex-1 p-6 overflow-auto">
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Total Images</p>
-                  <p className="text-2xl font-bold">47</p>
+                  <p className="text-sm font-medium text-gray-400">Total Images</p>
+                  <p className="text-2xl font-bold text-white">47</p>
                 </div>
-                <HardDrive className="h-8 w-8 text-blue-500" />
+                <HardDrive className="h-8 w-8 text-blue-400" />
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Active Deployments</p>
-                  <p className="text-2xl font-bold text-blue-500">3</p>
+                  <p className="text-sm font-medium text-gray-400">Active Deployments</p>
+                  <p className="text-2xl font-bold text-blue-400">3</p>
                 </div>
-                <Clock className="h-8 w-8 text-blue-500" />
+                <Clock className="h-8 w-8 text-blue-400" />
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Success Rate</p>
-                  <p className="text-2xl font-bold text-green-500">94.7%</p>
+                  <p className="text-sm font-medium text-gray-400">Success Rate</p>
+                  <p className="text-2xl font-bold text-green-400">94.7%</p>
                 </div>
-                <CheckCircle className="h-8 w-8 text-green-500" />
+                <CheckCircle className="h-8 w-8 text-green-400" />
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Storage Used</p>
-                  <p className="text-2xl font-bold">12.4 GB</p>
+                  <p className="text-sm font-medium text-gray-400">Storage Used</p>
+                  <p className="text-2xl font-bold text-white">12.4 GB</p>
                 </div>
-                <HardDrive className="h-8 w-8 text-orange-500" />
+                <HardDrive className="h-8 w-8 text-orange-400" />
               </div>
             </div>
           </div>
@@ -200,12 +200,12 @@ const FirmwareManagement: React.FC<FirmwareManagementProps> = ({ onClose }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Firmware Catalog */}
             <div className="space-y-6">
-              <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-                <div className="px-6 py-4 border-b border-gray-200">
+              <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700">
+                <div className="px-6 py-4 border-b border-gray-700">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900">Firmware Catalog</h3>
-                      <p className="text-sm text-gray-500">Available firmware images and versions</p>
+                      <h3 className="text-lg font-semibold text-white">Firmware Catalog</h3>
+                      <p className="text-sm text-gray-400">Available firmware images and versions</p>
                     </div>
                     <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                       <Upload className="h-4 w-4 mr-2 inline" />
@@ -216,8 +216,8 @@ const FirmwareManagement: React.FC<FirmwareManagementProps> = ({ onClose }) => {
                 <div className="p-6">
                   <div className="space-y-4">
                     <div className="flex items-center gap-4">
-                      <input placeholder="Search firmware..." className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                      <select className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                      <input placeholder="Search firmware..." className="flex-1 px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                      <select className="px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="all">All</option>
                         <option value="stable">Stable</option>
                         <option value="beta">Beta</option>
@@ -226,17 +226,17 @@ const FirmwareManagement: React.FC<FirmwareManagementProps> = ({ onClose }) => {
 
                     <div className="space-y-3">
                       {firmwareImages.map((firmware) => (
-                        <div key={firmware.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                        <div key={firmware.id} className="p-4 border border-gray-600 rounded-lg hover:bg-gray-700 cursor-pointer bg-gray-700">
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
-                                <h4 className="font-medium text-gray-900">{firmware.name}</h4>
+                                <h4 className="font-medium text-white">{firmware.name}</h4>
                                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadge(firmware.status)}`}>
                                   {firmware.status}
                                 </span>
                               </div>
-                              <p className="text-sm text-gray-600 mb-2">{firmware.description}</p>
-                              <div className="flex items-center gap-4 text-xs text-gray-500">
+                              <p className="text-sm text-gray-300 mb-2">{firmware.description}</p>
+                              <div className="flex items-center gap-4 text-xs text-gray-400">
                                 <span>{firmware.vendor}</span>
                                 <span>{firmware.deviceType}</span>
                                 <span>{firmware.size}</span>
@@ -248,10 +248,10 @@ const FirmwareManagement: React.FC<FirmwareManagementProps> = ({ onClose }) => {
                               </div>
                             </div>
                             <div className="flex items-center gap-2">
-                              <button className="p-2 text-gray-400 hover:text-gray-600">
+                              <button className="p-2 text-gray-400 hover:text-gray-300">
                                 <FileText className="h-4 w-4" />
                               </button>
-                              <button className="p-2 text-gray-400 hover:text-gray-600">
+                              <button className="p-2 text-gray-400 hover:text-gray-300">
                                 <Download className="h-4 w-4" />
                               </button>
                               <button className="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">Deploy</button>
@@ -267,19 +267,19 @@ const FirmwareManagement: React.FC<FirmwareManagementProps> = ({ onClose }) => {
 
             {/* Active Deployments */}
             <div className="space-y-6">
-              <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-                <div className="px-6 py-4 border-b border-gray-200">
-                  <h3 className="text-lg font-semibold text-gray-900">Active Deployments</h3>
-                  <p className="text-sm text-gray-500">Current firmware deployment operations</p>
+              <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700">
+                <div className="px-6 py-4 border-b border-gray-700">
+                  <h3 className="text-lg font-semibold text-white">Active Deployments</h3>
+                  <p className="text-sm text-gray-400">Current firmware deployment operations</p>
                 </div>
                 <div className="p-6">
                   <div className="space-y-4">
                     {deployments.map((deployment) => (
-                      <div key={deployment.id} className="p-4 border border-gray-200 rounded-lg">
+                      <div key={deployment.id} className="p-4 border border-gray-600 rounded-lg bg-gray-700">
                         <div className="flex items-center justify-between mb-3">
                           <div>
-                            <h4 className="font-medium text-gray-900">{deployment.device}</h4>
-                            <p className="text-sm text-gray-500">{deployment.deviceIp}</p>
+                            <h4 className="font-medium text-white">{deployment.device}</h4>
+                            <p className="text-sm text-gray-400">{deployment.deviceIp}</p>
                           </div>
                           <div className="flex items-center gap-2">
                             {getStatusIcon(deployment.status)}

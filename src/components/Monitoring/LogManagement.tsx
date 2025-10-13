@@ -195,15 +195,15 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'emergency': return 'text-red-800 bg-red-100';
-      case 'alert': return 'text-red-700 bg-red-100';
-      case 'critical': return 'text-red-600 bg-red-100';
-      case 'error': return 'text-red-500 bg-red-100';
-      case 'warning': return 'text-yellow-600 bg-yellow-100';
-      case 'notice': return 'text-blue-600 bg-blue-100';
-      case 'info': return 'text-green-600 bg-green-100';
-      case 'debug': return 'text-gray-600 bg-gray-100';
-      default: return 'text-gray-600 bg-gray-100';
+      case 'emergency': return 'text-red-300 bg-red-900';
+      case 'alert': return 'text-red-300 bg-red-900';
+      case 'critical': return 'text-red-400 bg-red-900';
+      case 'error': return 'text-red-400 bg-red-900';
+      case 'warning': return 'text-yellow-400 bg-yellow-900';
+      case 'notice': return 'text-blue-400 bg-blue-900';
+      case 'info': return 'text-green-400 bg-green-900';
+      case 'debug': return 'text-gray-400 bg-gray-700';
+      default: return 'text-gray-400 bg-gray-700';
     }
   };
 
@@ -239,21 +239,21 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-gray-800 rounded-lg shadow-lg p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-white">
             Log Management
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-400">
             Centralized log collection, analysis, and monitoring
           </p>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600:text-gray-300"
+            className="text-gray-400 hover:text-white"
           >
             <span className="text-2xl">×</span>
           </button>
@@ -274,7 +274,7 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               selectedView === key
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200:bg-gray-600'
+                : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
             }`}
           >
             {label}
@@ -288,7 +288,7 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
           <select
             value={selectedSeverity}
             onChange={(e) => setSelectedSeverity(e.target.value as any)}
-            className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900"
+            className="px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white"
           >
             <option value="all">All Severities</option>
             <option value="emergency">Emergency</option>
@@ -304,7 +304,7 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
           <select
             value={selectedSource}
             onChange={(e) => setSelectedSource(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900"
+            className="px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white"
           >
             <option value="all">All Sources</option>
             {logStats?.logsBySource.map(source => (
@@ -317,7 +317,7 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
             placeholder="Search logs..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 flex-1"
+            className="px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-400 flex-1"
           />
         </div>
       )}
@@ -327,7 +327,7 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-2 text-gray-600">Loading log data...</p>
+            <p className="mt-2 text-gray-300">Loading log data...</p>
           </div>
         </div>
       )}
@@ -338,50 +338,50 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
           {/* Overview */}
           {selectedView === 'overview' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Total Logs
                 </h3>
-                <div className="text-2xl font-bold text-blue-600">
+                <div className="text-2xl font-bold text-blue-400">
                   {logStats.totalLogs}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Last 24 hours
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Error Logs
                 </h3>
-                <div className="text-2xl font-bold text-red-600">
+                <div className="text-2xl font-bold text-red-400">
                   {logStats.logsBySeverity.filter(s => ['error', 'critical', 'alert', 'emergency'].includes(s.severity)).reduce((sum, s) => sum + s.count, 0)}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Critical issues
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Sources
                 </h3>
-                <div className="text-2xl font-bold text-green-600">
+                <div className="text-2xl font-bold text-green-400">
                   {logStats.logsBySource.length}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Active sources
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Facilities
                 </h3>
-                <div className="text-2xl font-bold text-purple-600">
+                <div className="text-2xl font-bold text-purple-400">
                   {logStats.logsByFacility.length}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Log facilities
                 </div>
               </div>
@@ -390,13 +390,13 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
 
           {/* Logs */}
           {selectedView === 'logs' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Recent Logs ({filteredLogs.length})
               </h3>
               <div className="space-y-3">
                 {filteredLogs.map((log) => (
-                  <div key={log.id} className="bg-white rounded-lg p-4">
+                  <div key={log.id} className="bg-gray-700 rounded-lg p-4">
                     <div className="flex items-start justify-between">
                       <div className="flex items-start">
                         <div className="text-2xl mr-3">
@@ -407,24 +407,24 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
                             <span className={`px-2 py-1 rounded text-xs font-medium ${getSeverityColor(log.severity)}`}>
                               {log.severity.toUpperCase()}
                             </span>
-                            <span className="text-sm text-gray-500">
+                            <span className="text-sm text-gray-400">
                               {log.facility}
                             </span>
-                            <span className="text-sm text-gray-500">
+                            <span className="text-sm text-gray-400">
                               {log.source}
                             </span>
                           </div>
-                          <div className="font-medium text-gray-900 mb-1">
+                          <div className="font-medium text-white mb-1">
                             {log.message}
                           </div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-sm text-gray-400">
                             {log.rawMessage}
                           </div>
                           <div className="flex flex-wrap gap-1 mt-2">
                             {log.tags.map((tag, index) => (
                               <span
                                 key={index}
-                                className="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded"
+                                className="px-2 py-1 bg-gray-600 text-gray-300 text-xs rounded"
                               >
                                 {tag}
                               </span>
@@ -432,7 +432,7 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
                           </div>
                         </div>
                       </div>
-                      <div className="text-right text-sm text-gray-500">
+                      <div className="text-right text-sm text-gray-400">
                         <div>{formatTimestamp(log.timestamp)}</div>
                         <div>{formatTimeAgo(log.timestamp)}</div>
                       </div>
@@ -445,13 +445,13 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
 
           {/* Search */}
           {selectedView === 'search' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Log Search Results ({filteredLogs.length})
               </h3>
               <div className="space-y-3">
                 {filteredLogs.map((log) => (
-                  <div key={log.id} className="bg-white rounded-lg p-4">
+                  <div key={log.id} className="bg-gray-700 rounded-lg p-4">
                     <div className="flex items-start justify-between">
                       <div className="flex items-start">
                         <div className="text-2xl mr-3">
@@ -462,22 +462,22 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
                             <span className={`px-2 py-1 rounded text-xs font-medium ${getSeverityColor(log.severity)}`}>
                               {log.severity.toUpperCase()}
                             </span>
-                            <span className="text-sm text-gray-500">
+                            <span className="text-sm text-gray-400">
                               {log.facility}
                             </span>
-                            <span className="text-sm text-gray-500">
+                            <span className="text-sm text-gray-400">
                               {log.source}
                             </span>
                           </div>
-                          <div className="font-medium text-gray-900 mb-1">
+                          <div className="font-medium text-white mb-1">
                             {log.message}
                           </div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-sm text-gray-400">
                             {log.rawMessage}
                           </div>
                         </div>
                       </div>
-                      <div className="text-right text-sm text-gray-500">
+                      <div className="text-right text-sm text-gray-400">
                         <div>{formatTimestamp(log.timestamp)}</div>
                         <div>{formatTimeAgo(log.timestamp)}</div>
                       </div>
@@ -490,16 +490,16 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
 
           {/* Alerts */}
           {selectedView === 'alerts' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Log Alerts
               </h3>
               <div className="text-center py-8">
                 <div className="text-gray-400 text-6xl mb-4">🚨</div>
-                <div className="text-lg font-medium text-gray-900 mb-2">
+                <div className="text-lg font-medium text-white mb-2">
                   Alert Configuration
                 </div>
-                <div className="text-gray-500">
+                <div className="text-gray-400">
                   Configure log-based alerts and notifications
                 </div>
                 <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">

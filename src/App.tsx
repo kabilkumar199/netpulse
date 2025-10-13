@@ -22,6 +22,9 @@ import BackupManagement from './components/Management/BackupManagement';
 import ProvisioningManagement from './components/Management/ProvisioningManagement';
 import FirmwareManagement from './components/Management/FirmwareManagement';
 import AlertManagement from './components/Management/AlertManagement';
+import UserList from './components/Management/UserList';
+import UserRole from './components/Management/UserRole';
+import UserProfile from './components/Management/UserProfile';
 import type { Device, Site, DiscoveryScan } from './types';
 
 function App() {
@@ -36,6 +39,7 @@ function App() {
   const [showGeotaggingManager, setShowGeotaggingManager] = useState(false);
   const [showLLDPIngestion, setShowLLDPIngestion] = useState(false);
   const [showCredentialsManager, setShowCredentialsManager] = useState(false);
+  const [showUserProfile, setShowUserProfile] = useState(false);
 
   const handleDeviceSelect = (device: Device) => {
     setSelectedDevice(device);
@@ -118,12 +122,14 @@ function App() {
         return <ConfigurationManager onClose={() => setCurrentView('nav-dashboard')} />;
       case 'nav-backups-management':
         return <BackupManagement onClose={() => setCurrentView('nav-dashboard')} />;
-      case 'nav-provisioning-management':
-        return <ProvisioningManagement onClose={() => setCurrentView('nav-dashboard')} />;
       case 'nav-firmware-management':
         return <FirmwareManagement onClose={() => setCurrentView('nav-dashboard')} />;
       case 'nav-alert-management':
         return <AlertManagement onClose={() => setCurrentView('nav-dashboard')} />;
+      case 'nav-user-list':
+        return <UserList onClose={() => setCurrentView('nav-dashboard')} />;
+      case 'nav-user-roles':
+        return <UserRole onClose={() => setCurrentView('nav-dashboard')} />;
       case 'nav-analyze-reports':
         return (
           <div className="text-center py-12">
@@ -211,9 +217,10 @@ function App() {
       case 'nav-monitoring-logs': return 'Log Management';
       case 'nav-config-management': return 'Configuration Management';
       case 'nav-backups-management': return 'Backup Management';
-      case 'nav-provisioning-management': return 'Device Provisioning';
       case 'nav-firmware-management': return 'Firmware Management';
       case 'nav-alert-management': return 'Alert Management';
+      case 'nav-user-list': return 'User Management';
+      case 'nav-user-roles': return 'User Roles';
       case 'nav-settings-credentials': return 'Credentials';
       case 'nav-settings-roles': return 'Device Roles';
       case 'nav-settings-dependencies': return 'Dependencies';
@@ -224,7 +231,7 @@ function App() {
 
   const getPageSubtitle = () => {
     switch (currentView) {
-      case 'nav-dashboard': return 'Network overview and monitoring';
+      case 'nav-dashboard': return '';
       case 'nav-discover-scan': return 'Start a new network discovery scan';
       case 'nav-discover-history': return 'View previous discovery scans and results';
       case 'nav-inventory-devices': return 'Manage network devices';
@@ -242,9 +249,10 @@ function App() {
       case 'nav-monitoring-logs': return 'Manage and analyze system logs';
       case 'nav-config-management': return 'Manage device configurations and compliance';
       case 'nav-backups-management': return 'Manage configuration and system backups';
-      case 'nav-provisioning-management': return 'Deploy and provision network devices';
       case 'nav-firmware-management': return 'Manage firmware versions and updates';
       case 'nav-alert-management': return 'Monitor and manage network alarms';
+      case 'nav-user-list': return 'Manage system users and their access';
+      case 'nav-user-roles': return 'Manage user roles and permissions';
       case 'nav-settings-credentials': return 'Manage authentication credentials';
       case 'nav-settings-roles': return 'Configure device roles';
       case 'nav-settings-dependencies': return 'Set up device dependencies';
@@ -254,12 +262,13 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-900">
       <Layout 
         title={getPageTitle()}
         subtitle={getPageSubtitle()}
         currentView={currentView}
         onNavigate={setCurrentView}
+        onProfileClick={() => setShowUserProfile(true)}
       >
         {renderContent()}
       </Layout>
@@ -365,15 +374,15 @@ function App() {
       )}
 
       {showCredentialsManager && (
-        <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-gray-900 overflow-y-auto">
           <div className="min-h-screen">
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">
+            <div className="flex items-center justify-between p-4 border-b border-gray-700">
+              <h2 className="text-xl font-semibold text-white">
                 Credentials Manager
               </h2>
               <button
                 onClick={() => setShowCredentialsManager(false)}
-                className="text-gray-400 hover:text-gray-600:text-gray-300"
+                className="text-gray-400 hover:text-white"
               >
                 ✕
               </button>
@@ -384,6 +393,14 @@ function App() {
               />
             </div>
           </div>
+        </div>
+      )}
+
+      {showUserProfile && (
+        <div className="fixed inset-0 z-50 bg-gray-900 overflow-y-auto">
+          <UserProfile
+            onClose={() => setShowUserProfile(false)}
+          />
         </div>
       )}
 

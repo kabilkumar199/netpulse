@@ -31,19 +31,19 @@ const StatsCard: React.FC<StatsCardProps> = ({
   };
 
   const changeColorClasses = {
-    increase: 'text-green-600',
-    decrease: 'text-red-600',
-    neutral: 'text-gray-600'
+    increase: 'text-green-400',
+    decrease: 'text-red-400',
+    neutral: 'text-gray-400'
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+    <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6 hover:shadow-lg transition-shadow">
       <div className="flex items-center justify-between">
         <div className="flex-1">
-          <p className="text-sm font-medium text-gray-600">
+          <p className="text-sm font-medium text-gray-400">
             {title}
           </p>
-          <p className="text-2xl font-bold text-gray-900 mt-1">
+          <p className="text-2xl font-bold text-white mt-1">
             {value}
           </p>
           {subtitle && (

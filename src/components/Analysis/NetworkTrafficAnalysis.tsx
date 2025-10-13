@@ -138,21 +138,21 @@ const NetworkTrafficAnalysis: React.FC<NetworkTrafficAnalysisProps> = ({ onClose
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-gray-800 rounded-lg shadow-lg p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-white">
             Network Traffic Analysis
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-400">
             Real-time network traffic monitoring and analysis
           </p>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600:text-gray-300"
+            className="text-gray-400 hover:text-white"
           >
             <span className="text-2xl">×</span>
           </button>
@@ -168,7 +168,7 @@ const NetworkTrafficAnalysis: React.FC<NetworkTrafficAnalysisProps> = ({ onClose
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               timeRange === range
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200:bg-gray-600'
+                : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
             }`}
           >
             {range}
@@ -191,7 +191,7 @@ const NetworkTrafficAnalysis: React.FC<NetworkTrafficAnalysisProps> = ({ onClose
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               selectedView === key
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200:bg-gray-600'
+                : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
             }`}
           >
             {label}
@@ -204,7 +204,7 @@ const NetworkTrafficAnalysis: React.FC<NetworkTrafficAnalysisProps> = ({ onClose
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-2 text-gray-600">Analyzing traffic data...</p>
+            <p className="mt-2 text-gray-300">Analyzing traffic data...</p>
           </div>
         </div>
       )}
@@ -215,50 +215,50 @@ const NetworkTrafficAnalysis: React.FC<NetworkTrafficAnalysisProps> = ({ onClose
           {/* Overview */}
           {selectedView === 'overview' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Total Traffic
                 </h3>
-                <div className="text-2xl font-bold text-blue-600">
+                <div className="text-2xl font-bold text-blue-400">
                   {formatBytes(trafficStats.totalBytes)}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Last {timeRange}
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Total Packets
                 </h3>
-                <div className="text-2xl font-bold text-green-600">
+                <div className="text-2xl font-bold text-green-400">
                   {formatPackets(trafficStats.totalPackets)}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Last {timeRange}
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Active Flows
                 </h3>
-                <div className="text-2xl font-bold text-purple-600">
+                <div className="text-2xl font-bold text-purple-400">
                   {flowRecords.length}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Current
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Avg Bandwidth
                 </h3>
-                <div className="text-2xl font-bold text-orange-600">
+                <div className="text-2xl font-bold text-orange-400">
                   {formatBytes(trafficStats.totalBytes / 3600)}/s
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Last hour
                 </div>
               </div>
@@ -267,31 +267,31 @@ const NetworkTrafficAnalysis: React.FC<NetworkTrafficAnalysisProps> = ({ onClose
 
           {/* Top Talkers */}
           {selectedView === 'top-talkers' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-700 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Top Talkers (Last {timeRange})
               </h3>
               <div className="space-y-3">
                 {trafficStats.topTalkers.map((talker, index) => (
                   <div key={talker.ip} className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <span className="w-8 h-8 bg-blue-100 text-blue-800 rounded-full flex items-center justify-center text-sm font-medium mr-3">
+                      <span className="w-8 h-8 bg-blue-900 text-blue-300 rounded-full flex items-center justify-center text-sm font-medium mr-3">
                         {index + 1}
                       </span>
                       <div>
-                        <div className="font-medium text-gray-900">{talker.ip}</div>
-                        <div className="text-sm text-gray-500">
+                        <div className="font-medium text-white">{talker.ip}</div>
+                        <div className="text-sm text-gray-400">
                           {formatBytes(talker.bytes)}
                         </div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-medium text-gray-900">
+                      <div className="font-medium text-white">
                         {talker.percentage.toFixed(1)}%
                       </div>
-                      <div className="w-32 bg-gray-200 rounded-full h-2 mt-1">
+                      <div className="w-32 bg-gray-600 rounded-full h-2 mt-1">
                         <div
-                          className="bg-blue-600 h-2 rounded-full"
+                          className="bg-blue-400 h-2 rounded-full"
                           style={{ width: `${talker.percentage}%` }}
                         />
                       </div>
@@ -304,29 +304,29 @@ const NetworkTrafficAnalysis: React.FC<NetworkTrafficAnalysisProps> = ({ onClose
 
           {/* Applications */}
           {selectedView === 'applications' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Top Applications (Last {timeRange})
               </h3>
               <div className="space-y-3">
                 {trafficStats.topApplications.map((app, index) => (
                   <div key={app.name} className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <span className="w-8 h-8 bg-green-100 text-green-800 rounded-full flex items-center justify-center text-sm font-medium mr-3">
+                      <span className="w-8 h-8 bg-green-900 text-green-300 rounded-full flex items-center justify-center text-sm font-medium mr-3">
                         {index + 1}
                       </span>
                       <div>
-                        <div className="font-medium text-gray-900">{app.name}</div>
-                        <div className="text-sm text-gray-500">
+                        <div className="font-medium text-white">{app.name}</div>
+                        <div className="text-sm text-gray-400">
                           {formatBytes(app.bytes)}
                         </div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-medium text-gray-900">
+                      <div className="font-medium text-white">
                         {app.percentage.toFixed(1)}%
                       </div>
-                      <div className="w-32 bg-gray-200 rounded-full h-2 mt-1">
+                      <div className="w-32 bg-gray-600 rounded-full h-2 mt-1">
                         <div
                           className="bg-green-600 h-2 rounded-full"
                           style={{ width: `${app.percentage}%` }}
@@ -341,29 +341,29 @@ const NetworkTrafficAnalysis: React.FC<NetworkTrafficAnalysisProps> = ({ onClose
 
           {/* Protocols */}
           {selectedView === 'protocols' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Protocol Distribution (Last {timeRange})
               </h3>
               <div className="space-y-3">
                 {trafficStats.topProtocols.map((protocol, index) => (
                   <div key={protocol.protocol} className="flex items-center justify-between">
                     <div className="flex items-center">
-                      <span className="w-8 h-8 bg-purple-100 text-purple-800 rounded-full flex items-center justify-center text-sm font-medium mr-3">
+                      <span className="w-8 h-8 bg-purple-900 text-purple-300 rounded-full flex items-center justify-center text-sm font-medium mr-3">
                         {index + 1}
                       </span>
                       <div>
-                        <div className="font-medium text-gray-900">{protocol.protocol}</div>
-                        <div className="text-sm text-gray-500">
+                        <div className="font-medium text-white">{protocol.protocol}</div>
+                        <div className="text-sm text-gray-400">
                           {formatBytes(protocol.bytes)}
                         </div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-medium text-gray-900">
+                      <div className="font-medium text-white">
                         {protocol.percentage.toFixed(1)}%
                       </div>
-                      <div className="w-32 bg-gray-200 rounded-full h-2 mt-1">
+                      <div className="w-32 bg-gray-600 rounded-full h-2 mt-1">
                         <div
                           className="bg-purple-600 h-2 rounded-full"
                           style={{ width: `${protocol.percentage}%` }}
@@ -378,11 +378,11 @@ const NetworkTrafficAnalysis: React.FC<NetworkTrafficAnalysisProps> = ({ onClose
 
           {/* Bandwidth Utilization */}
           {selectedView === 'bandwidth' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Bandwidth Utilization (Last Hour)
               </h3>
-              <div className="bg-white rounded p-4 h-64 flex items-end justify-between">
+              <div className="bg-gray-700 rounded p-4 h-64 flex items-end justify-between">
                 {trafficStats.bandwidthUtilization.slice(-20).map((point, index) => {
                   const height = (point.utilization / 100) * 200;
                   const color = point.utilization > 80 ? '#EF4444' : point.utilization > 60 ? '#F59E0B' : '#10B981';
@@ -400,7 +400,7 @@ const NetworkTrafficAnalysis: React.FC<NetworkTrafficAnalysisProps> = ({ onClose
                   );
                 })}
               </div>
-              <div className="flex justify-between text-sm text-gray-500 mt-2">
+              <div className="flex justify-between text-sm text-gray-400 mt-2">
                 <span>0%</span>
                 <span>50%</span>
                 <span>100%</span>

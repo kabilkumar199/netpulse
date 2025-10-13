@@ -27,7 +27,9 @@ import {
   X,
   HardDrive,
   Wrench,
-  Bell
+  Bell,
+  Users,
+  Shield
 } from 'lucide-react';
 import type { NavigationItem } from '../../types';
 import { mockNavigationItems } from '../../data/mockData';
@@ -71,6 +73,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle, currentView, onNavi
       'harddrive': HardDrive,
       'wrench': Wrench,
       'bell': Bell,
+      'users': Users,
+      'shield': Shield,
     };
     return iconMap[iconName] || Settings;
   };
@@ -104,8 +108,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle, currentView, onNavi
             level === 0 ? 'mb-1' : 'ml-4 mb-1'
           } ${
             isActive 
-              ? 'bg-blue-100 text-blue-700' 
-              : 'text-gray-700 hover:bg-gray-100'
+              ? 'bg-blue-600 text-white' 
+              : 'text-gray-300 hover:bg-gray-800 hover:text-white'
           }`}
         >
           <IconComponent className="w-4 h-4 mr-3" />
@@ -114,7 +118,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle, currentView, onNavi
             <ChevronRight className={`w-4 h-4 ml-2 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
           )}
           {item.badge && (
-            <span className="ml-2 px-2 py-1 text-xs bg-red-100 text-red-600 rounded-full">
+            <span className="ml-2 px-2 py-1 text-xs bg-red-900 text-red-300 rounded-full">
               {item.badge}
             </span>
           )}
@@ -130,10 +134,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle, currentView, onNavi
   };
 
   return (
-    <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out flex flex-col ${
+    <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 shadow-lg transform transition-transform duration-300 ease-in-out flex flex-col border-r border-gray-700 ${
       isOpen ? 'translate-x-0' : '-translate-x-full'
     } lg:translate-x-0 lg:relative lg:inset-auto`}>
-      <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200">
+      <div className="flex items-center justify-between h-16 px-4 border-b border-gray-700">
         <div className="flex items-center space-x-3">
           {/* Logo */}
           <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -141,13 +145,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle, currentView, onNavi
               <div className="w-3 h-3 bg-blue-500 rounded-sm"></div>
             </div>
           </div>
-          <h1 className="text-xl font-bold text-gray-800">
+          <h1 className="text-xl font-bold text-white">
             Netpulse
           </h1>
         </div>
         <button
           onClick={onToggle}
-          className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+          className="lg:hidden p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800"
         >
           <span className="sr-only">Close sidebar</span>
           <X className="w-5 h-5" />
@@ -160,17 +164,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle, currentView, onNavi
         </div>
       </nav>
       
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-gray-700">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
-            A
+          <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+            JC
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate">
-              Admin User
+            <p className="text-sm font-medium text-white truncate">
+              John Carter
             </p>
-            <p className="text-xs text-gray-500 truncate">
-              admin@company.com
+            <p className="text-xs text-gray-400 truncate">
+              john.carter@company.com
             </p>
           </div>
         </div>

@@ -234,7 +234,7 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'Critical': return 'bg-red-500 text-white';
+      case 'Critical': return 'bg-red-600 text-white';
       case 'Major': return 'bg-orange-500 text-white';
       case 'Minor': return 'bg-yellow-500 text-black';
       default: return 'bg-gray-500 text-white';
@@ -243,21 +243,21 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'New': return 'bg-red-500 text-white';
+      case 'New': return 'bg-red-600 text-white';
       case 'Acknowledged': return 'bg-yellow-500 text-black';
       case 'Assigned': return 'bg-blue-500 text-white';
       case 'Resolved': return 'bg-green-500 text-white';
       case 'Cleared': return 'bg-gray-500 text-white';
-      default: return 'bg-gray-100 text-gray-800';
+      default: return 'bg-gray-700 text-gray-300';
     }
   };
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case 'Chassis': return 'bg-red-100 text-red-800';
-      case 'Interface': return 'bg-blue-100 text-blue-800';
-      case 'System': return 'bg-purple-100 text-purple-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'Chassis': return 'bg-red-900 text-red-300';
+      case 'Interface': return 'bg-blue-900 text-blue-300';
+      case 'System': return 'bg-purple-900 text-purple-300';
+      default: return 'bg-gray-700 text-gray-300';
     }
   };
 
@@ -288,18 +288,18 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
   const canResetFilters = filters.severity !== 'all' || filters.status !== 'all' || filters.type !== 'all' || filters.search !== '';
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-900">
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+        <div className="bg-gray-800 shadow-sm border-b border-gray-700 px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-semibold text-gray-900">Alert Management</h1>
-              <p className="text-sm text-gray-500">Monitor and manage network alarms</p>
+              <h1 className="text-xl font-semibold text-white">Alert Management</h1>
+              <p className="text-sm text-gray-400">Monitor and manage network alarms</p>
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-gray-400 hover:text-white transition-colors"
             >
               <X className="h-6 w-6" />
             </button>
@@ -311,7 +311,7 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
         {/* Device Type Selector */}
         <div className="mb-6">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Device Type</h2>
+            <h2 className="text-lg font-semibold text-white">Device Type</h2>
             <button
               onClick={handleRefresh}
               disabled={isRefreshing}
@@ -333,13 +333,13 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
                 className={`flex min-w-64 items-center space-x-3 rounded-lg px-6 py-4 font-medium shadow transition-all ${
                   selectedDeviceType === device.id
                     ? 'bg-blue-500 text-white shadow-lg'
-                    : 'bg-white border text-gray-700 hover:bg-gray-50'
+                    : 'bg-gray-800 border border-gray-700 text-gray-300 hover:bg-gray-700'
                 }`}
               >
                 <span className="text-2xl">{device.icon}</span>
                 <div className="text-left">
                   <div className="font-bold">{device.name}</div>
-                  <div className={`text-xs ${selectedDeviceType === device.id ? 'text-white opacity-90' : 'text-gray-500'}`}>
+                  <div className={`text-xs ${selectedDeviceType === device.id ? 'text-white opacity-90' : 'text-gray-400'}`}>
                     {device.description}
                   </div>
                 </div>
@@ -350,39 +350,39 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
 
         {/* Alarm Statistics */}
         <div className="mb-6">
-          <h2 className="mb-4 text-xl font-semibold">Alarm Statistics</h2>
+          <h2 className="mb-4 text-xl font-semibold text-white">Alarm Statistics</h2>
           <div className="flex flex-wrap gap-4">
-            <div className="min-w-32 rounded-lg bg-white p-4 text-center shadow border border-gray-200">
-              <h3 className="text-xl font-bold text-blue-600">{stats.total}</h3>
-              <p className="text-sm text-gray-600">Total</p>
+            <div className="min-w-32 rounded-lg bg-gray-800 p-4 text-center shadow border border-gray-700">
+              <h3 className="text-xl font-bold text-blue-400">{stats.total}</h3>
+              <p className="text-sm text-gray-400">Total</p>
             </div>
-            <div className="min-w-32 rounded-lg bg-white p-4 text-center shadow border border-gray-200">
-              <h3 className="text-xl font-bold text-red-600">{stats.critical}</h3>
-              <p className="text-sm text-gray-600">Critical</p>
+            <div className="min-w-32 rounded-lg bg-gray-800 p-4 text-center shadow border border-gray-700">
+              <h3 className="text-xl font-bold text-red-400">{stats.critical}</h3>
+              <p className="text-sm text-gray-400">Critical</p>
             </div>
-            <div className="min-w-32 rounded-lg bg-white p-4 text-center shadow border border-gray-200">
-              <h3 className="text-xl font-bold text-orange-600">{stats.chassis}</h3>
-              <p className="text-sm text-gray-600">Chassis</p>
+            <div className="min-w-32 rounded-lg bg-gray-800 p-4 text-center shadow border border-gray-700">
+              <h3 className="text-xl font-bold text-orange-400">{stats.chassis}</h3>
+              <p className="text-sm text-gray-400">Chassis</p>
             </div>
-            <div className="min-w-32 rounded-lg bg-white p-4 text-center shadow border border-gray-200">
-              <h3 className="text-xl font-bold text-blue-600">{stats.interface}</h3>
-              <p className="text-sm text-gray-600">Interface</p>
+            <div className="min-w-32 rounded-lg bg-gray-800 p-4 text-center shadow border border-gray-700">
+              <h3 className="text-xl font-bold text-blue-400">{stats.interface}</h3>
+              <p className="text-sm text-gray-400">Interface</p>
             </div>
-            <div className="min-w-32 rounded-lg bg-white p-4 text-center shadow border border-gray-200">
-              <h3 className="text-xl font-bold text-purple-600">{stats.system}</h3>
-              <p className="text-sm text-gray-600">System</p>
+            <div className="min-w-32 rounded-lg bg-gray-800 p-4 text-center shadow border border-gray-700">
+              <h3 className="text-xl font-bold text-purple-400">{stats.system}</h3>
+              <p className="text-sm text-gray-400">System</p>
             </div>
-            <div className="min-w-32 rounded-lg bg-white p-4 text-center shadow border border-gray-200">
-              <h3 className="text-xl font-bold text-gray-600">{stats.cleared}</h3>
-              <p className="text-sm text-gray-600">Cleared</p>
+            <div className="min-w-32 rounded-lg bg-gray-800 p-4 text-center shadow border border-gray-700">
+              <h3 className="text-xl font-bold text-gray-400">{stats.cleared}</h3>
+              <p className="text-sm text-gray-400">Cleared</p>
             </div>
           </div>
         </div>
 
         {/* Filters */}
-        <div className="rounded-lg bg-white p-4 shadow border border-gray-200 mb-6">
+        <div className="rounded-lg bg-gray-800 p-4 shadow border border-gray-700 mb-6">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg font-semibold">Filters</h3>
+            <h3 className="text-lg font-semibold text-white">Filters</h3>
             {canResetFilters && (
               <button
                 onClick={resetFilters}
@@ -396,7 +396,7 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
             <select
               value={filters.severity}
               onChange={e => setFilters({ ...filters, severity: e.target.value })}
-              className="rounded-md border p-2 text-sm"
+              className="rounded-md border border-gray-600 bg-gray-700 text-white p-2 text-sm"
             >
               <option value="all">All Severities</option>
               <option value="Critical">Critical</option>
@@ -406,7 +406,7 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
             <select
               value={filters.status}
               onChange={e => setFilters({ ...filters, status: e.target.value })}
-              className="rounded-md border p-2 text-sm"
+              className="rounded-md border border-gray-600 bg-gray-700 text-white p-2 text-sm"
             >
               <option value="all">All Statuses</option>
               <option value="New">New</option>
@@ -418,7 +418,7 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
             <select
               value={filters.type}
               onChange={e => setFilters({ ...filters, type: e.target.value })}
-              className="rounded-md border p-2 text-sm"
+              className="rounded-md border border-gray-600 bg-gray-700 text-white p-2 text-sm"
             >
               <option value="all">All Types</option>
               <option value="Chassis">Chassis</option>
@@ -430,7 +430,7 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
               placeholder="Search alarms..."
               value={filters.search}
               onChange={e => setFilters({ ...filters, search: e.target.value })}
-              className="rounded-md border p-2 text-sm flex-1 min-w-[200px]"
+              className="rounded-md border border-gray-600 bg-gray-700 text-white placeholder-gray-400 p-2 text-sm flex-1 min-w-[200px]"
             />
           </div>
         </div>
@@ -473,52 +473,52 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
         )}
 
         {/* Alarms Table */}
-        <div className="rounded-lg bg-white shadow border border-gray-200">
-          <div className="border-b p-4">
-            <h3 className="text-lg font-semibold flex items-center gap-2">
+        <div className="rounded-lg bg-gray-800 shadow border border-gray-700">
+          <div className="border-b border-gray-700 p-4">
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
               <Bell className="w-5 h-5" />
               Alarms ({filteredAlarms.length})
             </h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-700">
                 <tr>
                   <th className="px-4 py-3 text-left">
                     <input
                       type="checkbox"
                       onChange={e => handleSelectAll(e.target.checked)}
                       checked={selectedAlarms.size === currentAlarms.length && currentAlarms.length > 0}
-                      className="rounded"
+                      className="rounded bg-gray-600 border-gray-500 text-blue-600"
                     />
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">Type</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">Severity</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">Title</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">Description</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">Status</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">Source</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">Actions</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-300">Type</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-300">Severity</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-300">Title</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-300">Description</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-300">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-300">Source</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-300">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y">
+              <tbody className="divide-y divide-gray-700">
                 {loading ? (
                   <tr>
-                    <td colSpan={8} className="px-4 py-8 text-center">Loading...</td>
+                    <td colSpan={8} className="px-4 py-8 text-center text-white">Loading...</td>
                   </tr>
                 ) : currentAlarms.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="px-4 py-8 text-center text-gray-500">No alarms found</td>
+                    <td colSpan={8} className="px-4 py-8 text-center text-gray-400">No alarms found</td>
                   </tr>
                 ) : (
                   currentAlarms.map(alarm => (
-                    <tr key={alarm.id} className="hover:bg-gray-50">
+                    <tr key={alarm.id} className="hover:bg-gray-700">
                       <td className="px-4 py-4">
                         <input
                           type="checkbox"
                           checked={selectedAlarms.has(alarm.id)}
                           onChange={e => handleAlarmSelect(alarm.id, e.target.checked)}
-                          className="rounded"
+                          className="rounded bg-gray-600 border-gray-500 text-blue-600"
                         />
                       </td>
                       <td className="px-4 py-4">
@@ -531,21 +531,21 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
                           {alarm.severity}
                         </span>
                       </td>
-                      <td className="px-4 py-4 text-sm">{alarm.title}</td>
-                      <td className="px-4 py-4 text-sm">{alarm.description}</td>
+                      <td className="px-4 py-4 text-sm text-white">{alarm.title}</td>
+                      <td className="px-4 py-4 text-sm text-gray-300">{alarm.description}</td>
                       <td className="px-4 py-4">
                         <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs ${getStatusColor(alarm.status)}`}>
                           {alarm.status}
                         </span>
                       </td>
-                      <td className="px-4 py-4 text-sm">{alarm.source}</td>
+                      <td className="px-4 py-4 text-sm text-gray-400">{alarm.source}</td>
                       <td className="px-4 py-4">
                         <button
                           onClick={() => {
                             setSelectedAlarm(alarm);
                             setShowDetailsModal(true);
                           }}
-                          className="text-blue-600 hover:text-blue-800"
+                          className="text-blue-400 hover:text-blue-300"
                         >
                           <Eye className="w-4 h-4" />
                         </button>
@@ -558,7 +558,7 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
           </div>
 
           {/* Pagination */}
-          <div className="flex items-center justify-between border-t px-4 py-3">
+          <div className="flex items-center justify-between border-t border-gray-700 px-4 py-3">
             <div className="flex items-center space-x-4">
               <select
                 value={alarmsPerPage}
@@ -566,13 +566,13 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
                   setAlarmsPerPage(Number(e.target.value));
                   setCurrentPage(1);
                 }}
-                className="rounded border p-1 text-sm"
+                className="rounded border border-gray-600 bg-gray-700 text-white p-1 text-sm"
               >
                 <option value={25}>25</option>
                 <option value={50}>50</option>
                 <option value={100}>100</option>
               </select>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-300">
                 Showing {(currentPage - 1) * alarmsPerPage + 1} to{' '}
                 {Math.min(currentPage * alarmsPerPage, filteredAlarms.length)} of{' '}
                 {filteredAlarms.length.toLocaleString()}
@@ -584,17 +584,17 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
                 <button
                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
-                  className="rounded bg-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="rounded bg-gray-600 px-3 py-1 text-sm text-white hover:bg-gray-500 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Previous
                 </button>
-                <span className="text-sm text-gray-700">
+                <span className="text-sm text-gray-300">
                   Page {currentPage} of {totalPages}
                 </span>
                 <button
                   onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                   disabled={currentPage === totalPages}
-                  className="rounded bg-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="rounded bg-gray-600 px-3 py-1 text-sm text-white hover:bg-gray-500 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Next
                 </button>
@@ -606,62 +606,62 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
 
       {/* Alarm Details Modal */}
       {showDetailsModal && selectedAlarm && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-gray-600 bg-opacity-50 flex items-center justify-center">
-          <div className="relative bg-white rounded-lg shadow-xl w-3/4 max-h-[80vh] overflow-y-auto p-6 m-4">
-            <div className="mb-4 flex justify-between items-center border-b pb-4">
-              <h3 className="text-xl font-bold">Alarm Details</h3>
-              <button onClick={() => setShowDetailsModal(false)} className="text-gray-500 hover:text-gray-700">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-75 flex items-center justify-center">
+          <div className="relative bg-gray-800 rounded-lg shadow-xl w-3/4 max-h-[80vh] overflow-y-auto p-6 m-4">
+            <div className="mb-4 flex justify-between items-center border-b border-gray-700 pb-4">
+              <h3 className="text-xl font-bold text-white">Alarm Details</h3>
+              <button onClick={() => setShowDetailsModal(false)} className="text-gray-400 hover:text-white">
                 <X className="w-6 h-6" />
               </button>
             </div>
 
             <div className="grid grid-cols-2 gap-6 mb-6">
               <div>
-                <h4 className="mb-3 font-semibold text-lg">Basic Information</h4>
+                <h4 className="mb-3 font-semibold text-lg text-white">Basic Information</h4>
                 <div className="space-y-3">
                   <div>
-                    <strong className="text-gray-700">Title:</strong>
-                    <p className="text-gray-900">{selectedAlarm.title}</p>
+                    <strong className="text-gray-300">Title:</strong>
+                    <p className="text-white">{selectedAlarm.title}</p>
                   </div>
                   <div>
-                    <strong className="text-gray-700">Description:</strong>
-                    <p className="text-gray-900">{selectedAlarm.description}</p>
+                    <strong className="text-gray-300">Description:</strong>
+                    <p className="text-white">{selectedAlarm.description}</p>
                   </div>
                   <div>
-                    <strong className="text-gray-700">Type:</strong>
+                    <strong className="text-gray-300">Type:</strong>
                     <span className={`ml-2 inline-flex rounded-full px-2.5 py-0.5 text-xs ${getTypeColor(selectedAlarm.type)}`}>
                       {selectedAlarm.type}
                     </span>
                   </div>
                   <div>
-                    <strong className="text-gray-700">Severity:</strong>
+                    <strong className="text-gray-300">Severity:</strong>
                     <span className={`ml-2 inline-flex rounded-full px-2.5 py-0.5 text-xs ${getSeverityColor(selectedAlarm.severity)}`}>
                       {selectedAlarm.severity}
                     </span>
                   </div>
                   <div>
-                    <strong className="text-gray-700">Status:</strong>
+                    <strong className="text-gray-300">Status:</strong>
                     <span className={`ml-2 inline-flex rounded-full px-2.5 py-0.5 text-xs ${getStatusColor(selectedAlarm.status)}`}>
                       {selectedAlarm.status}
                     </span>
                   </div>
                   <div>
-                    <strong className="text-gray-700">Source:</strong>
-                    <p className="text-gray-900">{selectedAlarm.source}</p>
+                    <strong className="text-gray-300">Source:</strong>
+                    <p className="text-white">{selectedAlarm.source}</p>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h4 className="mb-3 font-semibold text-lg">Assignment</h4>
+                <h4 className="mb-3 font-semibold text-lg text-white">Assignment</h4>
                 <div className="space-y-3">
                   <div>
-                    <strong className="text-gray-700">Assigned To:</strong>
-                    <p className="text-gray-900">{selectedAlarm.assignedTo || 'None'}</p>
+                    <strong className="text-gray-300">Assigned To:</strong>
+                    <p className="text-white">{selectedAlarm.assignedTo || 'None'}</p>
                   </div>
                   <div>
-                    <strong className="text-gray-700">Created:</strong>
-                    <p className="text-gray-900">{new Date(selectedAlarm.timestamp).toLocaleString()}</p>
+                    <strong className="text-gray-300">Created:</strong>
+                    <p className="text-white">{new Date(selectedAlarm.timestamp).toLocaleString()}</p>
                   </div>
                 </div>
               </div>
@@ -669,19 +669,19 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
 
             {selectedAlarm.comments.length > 0 && (
               <div className="mb-6">
-                <h4 className="mb-3 font-semibold text-lg">
+                <h4 className="mb-3 font-semibold text-lg text-white">
                   Comments ({selectedAlarm.comments.length})
                 </h4>
                 <div className="max-h-60 space-y-3 overflow-y-auto">
                   {selectedAlarm.comments.map(comment => (
-                    <div key={comment.id} className="rounded bg-blue-50 p-3 border border-blue-200">
+                    <div key={comment.id} className="rounded bg-blue-900 p-3 border border-blue-700">
                       <div className="mb-2 flex justify-between">
-                        <span className="text-sm font-medium">{comment.user}</span>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-sm font-medium text-blue-300">{comment.user}</span>
+                        <span className="text-xs text-gray-400">
                           {new Date(comment.timestamp).toLocaleString()}
                         </span>
                       </div>
-                      <p className="text-sm">{comment.comment}</p>
+                      <p className="text-sm text-blue-200">{comment.comment}</p>
                     </div>
                   ))}
                 </div>
@@ -689,17 +689,17 @@ const AlertManagement: React.FC<AlertManagementProps> = ({ onClose }) => {
             )}
 
             <div className="mb-6">
-              <h4 className="mb-3 font-semibold text-lg">Timeline</h4>
+              <h4 className="mb-3 font-semibold text-lg text-white">Timeline</h4>
               <div className="max-h-60 space-y-3 overflow-y-auto">
                 {selectedAlarm.timeline.map((event, i) => (
-                  <div key={i} className="rounded bg-gray-50 p-3 border border-gray-200">
+                  <div key={i} className="rounded bg-gray-700 p-3 border border-gray-600">
                     <div className="flex justify-between">
                       <div>
-                        <div className="font-medium">{event.status}</div>
-                        <div className="text-sm text-gray-600">{event.comment}</div>
-                        <div className="text-xs text-gray-500">by {event.user}</div>
+                        <div className="font-medium text-white">{event.status}</div>
+                        <div className="text-sm text-gray-300">{event.comment}</div>
+                        <div className="text-xs text-gray-400">by {event.user}</div>
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-gray-400">
                         {new Date(event.timestamp).toLocaleString()}
                       </div>
                     </div>

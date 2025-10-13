@@ -269,13 +269,13 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'success':
-        return 'bg-green-100 text-green-800';
+        return 'bg-green-900 text-green-300';
       case 'error':
-        return 'bg-red-100 text-red-800';
+        return 'bg-red-900 text-red-300';
       case 'warning':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-yellow-900 text-yellow-300';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-700 text-gray-300';
     }
   };
 
@@ -308,42 +308,42 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Network Protocol Ingestion</h1>
-          <p className="text-gray-600 mt-1">
+          <h1 className="text-2xl font-bold text-white">Network Protocol Ingestion</h1>
+          <p className="text-gray-400 mt-1">
             Discover network topology using LLDP, CDP, IS-IS, OSPF, and BGP protocols
           </p>
         </div>
         {onClose && (
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600:text-gray-300">
+          <button onClick={onClose} className="text-gray-400 hover:text-white">
             ✕
           </button>
         )}
       </div>
 
       {/* Protocol Selection - Compact */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-4">
         <div className="relative">
           {/* Dropdown Button */}
           <button
             onClick={() => setShowProtocolDropdown(!showProtocolDropdown)}
-            className="w-full flex items-center justify-between p-3 border-2 border-gray-300 rounded-lg bg-white hover:border-blue-500:border-blue-400 transition-colors"
+            className="w-full flex items-center justify-between p-3 border-2 border-gray-600 rounded-lg bg-gray-700 hover:border-blue-500 transition-colors"
           >
             <div className="flex items-center space-x-3">
-              <span className="text-sm font-medium text-gray-700">Protocols:</span>
+              <span className="text-sm font-medium text-gray-300">Protocols:</span>
               <div className="flex items-center gap-2">
                 {Object.entries(protocols)
                   .filter(([_, config]) => config.enabled)
                   .map(([type, config]) => (
                     <span
                       key={type}
-                      className="px-2 py-1 bg-blue-100/30 text-blue-700 rounded-md text-xs font-medium flex items-center space-x-1"
+                      className="px-2 py-1 bg-blue-900/30 text-blue-300 rounded-md text-xs font-medium flex items-center space-x-1"
                     >
                       <span>{config.icon}</span>
                       <span>{config.name}</span>
                     </span>
                   ))}
                 {Object.values(protocols).filter(c => c.enabled).length === 0 && (
-                  <span className="text-sm text-gray-400 italic">None selected</span>
+                  <span className="text-sm text-gray-500 italic">None selected</span>
                 )}
               </div>
             </div>
@@ -352,12 +352,12 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
 
           {/* Dropdown Content */}
           {showProtocolDropdown && (
-            <div className="absolute top-full left-0 right-0 mt-2 z-50 bg-white border-2 border-gray-300 rounded-lg shadow-lg p-3 space-y-2">
+            <div className="absolute top-full left-0 right-0 mt-2 z-50 bg-gray-800 border-2 border-gray-600 rounded-lg shadow-lg p-3 space-y-2">
               {(Object.entries(protocols) as [ProtocolType, ProtocolConfig][]).map(([type, config]) => (
                 <label
                   key={type}
-                  className={`flex items-center space-x-2 p-2 rounded cursor-pointer hover:bg-gray-100:bg-gray-700 ${
-                    config.enabled ? 'bg-blue-50/20' : ''
+                  className={`flex items-center space-x-2 p-2 rounded cursor-pointer hover:bg-gray-700 ${
+                    config.enabled ? 'bg-blue-900/20' : ''
                   }`}
                 >
                   <input
@@ -368,8 +368,8 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
                   />
                   <span className="text-lg">{config.icon}</span>
                   <div className="flex-1">
-                    <div className="text-sm font-medium text-gray-900">{config.name}</div>
-                    <div className="text-xs text-gray-500">{config.description}</div>
+                    <div className="text-sm font-medium text-white">{config.name}</div>
+                    <div className="text-xs text-gray-400">{config.description}</div>
                   </div>
                 </label>
               ))}
@@ -447,18 +447,18 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
       </div>
 
       {/* Protocol Settings */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-        <h3 className="text-base font-semibold text-gray-900 mb-3">Protocol Settings</h3>
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-4">
+        <h3 className="text-base font-semibold text-white mb-3">Protocol Settings</h3>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-300 mb-2">
               Select Protocol for Configuration
             </label>
             <select
               value={selectedProtocol}
               onChange={(e) => setSelectedProtocol(e.target.value as ProtocolType)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               {Object.entries(protocols).map(([type, config]) => (
                 <option key={type} value={type}>
@@ -469,8 +469,8 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
           </div>
 
           {/* Dynamic Protocol Settings */}
-          <div className="p-4 bg-gray-50 rounded-lg">
-            <h4 className="font-medium text-gray-900 mb-3">
+          <div className="p-4 bg-gray-700 rounded-lg">
+            <h4 className="font-medium text-white mb-3">
               {protocols[selectedProtocol].name} Settings
             </h4>
 
@@ -480,18 +480,18 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
                   <input
                     type="checkbox"
                     defaultChecked
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                    className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                   />
-                  <span className="text-sm text-gray-700">Include CDP</span>
+                  <span className="text-sm text-gray-300">Include CDP</span>
                 </label>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Polling Interval (seconds)
                   </label>
                   <input
                     type="number"
                     defaultValue="300"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
               </div>
@@ -500,10 +500,10 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
             {selectedProtocol === 'isis' && (
               <div className="space-y-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     IS-IS Level
                   </label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <select className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     <option value="both">Both (Level-1 & Level-2)</option>
                     <option value="level-1">Level-1 Only</option>
                     <option value="level-2">Level-2 Only</option>
@@ -513,9 +513,9 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
                   <input
                     type="checkbox"
                     defaultChecked
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                    className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                   />
-                  <span className="text-sm text-gray-700">Include Metrics</span>
+                  <span className="text-sm text-gray-300">Include Metrics</span>
                 </label>
               </div>
             )}
@@ -523,22 +523,22 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
             {selectedProtocol === 'ospf' && (
               <div className="space-y-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     OSPF Areas (comma-separated)
                   </label>
                   <input
                     type="text"
                     placeholder="0.0.0.0, 0.0.0.1"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
                 <label className="flex items-center space-x-3">
                   <input
                     type="checkbox"
                     defaultChecked
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                    className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                   />
-                  <span className="text-sm text-gray-700">Include Routes</span>
+                  <span className="text-sm text-gray-300">Include Routes</span>
                 </label>
               </div>
             )}
@@ -546,7 +546,7 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
             {selectedProtocol === 'bgp' && (
               <div className="space-y-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Address Families
                   </label>
                   <div className="space-y-2">
@@ -554,17 +554,17 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
                       <input
                         type="checkbox"
                         defaultChecked
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                        className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                       />
-                      <span className="text-sm text-gray-700">IPv4 Unicast</span>
+                      <span className="text-sm text-gray-300">IPv4 Unicast</span>
                     </label>
                     <label className="flex items-center space-x-3">
                       <input
                         type="checkbox"
                         defaultChecked
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                        className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                       />
-                      <span className="text-sm text-gray-700">IPv6 Unicast</span>
+                      <span className="text-sm text-gray-300">IPv6 Unicast</span>
                     </label>
                   </div>
                 </div>
@@ -572,9 +572,9 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
                   <input
                     type="checkbox"
                     defaultChecked
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                    className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                   />
-                  <span className="text-sm text-gray-700">Include Route Tables</span>
+                  <span className="text-sm text-gray-300">Include Route Tables</span>
                 </label>
               </div>
             )}
@@ -583,19 +583,19 @@ const NetworkProtocolIngestion: React.FC<NetworkProtocolIngestionProps> = ({ onC
       </div>
 
       {/* Device Selection */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-        <h3 className="text-base font-semibold text-gray-900 mb-3">Device Selection</h3>
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-4">
+        <h3 className="text-base font-semibold text-white mb-3">Device Selection</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Device</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Device</label>
             <select
               value={selectedDevice?.id || ''}
               onChange={(e) => {
                 const device = mockDevices.find((d) => d.id === e.target.value);
                 setSelectedDevice(device || null);
               }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">Select a device...</option>
               {mockDevices.map((device) => (

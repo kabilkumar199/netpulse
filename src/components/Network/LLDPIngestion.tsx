@@ -82,10 +82,10 @@ const LLDPIngestion: React.FC<LLDPIngestionProps> = ({ onClose }) => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'success': return 'bg-green-100 text-green-800';
-      case 'error': return 'bg-red-100 text-red-800';
-      case 'warning': return 'bg-yellow-100 text-yellow-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'success': return 'bg-green-900 text-green-300';
+      case 'error': return 'bg-red-900 text-red-300';
+      case 'warning': return 'bg-yellow-900 text-yellow-300';
+      default: return 'bg-gray-700 text-gray-300';
     }
   };
 
@@ -105,17 +105,17 @@ const LLDPIngestion: React.FC<LLDPIngestionProps> = ({ onClose }) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-white">
             LLDP Link Ingestion
           </h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-gray-400 mt-1">
             Discover and ingest network links using LLDP/CDP protocols
           </p>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600:text-gray-300"
+            className="text-gray-400 hover:text-white"
           >
             ✕
           </button>
@@ -123,14 +123,14 @@ const LLDPIngestion: React.FC<LLDPIngestionProps> = ({ onClose }) => {
       </div>
 
       {/* Device Selection */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">
           Select Device for LLDP Ingestion
         </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-300 mb-2">
               Device
             </label>
             <select
@@ -139,7 +139,7 @@ const LLDPIngestion: React.FC<LLDPIngestionProps> = ({ onClose }) => {
                 const device = mockDevices.find(d => d.id === e.target.value);
                 setSelectedDevice(device || null);
               }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="">Select a device...</option>
               {mockDevices.map(device => (
@@ -192,21 +192,21 @@ const LLDPIngestion: React.FC<LLDPIngestionProps> = ({ onClose }) => {
 
       {/* Selected Device Info */}
       {selectedDevice && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">
             Device Information
           </h3>
           
           <div className="flex items-center space-x-4">
             <span className="text-3xl">{getDeviceIcon(selectedDevice)}</span>
             <div>
-              <div className="font-medium text-gray-900">
+              <div className="font-medium text-white">
                 {selectedDevice.hostname}
               </div>
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-400">
                 {selectedDevice.vendor} {selectedDevice.model} • {selectedDevice.os}
               </div>
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-400">
                 IP: {selectedDevice.ipAddresses[0]} • Status: {selectedDevice.status.toUpperCase()}
               </div>
             </div>
@@ -216,14 +216,14 @@ const LLDPIngestion: React.FC<LLDPIngestionProps> = ({ onClose }) => {
 
       {/* Ingestion Results */}
       {ingestionResults.length > 0 && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-white">
               Ingestion Results
             </h3>
             <button
               onClick={() => setIngestionResults([])}
-              className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200:bg-gray-600"
+              className="px-3 py-1 text-sm bg-gray-600 text-gray-300 rounded-lg hover:bg-gray-500"
             >
               Clear Results
             </button>
@@ -231,15 +231,15 @@ const LLDPIngestion: React.FC<LLDPIngestionProps> = ({ onClose }) => {
           
           <div className="space-y-3">
             {ingestionResults.map((result) => (
-              <div key={result.id} className="border border-gray-200 rounded-lg p-4">
+              <div key={result.id} className="border border-gray-600 rounded-lg p-4 bg-gray-700">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center space-x-3">
                     <span className="text-2xl">{getStatusIcon(result.status)}</span>
                     <div>
-                      <div className="font-medium text-gray-900">
+                      <div className="font-medium text-white">
                         {result.deviceName}
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-400">
                         {formatTimestamp(result.timestamp)}
                       </div>
                     </div>
@@ -259,38 +259,38 @@ const LLDPIngestion: React.FC<LLDPIngestionProps> = ({ onClose }) => {
                 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                   <div>
-                    <span className="text-gray-600">Links Discovered:</span>
-                    <div className="font-medium text-gray-900">
+                    <span className="text-gray-400">Links Discovered:</span>
+                    <div className="font-medium text-white">
                       {result.linksDiscovered}
                     </div>
                   </div>
                   <div>
-                    <span className="text-gray-600">Neighbors Found:</span>
-                    <div className="font-medium text-gray-900">
+                    <span className="text-gray-400">Neighbors Found:</span>
+                    <div className="font-medium text-white">
                       {result.neighborsFound}
                     </div>
                   </div>
                   <div>
-                    <span className="text-gray-600">Errors:</span>
-                    <div className="font-medium text-gray-900">
+                    <span className="text-gray-400">Errors:</span>
+                    <div className="font-medium text-white">
                       {result.errors.length}
                     </div>
                   </div>
                   <div>
-                    <span className="text-gray-600">Duration:</span>
-                    <div className="font-medium text-gray-900">
+                    <span className="text-gray-400">Duration:</span>
+                    <div className="font-medium text-white">
                       {Math.floor(Math.random() * 30) + 5}s
                     </div>
                   </div>
                 </div>
                 
                 {showDetails === result.id && (
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <h5 className="font-medium text-gray-900 mb-2">Detailed Results</h5>
+                  <div className="mt-4 pt-4 border-t border-gray-600">
+                    <h5 className="font-medium text-white mb-2">Detailed Results</h5>
                     <div className="space-y-2">
                       <div className="text-sm">
-                        <span className="text-gray-600">Device ID:</span>
-                        <span className="ml-2 text-gray-900">{result.deviceId}</span>
+                        <span className="text-gray-400">Device ID:</span>
+                        <span className="ml-2 text-white">{result.deviceId}</span>
                       </div>
                       <div className="text-sm">
                         <span className="text-gray-600">Protocols Used:</span>

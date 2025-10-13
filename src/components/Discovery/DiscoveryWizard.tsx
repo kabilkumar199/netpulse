@@ -164,25 +164,25 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
         return (
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Scan Name *
               </label>
               <input
                 type="text"
                 value={scanName}
                 onChange={(e) => setScanName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Enter scan name"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Description
               </label>
               <textarea
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Optional description"
               />
             </div>
@@ -193,7 +193,7 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
         return (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
-              <h3 className="text-lg font-medium text-gray-900">
+              <h3 className="text-lg font-medium text-white">
                 Seed Devices
               </h3>
               <button
@@ -206,16 +206,16 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
             
             <div className="space-y-4">
               {seedDevices.map((device) => (
-                <div key={device.id} className="p-4 border border-gray-200 rounded-lg">
+                <div key={device.id} className="p-4 border border-gray-600 rounded-lg bg-gray-700">
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-gray-300 mb-1">
                         Type
                       </label>
                       <select
                         value={device.type}
                         onChange={(e) => updateSeedDevice(device.id, 'type', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       >
                         <option value="ip">Single IP</option>
                         <option value="range">IP Range</option>
@@ -227,34 +227,34 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-gray-300 mb-1">
                         Value *
                       </label>
                       <input
                         type="text"
                         value={device.value}
                         onChange={(e) => updateSeedDevice(device.id, 'value', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="192.168.1.1 or 192.168.1.0/24"
                         required
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-gray-300 mb-1">
                         Description
                       </label>
                       <input
                         type="text"
                         value={device.description}
                         onChange={(e) => updateSeedDevice(device.id, 'description', e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="Optional description"
                       />
                     </div>
                     <div className="flex items-end">
                       <button
                         onClick={() => removeSeedDevice(device.id)}
-                        className="px-3 py-2 text-red-600 hover:text-red-800 transition-colors"
+                        className="px-3 py-2 text-red-400 hover:text-red-300 transition-colors"
                       >
                         Remove
                       </button>
@@ -264,7 +264,7 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
               ))}
               
               {seedDevices.length === 0 && (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-8 text-gray-400">
                   No seed devices added yet. Click "Add Device" to get started.
                 </div>
               )}
@@ -283,7 +283,7 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
                 onChange={(e) => setExpansionSettings({...expansionSettings, enabled: e.target.checked})}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
-              <label htmlFor="enableExpansion" className="text-sm font-medium text-gray-700">
+              <label htmlFor="enableExpansion" className="text-sm font-medium text-gray-300">
                 Enable multi-hop expansion
               </label>
             </div>
@@ -291,7 +291,7 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
             {expansionSettings.enabled && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Maximum Hops
                   </label>
                   <input
@@ -300,11 +300,11 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
                     max="10"
                     value={expansionSettings.maxHops}
                     onChange={(e) => setExpansionSettings({...expansionSettings, maxHops: parseInt(e.target.value)})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Maximum Devices
                   </label>
                   <input
@@ -313,14 +313,14 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
                     max="1000"
                     value={expansionSettings.maxDevices}
                     onChange={(e) => setExpansionSettings({...expansionSettings, maxDevices: parseInt(e.target.value)})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
               </div>
             )}
             
             <div className="space-y-4">
-              <h4 className="text-md font-medium text-gray-900">Include Device Types</h4>
+              <h4 className="text-md font-medium text-white">Include Device Types</h4>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { key: 'includeVirtual', label: 'Virtual' },
@@ -333,9 +333,9 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
                       type="checkbox"
                       checked={expansionSettings[key as keyof ExpansionSettings] as boolean}
                       onChange={(e) => setExpansionSettings({...expansionSettings, [key]: e.target.checked})}
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                      className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                     />
-                    <span className="text-sm text-gray-700">{label}</span>
+                    <span className="text-sm text-gray-300">{label}</span>
                   </label>
                 ))}
               </div>
@@ -354,7 +354,7 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
                 onChange={(e) => setCredentialSettings({...credentialSettings, useAllCurrent: e.target.checked})}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
-              <label htmlFor="useAllCurrent" className="text-sm font-medium text-gray-700">
+              <label htmlFor="useAllCurrent" className="text-sm font-medium text-gray-300">
                 Use all current credentials
               </label>
             </div>
@@ -521,18 +521,18 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex min-h-screen items-center justify-center p-4">
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={onCancel}></div>
+        <div className="fixed inset-0 bg-black bg-opacity-75 transition-opacity" onClick={onCancel}></div>
         
-        <div className="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+        <div className="relative bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
           {/* Header */}
-          <div className="px-6 py-4 border-b border-gray-200">
+          <div className="px-6 py-4 border-b border-gray-700">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-white">
                 Network Discovery Wizard
               </h2>
               <button
                 onClick={onCancel}
-                className="text-gray-400 hover:text-gray-600:text-gray-300"
+                className="text-gray-400 hover:text-white"
               >
                 ✕
               </button>
@@ -546,19 +546,19 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
                     <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
                       currentStep >= step.id
                         ? 'bg-blue-600 text-white'
-                        : 'bg-gray-200 text-gray-600'
+                        : 'bg-gray-600 text-gray-400'
                     }`}>
                       {step.id}
                     </div>
                     {index < steps.length - 1 && (
                       <div className={`w-16 h-0.5 mx-2 ${
-                        currentStep > step.id ? 'bg-blue-600' : 'bg-gray-200'
+                        currentStep > step.id ? 'bg-blue-600' : 'bg-gray-600'
                       }`}></div>
                     )}
                   </div>
                 ))}
               </div>
-              <div className="mt-2 text-sm text-gray-600">
+              <div className="mt-2 text-sm text-gray-400">
                 Step {currentStep} of {steps.length}: {steps[currentStep - 1].title}
               </div>
             </div>
@@ -570,12 +570,12 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
           </div>
           
           {/* Footer */}
-          <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
+          <div className="px-6 py-4 border-t border-gray-700 bg-gray-700">
             <div className="flex justify-between">
               <button
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 text-gray-300 bg-gray-600 border border-gray-600 rounded-lg hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Previous
               </button>
@@ -583,7 +583,7 @@ const DiscoveryWizard: React.FC<DiscoveryWizardProps> = ({ onComplete, onCancel 
               <div className="space-x-3">
                 <button
                   onClick={onCancel}
-                  className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50:bg-gray-500"
+                  className="px-4 py-2 text-gray-300 bg-gray-600 border border-gray-600 rounded-lg hover:bg-gray-500"
                 >
                   Cancel
                 </button>

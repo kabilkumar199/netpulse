@@ -27,8 +27,8 @@ const DeviceStatusChart: React.FC<DeviceStatusChartProps> = ({ data }) => {
   ];
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+    <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6 hover:shadow-lg transition-shadow">
+      <h3 className="text-lg font-semibold text-white mb-4">
         Device Status Overview
       </h3>
       
@@ -97,10 +97,10 @@ const DeviceStatusChart: React.FC<DeviceStatusChartProps> = ({ data }) => {
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-900">
+              <div className="text-2xl font-bold text-white">
                 {total}
               </div>
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-400">
                 Total
               </div>
             </div>
@@ -111,15 +111,15 @@ const DeviceStatusChart: React.FC<DeviceStatusChartProps> = ({ data }) => {
       {/* Legend */}
       <div className="grid grid-cols-2 gap-4">
         {statusItems.map((item) => (
-          <div key={item.label} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+          <div key={item.label} className="flex items-center space-x-3 p-3 bg-gray-700 rounded-lg">
             <div className={`w-8 h-8 rounded-lg ${item.color} flex items-center justify-center`}>
               <item.icon className="w-4 h-4 text-white" />
             </div>
             <div className="flex-1">
-              <div className="text-sm font-medium text-gray-700">
+              <div className="text-sm font-medium text-gray-300">
                 {item.label}
               </div>
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-gray-400">
                 {item.count} ({item.percentage.toFixed(1)}%)
               </div>
             </div>

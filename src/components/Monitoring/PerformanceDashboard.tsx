@@ -99,10 +99,10 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ device, onC
   }, [device?.id]);
 
   const getMetricColor = (value: number, threshold?: { warning: number; critical: number }) => {
-    if (!threshold) return 'text-gray-600';
-    if (value >= threshold.critical) return 'text-red-600';
-    if (value >= threshold.warning) return 'text-yellow-600';
-    return 'text-green-600';
+    if (!threshold) return 'text-gray-400';
+    if (value >= threshold.critical) return 'text-red-400';
+    if (value >= threshold.warning) return 'text-yellow-400';
+    return 'text-green-400';
   };
 
   const getCurrentValue = (metrics: PerformanceMetric[]) => {
@@ -125,15 +125,15 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ device, onC
   const peakValue = getPeakValue(performanceData[selectedMetric]);
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-gray-800 rounded-lg shadow-lg p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-white">
             Performance Dashboard
           </h2>
           {device && (
-            <p className="text-gray-600">
+            <p className="text-gray-400">
               {device.hostname} - {device.vendor} {device.model}
             </p>
           )}
@@ -141,7 +141,7 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ device, onC
         {onClose && (
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600:text-gray-300"
+            className="text-gray-400 hover:text-white"
           >
             <span className="text-2xl">×</span>
           </button>
@@ -157,7 +157,7 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ device, onC
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               selectedMetric === metric
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200:bg-gray-600'
+                : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
             }`}
           >
             {metric.charAt(0).toUpperCase() + metric.slice(1)}
@@ -174,7 +174,7 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ device, onC
             className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
               timeRange === range
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200:bg-gray-600'
+                : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
             }`}
           >
             {range}
@@ -185,38 +185,38 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ device, onC
       {/* Current Metrics */}
       {currentMetric && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <div className="bg-gray-50 rounded-lg p-4">
-            <h3 className="text-sm font-medium text-gray-600 mb-2">
+          <div className="bg-gray-700 rounded-lg p-4">
+            <h3 className="text-sm font-medium text-gray-300 mb-2">
               Current Value
             </h3>
             <div className={`text-3xl font-bold ${getMetricColor(currentMetric.value, currentMetric.threshold)}`}>
               {currentMetric.value.toFixed(1)} {currentMetric.unit}
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-400">
               {currentMetric.timestamp.toLocaleTimeString()}
             </div>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-4">
-            <h3 className="text-sm font-medium text-gray-600 mb-2">
+          <div className="bg-gray-700 rounded-lg p-4">
+            <h3 className="text-sm font-medium text-gray-300 mb-2">
               Average
             </h3>
-            <div className="text-3xl font-bold text-blue-600">
+            <div className="text-3xl font-bold text-blue-400">
               {averageValue.toFixed(1)} {currentMetric.unit}
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-400">
               Last {timeRange}
             </div>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-4">
-            <h3 className="text-sm font-medium text-gray-600 mb-2">
+          <div className="bg-gray-700 rounded-lg p-4">
+            <h3 className="text-sm font-medium text-gray-300 mb-2">
               Peak
             </h3>
-            <div className="text-3xl font-bold text-red-600">
+            <div className="text-3xl font-bold text-red-400">
               {peakValue.toFixed(1)} {currentMetric.unit}
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-400">
               Last {timeRange}
             </div>
           </div>
@@ -224,13 +224,13 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ device, onC
       )}
 
       {/* Performance Chart */}
-      <div className="bg-gray-50 rounded-lg p-4 mb-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-gray-700 rounded-lg p-4 mb-6">
+        <h3 className="text-lg font-semibold text-white mb-4">
           {selectedMetric.charAt(0).toUpperCase() + selectedMetric.slice(1)} Usage Over Time
         </h3>
         
         {/* Simple ASCII Chart - In real implementation, use a proper charting library */}
-        <div className="bg-white rounded p-4 h-64 flex items-end justify-between">
+        <div className="bg-gray-800 rounded p-4 h-64 flex items-end justify-between">
           {performanceData[selectedMetric].slice(-20).map((metric, index) => {
             const height = (metric.value / 100) * 200; // Scale to chart height
             const color = getMetricColor(metric.value, metric.threshold);
@@ -253,20 +253,20 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ device, onC
 
       {/* Thresholds */}
       {currentMetric?.threshold && (
-        <div className="bg-gray-50 rounded-lg p-4">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="bg-gray-700 rounded-lg p-4">
+          <h3 className="text-lg font-semibold text-white mb-4">
             Thresholds
           </h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <div className="text-sm text-gray-600">Warning</div>
-              <div className="text-xl font-semibold text-yellow-600">
+              <div className="text-sm text-gray-400">Warning</div>
+              <div className="text-xl font-semibold text-yellow-400">
                 {currentMetric.threshold.warning} {currentMetric.unit}
               </div>
             </div>
             <div>
-              <div className="text-sm text-gray-600">Critical</div>
-              <div className="text-xl font-semibold text-red-600">
+              <div className="text-sm text-gray-400">Critical</div>
+              <div className="text-xl font-semibold text-red-400">
                 {currentMetric.threshold.critical} {currentMetric.unit}
               </div>
             </div>
@@ -276,10 +276,10 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ device, onC
 
       {/* Loading State */}
       {isLoading && (
-        <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center">
+        <div className="absolute inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-2 text-gray-600">Loading performance data...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto"></div>
+            <p className="mt-2 text-gray-300">Loading performance data...</p>
           </div>
         </div>
       )}

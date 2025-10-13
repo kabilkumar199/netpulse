@@ -29,11 +29,11 @@ const Dashboard: React.FC = () => {
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">
-          Network Topology Dashboard
+        <h1 className="text-2xl font-bold text-white">
+          Dashboard
         </h1>
-        <p className="text-gray-600 mt-1">
-          Monitor and manage your network infrastructure
+        <p className="text-gray-400 mt-1">
+          Overview of your network infrastructure
         </p>
       </div>
 
@@ -117,53 +117,53 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">
           Recent Network Activity
         </h3>
         
         <div className="space-y-4">
-          <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+          <div className="flex items-center space-x-4 p-4 bg-gray-700 rounded-lg">
             <span className="text-2xl">🔍</span>
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-sm font-medium text-white">
                 Network discovery completed
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-400">
                 Found 5 new devices across 3 sites
               </p>
             </div>
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-gray-400">
               2 hours ago
             </span>
           </div>
           
-          <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+          <div className="flex items-center space-x-4 p-4 bg-gray-700 rounded-lg">
             <span className="text-2xl">🔗</span>
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-sm font-medium text-white">
                 LLDP link discovered
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-400">
                 New connection between SW-ACCESS-01 and CORE-ROUTER-01
               </p>
             </div>
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-gray-400">
               4 hours ago
             </span>
           </div>
           
-          <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+          <div className="flex items-center space-x-4 p-4 bg-gray-700 rounded-lg">
             <span className="text-2xl">⚠️</span>
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-sm font-medium text-white">
                 Device status changed
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-400">
                 SW-DIST-01 status changed to warning
               </p>
             </div>
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-gray-400">
               6 hours ago
             </span>
           </div>

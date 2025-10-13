@@ -103,18 +103,18 @@ const BackupManagement: React.FC<BackupManagementProps> = ({ onClose }) => {
   });
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-900">
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+        <div className="bg-gray-800 shadow-sm border-b border-gray-700 px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-semibold text-gray-900">Configuration Backups</h1>
-              <p className="text-sm text-gray-500">Manage device configuration backups and restore points</p>
+              <h1 className="text-xl font-semibold text-white">Configuration Backups</h1>
+              <p className="text-sm text-gray-400">Manage device configuration backups and restore points</p>
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-400 hover:text-white"
             >
               ✕
             </button>
@@ -125,43 +125,43 @@ const BackupManagement: React.FC<BackupManagementProps> = ({ onClose }) => {
 
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Total Backups</p>
-                  <p className="text-2xl font-bold">1,247</p>
+                  <p className="text-sm font-medium text-gray-400">Total Backups</p>
+                  <p className="text-2xl font-bold text-white">1,247</p>
                 </div>
-                <Database className="h-8 w-8 text-blue-500" />
+                <Database className="h-8 w-8 text-blue-400" />
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Success Rate</p>
-                  <p className="text-2xl font-bold text-green-500">98.2%</p>
+                  <p className="text-sm font-medium text-gray-400">Success Rate</p>
+                  <p className="text-2xl font-bold text-green-400">98.2%</p>
                 </div>
-                <CheckCircle className="h-8 w-8 text-green-500" />
+                <CheckCircle className="h-8 w-8 text-green-400" />
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Storage Used</p>
-                  <p className="text-2xl font-bold">2.4 GB</p>
+                  <p className="text-sm font-medium text-gray-400">Storage Used</p>
+                  <p className="text-2xl font-bold text-white">2.4 GB</p>
                 </div>
-                <Database className="h-8 w-8 text-blue-500" />
+                <Database className="h-8 w-8 text-blue-400" />
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Last Backup</p>
-                  <p className="text-2xl font-bold">2m ago</p>
+                  <p className="text-sm font-medium text-gray-400">Last Backup</p>
+                  <p className="text-2xl font-bold text-white">2m ago</p>
                 </div>
-                <Clock className="h-8 w-8 text-orange-500" />
+                <Clock className="h-8 w-8 text-orange-400" />
               </div>
             </div>
           </div>
@@ -171,9 +171,9 @@ const BackupManagement: React.FC<BackupManagementProps> = ({ onClose }) => {
             <div className="flex items-center gap-4">
               <input 
                 placeholder="Search backups..." 
-                className="w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                className="w-64 px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
               />
-              <select className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              <select className="px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 <option value="all">All Backups</option>
                 <option value="completed">Completed</option>
                 <option value="failed">Failed</option>
@@ -190,30 +190,30 @@ const BackupManagement: React.FC<BackupManagementProps> = ({ onClose }) => {
           </div>
 
           {/* Backups Table */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-700">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Device</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Type</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Size</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Created</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-gray-800 divide-y divide-gray-700">
                   {backups.map((backup) => (
-                    <tr key={backup.id} className="hover:bg-gray-50">
+                    <tr key={backup.id} className="hover:bg-gray-700">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{backup.device}</div>
-                          <div className="text-sm text-gray-500">{backup.deviceIp}</div>
+                          <div className="text-sm font-medium text-white">{backup.device}</div>
+                          <div className="text-sm text-gray-400">{backup.deviceIp}</div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-900 text-blue-300">
                           {backup.type}
                         </span>
                       </td>
@@ -225,18 +225,18 @@ const BackupManagement: React.FC<BackupManagementProps> = ({ onClose }) => {
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
                         {backup.size}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                         {backup.created}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex items-center space-x-2">
-                          <button className="text-blue-600 hover:text-blue-900">
+                          <button className="text-blue-400 hover:text-blue-300">
                             <Download className="h-4 w-4" />
                           </button>
-                          <button className="text-gray-400 hover:text-gray-600">
+                          <button className="text-gray-400 hover:text-gray-300">
                             <MoreHorizontal className="h-4 w-4" />
                           </button>
                         </div>

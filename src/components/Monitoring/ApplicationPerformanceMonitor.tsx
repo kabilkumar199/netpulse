@@ -223,19 +223,19 @@ const ApplicationPerformanceMonitor: React.FC<ApplicationPerformanceMonitorProps
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'up': return 'text-green-600';
-      case 'down': return 'text-red-600';
-      case 'warning': return 'text-yellow-600';
-      default: return 'text-gray-600';
+      case 'up': return 'text-green-400';
+      case 'down': return 'text-red-400';
+      case 'warning': return 'text-yellow-400';
+      default: return 'text-gray-400';
     }
   };
 
   const getStatusBgColor = (status: string) => {
     switch (status) {
-      case 'up': return 'bg-green-100 text-green-800';
-      case 'down': return 'bg-red-100 text-red-800';
-      case 'warning': return 'bg-yellow-100 text-yellow-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'up': return 'bg-green-900 text-green-300';
+      case 'down': return 'bg-red-900 text-red-300';
+      case 'warning': return 'bg-yellow-900 text-yellow-300';
+      default: return 'bg-gray-700 text-gray-300';
     }
   };
 
@@ -276,21 +276,21 @@ const ApplicationPerformanceMonitor: React.FC<ApplicationPerformanceMonitorProps
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-gray-800 rounded-lg shadow-lg p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-white">
             Application Performance Monitor
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-400">
             Monitor application availability, performance, and health
           </p>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600:text-gray-300"
+            className="text-gray-400 hover:text-white"
           >
             <span className="text-2xl">×</span>
           </button>
@@ -311,7 +311,7 @@ const ApplicationPerformanceMonitor: React.FC<ApplicationPerformanceMonitorProps
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               selectedView === key
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200:bg-gray-600'
+                : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
             }`}
           >
             {label}
@@ -324,7 +324,7 @@ const ApplicationPerformanceMonitor: React.FC<ApplicationPerformanceMonitorProps
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-2 text-gray-600">Loading application data...</p>
+            <p className="mt-2 text-gray-300">Loading application data...</p>
           </div>
         </div>
       )}
@@ -335,50 +335,50 @@ const ApplicationPerformanceMonitor: React.FC<ApplicationPerformanceMonitorProps
           {/* Overview */}
           {selectedView === 'overview' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Total Applications
                 </h3>
-                <div className="text-2xl font-bold text-blue-600">
+                <div className="text-2xl font-bold text-blue-400">
                   {applicationMetrics.totalApplications}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Monitored
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Up Applications
                 </h3>
-                <div className="text-2xl font-bold text-green-600">
+                <div className="text-2xl font-bold text-green-400">
                   {applicationMetrics.upApplications}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Healthy
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Avg Response Time
                 </h3>
-                <div className="text-2xl font-bold text-purple-600">
+                <div className="text-2xl font-bold text-purple-400">
                   {formatResponseTime(applicationMetrics.averageResponseTime)}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Across all apps
                 </div>
               </div>
 
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-2">
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-gray-300 mb-2">
                   Avg Availability
                 </h3>
-                <div className="text-2xl font-bold text-orange-600">
+                <div className="text-2xl font-bold text-orange-400">
                   {formatAvailability(applicationMetrics.averageAvailability)}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Uptime
                 </div>
               </div>
@@ -387,41 +387,41 @@ const ApplicationPerformanceMonitor: React.FC<ApplicationPerformanceMonitorProps
 
           {/* Applications */}
           {selectedView === 'applications' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Application Status
               </h3>
               <div className="space-y-4">
                 {applicationStatuses.map((app) => (
-                  <div key={app.id} className="bg-white rounded-lg p-4">
+                  <div key={app.id} className="bg-gray-700 rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
                         <div className="text-2xl mr-3">
                           {getApplicationIcon(app.type)}
                         </div>
                         <div>
-                          <div className="font-medium text-gray-900">{app.name}</div>
-                          <div className="text-sm text-gray-500">
+                          <div className="font-medium text-white">{app.name}</div>
+                          <div className="text-sm text-gray-400">
                             {app.type.charAt(0).toUpperCase() + app.type.slice(1)} Application
                           </div>
                         </div>
                       </div>
                       <div className="flex items-center space-x-4">
                         <div className="text-right">
-                          <div className="text-sm text-gray-500">Response Time</div>
-                          <div className="font-medium text-gray-900">
+                          <div className="text-sm text-gray-400">Response Time</div>
+                          <div className="font-medium text-white">
                             {formatResponseTime(app.responseTime)}
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="text-sm text-gray-500">Availability</div>
-                          <div className="font-medium text-gray-900">
+                          <div className="text-sm text-gray-400">Availability</div>
+                          <div className="font-medium text-white">
                             {formatAvailability(app.availability)}
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="text-sm text-gray-500">Error Rate</div>
-                          <div className="font-medium text-gray-900">
+                          <div className="text-sm text-gray-400">Error Rate</div>
+                          <div className="font-medium text-white">
                             {formatErrorRate(app.errorRate)}
                           </div>
                         </div>
@@ -431,10 +431,10 @@ const ApplicationPerformanceMonitor: React.FC<ApplicationPerformanceMonitorProps
                       </div>
                     </div>
                     <div className="mt-3 flex items-center justify-between">
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-400">
                         Last check: {formatTimeAgo(app.lastCheck)}
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-400">
                         {app.checks.length} health checks
                       </div>
                     </div>
@@ -446,30 +446,30 @@ const ApplicationPerformanceMonitor: React.FC<ApplicationPerformanceMonitorProps
 
           {/* Health Checks */}
           {selectedView === 'checks' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Health Checks
               </h3>
               <div className="space-y-4">
                 {applicationStatuses.map((app) => (
-                  <div key={app.id} className="bg-white rounded-lg p-4">
+                  <div key={app.id} className="bg-gray-700 rounded-lg p-4">
                     <div className="flex items-center mb-3">
                       <div className="text-xl mr-2">
                         {getApplicationIcon(app.type)}
                       </div>
-                      <div className="font-medium text-gray-900">{app.name}</div>
+                      <div className="font-medium text-white">{app.name}</div>
                     </div>
                     <div className="space-y-2">
                       {app.checks.map((check) => (
-                        <div key={check.id} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-b-0">
+                        <div key={check.id} className="flex items-center justify-between py-2 border-b border-gray-600 last:border-b-0">
                           <div className="flex items-center">
                             <div className={`w-2 h-2 rounded-full mr-3 ${
                               check.status === 'up' ? 'bg-green-500' :
                               check.status === 'warning' ? 'bg-yellow-500' : 'bg-red-500'
                             }`} />
                             <div>
-                              <div className="font-medium text-gray-900">{check.name}</div>
-                              <div className="text-sm text-gray-500">
+                              <div className="font-medium text-white">{check.name}</div>
+                              <div className="text-sm text-gray-400">
                                 {check.type.toUpperCase()} • {formatTimeAgo(check.lastCheck)}
                               </div>
                             </div>
@@ -479,7 +479,7 @@ const ApplicationPerformanceMonitor: React.FC<ApplicationPerformanceMonitorProps
                               {formatResponseTime(check.responseTime)}
                             </div>
                             {check.error && (
-                              <div className="text-sm text-red-600">
+                              <div className="text-sm text-red-400">
                                 {check.error}
                               </div>
                             )}
@@ -495,16 +495,16 @@ const ApplicationPerformanceMonitor: React.FC<ApplicationPerformanceMonitorProps
 
           {/* Dependencies */}
           {selectedView === 'dependencies' && (
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Application Dependencies
               </h3>
               <div className="text-center py-8">
                 <div className="text-gray-400 text-6xl mb-4">🔗</div>
-                <div className="text-lg font-medium text-gray-900 mb-2">
+                <div className="text-lg font-medium text-white mb-2">
                   Dependency Mapping
                 </div>
-                <div className="text-gray-500">
+                <div className="text-gray-400">
                   Visualize application dependencies and impact analysis
                 </div>
                 <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">

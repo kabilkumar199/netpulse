@@ -860,6 +860,26 @@ export const mockNavigationItems: NavigationItem[] = [
     path: '/management',
     children: [
       {
+        id: 'nav-user-management',
+        label: 'User Management',
+        icon: 'users',
+        path: '/management/users',
+        children: [
+          {
+            id: 'nav-user-list',
+            label: 'User List',
+            icon: 'users',
+            path: '/management/users/list'
+          },
+          {
+            id: 'nav-user-roles',
+            label: 'User Roles',
+            icon: 'shield',
+            path: '/management/users/roles'
+          }
+        ]
+      },
+      {
         id: 'nav-config-management',
         label: 'Configuration',
         icon: 'settings',
@@ -870,12 +890,6 @@ export const mockNavigationItems: NavigationItem[] = [
         label: 'Backups',
         icon: 'database',
         path: '/management/backups'
-      },
-      {
-        id: 'nav-provisioning-management',
-        label: 'Provisioning',
-        icon: 'wrench',
-        path: '/management/provisioning'
       },
       {
         id: 'nav-firmware-management',

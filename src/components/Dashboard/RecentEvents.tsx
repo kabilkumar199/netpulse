@@ -19,11 +19,11 @@ const RecentEvents: React.FC<RecentEventsProps> = ({ events }) => {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'text-red-600';
-      case 'error': return 'text-orange-600';
-      case 'warning': return 'text-yellow-600';
-      case 'info': return 'text-blue-600';
-      default: return 'text-gray-600';
+      case 'critical': return 'text-red-400';
+      case 'error': return 'text-orange-400';
+      case 'warning': return 'text-yellow-400';
+      case 'info': return 'text-blue-400';
+      default: return 'text-gray-400';
     }
   };
 
@@ -41,12 +41,12 @@ const RecentEvents: React.FC<RecentEventsProps> = ({ events }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+    <div className="bg-gray-800 rounded-xl shadow-sm border border-gray-700 p-6 hover:shadow-lg transition-shadow">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">
+        <h3 className="text-lg font-semibold text-white">
           Recent Events
         </h3>
-        <button className="text-sm text-blue-600 hover:text-blue-800:text-blue-300">
+        <button className="text-sm text-blue-400 hover:text-blue-300">
           View All
         </button>
       </div>
@@ -55,7 +55,7 @@ const RecentEvents: React.FC<RecentEventsProps> = ({ events }) => {
         {events.slice(0, 5).map((event) => {
           const IconComponent = getSeverityIcon(event.severity);
           return (
-          <div key={event.id} className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
+          <div key={event.id} className="flex items-start space-x-4 p-4 bg-gray-700 rounded-lg">
             <div className="flex-shrink-0">
               <IconComponent className={`w-5 h-5 ${getSeverityColor(event.severity)}`} />
             </div>
@@ -68,28 +68,28 @@ const RecentEvents: React.FC<RecentEventsProps> = ({ events }) => {
                   {formatTimestamp(event.timestamp)}
                 </p>
               </div>
-              <p className="text-sm text-gray-700 mt-1">
+              <p className="text-sm text-gray-300 mt-1">
                 {event.message}
               </p>
               {event.deviceId && (
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-400 mt-1">
                   Device: {event.deviceId}
                 </p>
               )}
               <div className="flex items-center space-x-4 mt-2">
                 {event.acknowledged ? (
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-900 text-green-300">
                     <CheckCircle className="w-3 h-3 mr-1" />
                     Acknowledged
                   </span>
                 ) : (
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-900 text-yellow-300">
                     <Clock className="w-3 h-3 mr-1" />
                     Pending
                   </span>
                 )}
                 {event.resolved && (
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-900 text-blue-300">
                     <CheckCircle className="w-3 h-3 mr-1" />
                     Resolved
                   </span>
@@ -103,8 +103,8 @@ const RecentEvents: React.FC<RecentEventsProps> = ({ events }) => {
       
       {events.length === 0 && (
         <div className="text-center py-8">
-          <span className="text-4xl text-gray-300">📭</span>
-          <p className="text-gray-500 mt-2">No recent events</p>
+          <span className="text-4xl text-gray-600">📭</span>
+          <p className="text-gray-400 mt-2">No recent events</p>
         </div>
       )}
     </div>

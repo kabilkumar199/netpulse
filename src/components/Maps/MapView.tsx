@@ -27,11 +27,11 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
 
   const getDeviceColor = (device: Device) => {
     switch (device.status) {
-      case 'up': return 'text-green-600';
-      case 'down': return 'text-red-600';
-      case 'warning': return 'text-yellow-600';
-      case 'unknown': return 'text-gray-600';
-      default: return 'text-gray-600';
+      case 'up': return 'text-green-400';
+      case 'down': return 'text-red-400';
+      case 'warning': return 'text-yellow-400';
+      case 'unknown': return 'text-gray-400';
+      default: return 'text-gray-400';
     }
   };
 
@@ -65,10 +65,10 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
   return (
     <div className="space-y-6">
       {/* Map Controls */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-white">
               Network Map
             </h3>
             
@@ -85,8 +85,8 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
                   onClick={() => setSelectedOverlay(overlay.id as any)}
                   className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     selectedOverlay === overlay.id
-                      ? 'bg-blue-100 text-blue-700'
-                      : 'text-gray-600 hover:text-gray-900:text-gray-300'
+                      ? 'bg-blue-600 text-white'
+                      : 'text-gray-300 hover:text-white'
                   }`}
                 >
                   <span>{overlay.icon}</span>
@@ -101,7 +101,7 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
             <select
               value={mapType}
               onChange={(e) => setMapType(e.target.value as any)}
-              className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="roadmap">Roadmap</option>
               <option value="satellite">Satellite</option>
@@ -112,16 +112,16 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
             <div className="flex items-center space-x-1">
               <button
                 onClick={zoomOut}
-                className="p-2 text-gray-600 hover:text-gray-900:text-gray-300 hover:bg-gray-100:bg-gray-700 rounded-lg"
+                className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg"
               >
                 ➖
               </button>
-              <span className="px-2 py-1 text-sm text-gray-600 min-w-8 text-center">
+              <span className="px-2 py-1 text-sm text-gray-300 min-w-8 text-center">
                 {zoom}
               </span>
               <button
                 onClick={zoomIn}
-                className="p-2 text-gray-600 hover:text-gray-900:text-gray-300 hover:bg-gray-100:bg-gray-700 rounded-lg"
+                className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg"
               >
                 ➕
               </button>
@@ -129,7 +129,7 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
             
             <button
               onClick={resetView}
-              className="px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200:bg-gray-600"
+              className="px-3 py-2 text-sm bg-gray-600 text-gray-300 rounded-lg hover:bg-gray-500"
             >
               Reset View
             </button>
@@ -138,15 +138,15 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
       </div>
 
       {/* Map Container */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 overflow-hidden">
         <div className="relative">
           {/* Map Placeholder */}
           <div 
             ref={mapRef}
-            className="w-full h-96 bg-gray-100 flex items-center justify-center relative"
+            className="w-full h-96 bg-gray-900 flex items-center justify-center relative"
           >
             {/* Mock Map Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-green-100 opacity-50"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 opacity-50"></div>
             
             {/* Map Content */}
             <div className="relative z-10 w-full h-full">
@@ -224,8 +224,8 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
             </div>
             
             {/* Map Info Overlay */}
-            <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-3">
-              <div className="text-sm text-gray-600">
+            <div className="absolute top-4 left-4 bg-gray-800 rounded-lg shadow-lg p-3 border border-gray-700">
+              <div className="text-sm text-gray-300">
                 <div>Center: {center.lat.toFixed(4)}, {center.lng.toFixed(4)}</div>
                 <div>Zoom: {zoom}</div>
                 <div>Type: {mapType}</div>
@@ -237,9 +237,9 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
 
       {/* Selected Device/Site Info */}
       {(selectedDevice || selectedSite) && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-white">
               {selectedDevice ? 'Selected Device' : 'Selected Site'}
             </h3>
             <button
@@ -247,7 +247,7 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
                 setSelectedDevice(null);
                 setSelectedSite(null);
               }}
-              className="text-gray-400 hover:text-gray-600:text-gray-300"
+              className="text-gray-400 hover:text-white"
             >
               ✕
             </button>
@@ -258,10 +258,10 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
               <div className="flex items-center space-x-3">
                 <span className="text-3xl">{getDeviceIcon(selectedDevice)}</span>
                 <div>
-                  <div className="font-medium text-gray-900">
+                  <div className="font-medium text-white">
                     {selectedDevice.hostname}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-400">
                     {selectedDevice.vendor} {selectedDevice.model}
                   </div>
                 </div>
@@ -269,26 +269,26 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-600">Status:</span>
+                  <span className="text-gray-400">Status:</span>
                   <div className={`font-medium ${getDeviceColor(selectedDevice)}`}>
                     {selectedDevice.status.toUpperCase()}
                   </div>
                 </div>
                 <div>
-                  <span className="text-gray-600">IP Address:</span>
-                  <div className="text-gray-900">
+                  <span className="text-gray-400">IP Address:</span>
+                  <div className="text-white">
                     {selectedDevice.ipAddresses[0]}
                   </div>
                 </div>
                 <div>
-                  <span className="text-gray-600">Location:</span>
-                  <div className="text-gray-900">
+                  <span className="text-gray-400">Location:</span>
+                  <div className="text-white">
                     {selectedDevice.location?.name || 'Unknown'}
                   </div>
                 </div>
                 <div>
-                  <span className="text-gray-600">Last Seen:</span>
-                  <div className="text-gray-900">
+                  <span className="text-gray-400">Last Seen:</span>
+                  <div className="text-white">
                     {new Date(selectedDevice.lastSeen).toLocaleDateString()}
                   </div>
                 </div>
@@ -301,10 +301,10 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
               <div className="flex items-center space-x-3">
                 <span className="text-3xl">{getSiteIcon()}</span>
                 <div>
-                  <div className="font-medium text-gray-900">
+                  <div className="font-medium text-white">
                     {selectedSite.name}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-400">
                     {selectedSite.description}
                   </div>
                 </div>
@@ -312,26 +312,26 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-600">Address:</span>
-                  <div className="text-gray-900">
+                  <span className="text-gray-400">Address:</span>
+                  <div className="text-white">
                     {selectedSite.location.address}
                   </div>
                 </div>
                 <div>
-                  <span className="text-gray-600">Coordinates:</span>
-                  <div className="text-gray-900">
+                  <span className="text-gray-400">Coordinates:</span>
+                  <div className="text-white">
                     {selectedSite.location.latitude.toFixed(4)}, {selectedSite.location.longitude.toFixed(4)}
                   </div>
                 </div>
                 <div>
-                  <span className="text-gray-600">Devices:</span>
-                  <div className="text-gray-900">
+                  <span className="text-gray-400">Devices:</span>
+                  <div className="text-white">
                     {selectedSite.devices.length}
                   </div>
                 </div>
                 <div>
-                  <span className="text-gray-600">Subnets:</span>
-                  <div className="text-gray-900">
+                  <span className="text-gray-400">Subnets:</span>
+                  <div className="text-white">
                     {selectedSite.subnets.length}
                   </div>
                 </div>
@@ -342,24 +342,24 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
       )}
 
       {/* Map Legend */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-        <h4 className="font-medium text-gray-900 mb-3">Legend</h4>
+      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-4">
+        <h4 className="font-medium text-white mb-3">Legend</h4>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div className="flex items-center space-x-2">
-            <span className="text-green-600">🟢</span>
-            <span className="text-gray-700">Device Up</span>
+            <span className="text-green-400">🟢</span>
+            <span className="text-gray-300">Device Up</span>
           </div>
           <div className="flex items-center space-x-2">
-            <span className="text-red-600">🔴</span>
-            <span className="text-gray-700">Device Down</span>
+            <span className="text-red-400">🔴</span>
+            <span className="text-gray-300">Device Down</span>
           </div>
           <div className="flex items-center space-x-2">
-            <span className="text-yellow-600">🟡</span>
-            <span className="text-gray-700">Device Warning</span>
+            <span className="text-yellow-400">🟡</span>
+            <span className="text-gray-300">Device Warning</span>
           </div>
           <div className="flex items-center space-x-2">
-            <span className="text-gray-600">⚪</span>
-            <span className="text-gray-700">Device Unknown</span>
+            <span className="text-gray-400">⚪</span>
+            <span className="text-gray-300">Device Unknown</span>
           </div>
         </div>
       </div>

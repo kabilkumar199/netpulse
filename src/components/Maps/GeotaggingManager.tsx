@@ -155,17 +155,17 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-white">
             Geotagging Manager
           </h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-gray-400 mt-1">
             Manage geographic locations for devices and sites
           </p>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600:text-gray-300"
+            className="text-gray-400 hover:text-white"
           >
             ✕
           </button>
@@ -174,8 +174,8 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Item Selection */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">
             Select Item
           </h3>
           
@@ -185,8 +185,8 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
               onClick={() => setSelectedType('device')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 selectedType === 'device'
-                  ? 'bg-blue-100 text-blue-700'
-                  : 'text-gray-600 hover:text-gray-900:text-gray-300'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-400 hover:text-white'
               }`}
             >
               Devices
@@ -195,8 +195,8 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
               onClick={() => setSelectedType('site')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 selectedType === 'site'
-                  ? 'bg-blue-100 text-blue-700'
-                  : 'text-gray-600 hover:text-gray-900:text-gray-300'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-400 hover:text-white'
               }`}
             >
               Sites
@@ -210,7 +210,7 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={`Search ${selectedType}s...`}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           
@@ -222,24 +222,24 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
                 onClick={() => handleItemSelect(item)}
                 className={`p-3 rounded-lg border cursor-pointer transition-colors ${
                   selectedItem?.id === item.id
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:bg-gray-50:bg-gray-700'
+                    ? 'border-blue-500 bg-blue-900'
+                    : 'border-gray-600 hover:bg-gray-700'
                 }`}
               >
                 <div className="flex items-center space-x-3">
                   <span className="text-xl">{getItemIcon(item)}</span>
                   <div className="flex-1">
-                    <div className="font-medium text-gray-900">
+                    <div className="font-medium text-white">
                       {getItemName(item)}
                     </div>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-gray-400">
                       {selectedType === 'device' 
                         ? `${(item as Device).vendor} ${(item as Device).model}`
                         : (item as Site).description
                       }
                     </div>
                     {(item as Device | Site).location && (
-                      <div className="text-xs text-green-600 mt-1">
+                      <div className="text-xs text-green-400 mt-1">
                         ✓ Has location data
                       </div>
                     )}
@@ -251,9 +251,9 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
         </div>
 
         {/* Location Editor */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-white">
               Location Details
             </h3>
             {selectedItem && !isEditing && (
@@ -269,13 +269,13 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
           {selectedItem ? (
             <div className="space-y-4">
               {/* Selected Item Info */}
-              <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+              <div className="flex items-center space-x-3 p-3 bg-gray-700 rounded-lg">
                 <span className="text-2xl">{getItemIcon(selectedItem)}</span>
                 <div>
-                  <div className="font-medium text-gray-900">
+                  <div className="font-medium text-white">
                     {getItemName(selectedItem)}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-400">
                     {selectedType === 'device' 
                       ? `${(selectedItem as Device).vendor} ${(selectedItem as Device).model}`
                       : (selectedItem as Site).description
@@ -287,7 +287,7 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
               {/* Location Form */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Location Name
                   </label>
                   <input
@@ -295,13 +295,13 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                     disabled={!isEditing}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100:bg-gray-600"
+                    className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-600"
                   />
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
                       Latitude
                     </label>
                     <input
@@ -310,11 +310,11 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
                       value={formData.latitude}
                       onChange={(e) => setFormData({...formData, latitude: e.target.value})}
                       disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100:bg-gray-600"
+                      className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-600"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
                       Longitude
                     </label>
                     <input
@@ -323,13 +323,13 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
                       value={formData.longitude}
                       onChange={(e) => setFormData({...formData, longitude: e.target.value})}
                       disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100:bg-gray-600"
+                      className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-600"
                     />
                   </div>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Address
                   </label>
                   <div className="flex space-x-2">
@@ -338,7 +338,7 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
                       value={formData.address}
                       onChange={(e) => setFormData({...formData, address: e.target.value})}
                       disabled={!isEditing}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100:bg-gray-600"
+                      className="flex-1 px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-600"
                     />
                     {isEditing && (
                       <button
@@ -353,7 +353,7 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
                       City
                     </label>
                     <input
@@ -361,11 +361,11 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
                       value={formData.city}
                       onChange={(e) => setFormData({...formData, city: e.target.value})}
                       disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100:bg-gray-600"
+                      className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-600"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
                       State
                     </label>
                     <input
@@ -373,14 +373,14 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
                       value={formData.state}
                       onChange={(e) => setFormData({...formData, state: e.target.value})}
                       disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100:bg-gray-600"
+                      className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-600"
                     />
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
                       Country
                     </label>
                     <input
@@ -388,7 +388,7 @@ const GeotaggingManager: React.FC<GeotaggingManagerProps> = ({ onClose }) => {
                       value={formData.country}
                       onChange={(e) => setFormData({...formData, country: e.target.value})}
                       disabled={!isEditing}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100:bg-gray-600"
+                      className="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-600"
                     />
                   </div>
                   <div>
