@@ -19,7 +19,6 @@ import LogManagement from './components/Monitoring/LogManagement';
 import ConfigurationManager from './components/Settings/ConfigurationManager';
 import CredentialsManager from './components/Settings/CredentialsManager';
 import BackupManagement from './components/Management/BackupManagement';
-import ProvisioningManagement from './components/Management/ProvisioningManagement';
 import FirmwareManagement from './components/Management/FirmwareManagement';
 import AlertManagement from './components/Management/AlertManagement';
 import UserList from './components/Management/UserList';

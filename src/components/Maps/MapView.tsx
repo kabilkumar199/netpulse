@@ -1,43 +1,73 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Icon } from 'leaflet';
 import type { Device, Site } from '../../types';
 import { mockDevices, mockSites } from '../../data/mockData';
+import 'leaflet/dist/leaflet.css';
 
 interface MapViewProps {
   onDeviceSelect?: (device: Device) => void;
   onSiteSelect?: (site: Site) => void;
 }
 
+// Custom icons for devices
+const createDeviceIcon = (status: string, vendor: string) => {
+  const colors = {
+    up: '#10B981',
+    down: '#EF4444',
+    warning: '#F59E0B',
+    unknown: '#6B7280'
+  };
+
+  const vendorShapes = {
+    Cisco: 'M8 8h16v16H8z', // Square
+    Dell: 'M16 4l8 8-8 8-8-8z', // Diamond
+    Fortinet: 'M4 8h24v4H4z', // Rectangle
+    default: 'M16 4l12 12-12 12L4 16z' // Diamond
+  };
+
+  const color = colors[status as keyof typeof colors] || colors.unknown;
+  const shape = vendorShapes[vendor as keyof typeof vendorShapes] || vendorShapes.default;
+
+  const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <circle cx="16" cy="16" r="14" fill="${color}" stroke="#1F2937" stroke-width="2"/>
+    <path d="${shape}" fill="white" transform="scale(0.8) translate(2, 2)"/>
+  </svg>`;
+
+  return new Icon({
+    iconUrl: `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgString)}`,
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [0, -16]
+  });
+};
+
+// Custom icon for sites
+const siteIcon = new Icon({
+  iconUrl: `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="18" fill="#3B82F6" stroke="#1F2937" stroke-width="2"/>
+      <rect x="12" y="14" width="16" height="12" fill="white"/>
+      <rect x="14" y="16" width="2" height="8" fill="#3B82F6"/>
+      <rect x="17" y="16" width="2" height="8" fill="#3B82F6"/>
+      <rect x="20" y="16" width="2" height="8" fill="#3B82F6"/>
+      <rect x="23" y="16" width="2" height="8" fill="#3B82F6"/>
+      <polygon points="20,8 26,14 14,14" fill="white"/>
+    </svg>
+  `)}`,
+  iconSize: [40, 40],
+  iconAnchor: [20, 20],
+  popupAnchor: [0, -20]
+});
+
 const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
   const [selectedOverlay, setSelectedOverlay] = useState<'devices' | 'sites' | 'links' | 'alerts'>('devices');
   const [mapType, setMapType] = useState<'roadmap' | 'satellite' | 'hybrid' | 'terrain'>('roadmap');
   const [zoom, setZoom] = useState(10);
-  const [center, setCenter] = useState({ lat: 37.7749, lng: -122.4194 });
+  const [center, setCenter] = useState<[number, number]>([37.7749, -122.4194]);
   const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
   const [selectedSite, setSelectedSite] = useState<Site | null>(null);
-  const mapRef = useRef<HTMLDivElement>(null);
 
-  const getDeviceIcon = (device: Device) => {
-    switch (device.vendor) {
-      case 'Cisco': return '🔷';
-      case 'Dell': return '💻';
-      case 'Fortinet': return '🛡️';
-      default: return '🖥️';
-    }
-  };
-
-  const getDeviceColor = (device: Device) => {
-    switch (device.status) {
-      case 'up': return 'text-green-400';
-      case 'down': return 'text-red-400';
-      case 'warning': return 'text-yellow-400';
-      case 'unknown': return 'text-gray-400';
-      default: return 'text-gray-400';
-    }
-  };
-
-  const getSiteIcon = () => {
-    return '🏢';
-  };
 
   const handleDeviceClick = (device: Device) => {
     setSelectedDevice(device);
@@ -49,87 +79,118 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
     onSiteSelect?.(site);
   };
 
-  const zoomIn = () => {
-    setZoom(prev => Math.min(prev + 1, 20));
+  const getTileLayerUrl = () => {
+    switch (mapType) {
+      case 'satellite':
+        return 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+      case 'terrain':
+        return 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
+      case 'hybrid':
+        return 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+      default:
+        return 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    }
   };
 
-  const zoomOut = () => {
-    setZoom(prev => Math.max(prev - 1, 1));
+  const getTileLayerAttribution = () => {
+    switch (mapType) {
+      case 'satellite':
+        return '&copy; <a href="https://www.esri.com/">Esri</a>';
+      case 'terrain':
+        return '&copy; <a href="https://opentopomap.org/">OpenTopoMap</a>';
+      case 'hybrid':
+        return '&copy; <a href="https://www.esri.com/">Esri</a>';
+      default:
+        return '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+    }
   };
 
-  const resetView = () => {
-    setCenter({ lat: 37.7749, lng: -122.4194 });
-    setZoom(10);
-  };
+  // Add some mock coordinates for devices and sites
+  const devicesWithCoords = mockDevices.map((device) => ({
+    ...device,
+    coordinates: [
+      37.7749 + (Math.random() - 0.5) * 0.1,
+      -122.4194 + (Math.random() - 0.5) * 0.1
+    ] as [number, number]
+  }));
+
+  const sitesWithCoords = mockSites.map((site) => ({
+    ...site,
+    coordinates: [
+      37.7849 + (Math.random() - 0.5) * 0.05,
+      -122.4094 + (Math.random() - 0.5) * 0.05
+    ] as [number, number]
+  }));
 
   return (
-    <div className="space-y-6">
+    <div className="h-full flex flex-col bg-gray-900">
       {/* Map Controls */}
-      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <h3 className="text-lg font-semibold text-white">
-              Network Map
-            </h3>
-            
-            {/* Overlay Controls */}
-            <div className="flex space-x-2">
+      <div className="bg-gray-800 p-4 border-b border-gray-700">
+        <div className="flex flex-wrap gap-4 items-center">
+          {/* Overlay Selection */}
+          <div className="flex items-center space-x-2">
+            <label className="text-sm font-medium text-gray-300">Show:</label>
+            <div className="flex space-x-1">
               {[
-                { id: 'devices', label: 'Devices', icon: '🖥️' },
-                { id: 'sites', label: 'Sites', icon: '🏢' },
-                { id: 'links', label: 'Links', icon: '🔗' },
-                { id: 'alerts', label: 'Alerts', icon: '🚨' }
-              ].map((overlay) => (
+                { key: 'devices', label: 'Devices', count: devicesWithCoords.length },
+                { key: 'sites', label: 'Sites', count: sitesWithCoords.length },
+                { key: 'links', label: 'Links', count: 0 },
+                { key: 'alerts', label: 'Alerts', count: 0 }
+              ].map(({ key, label, count }) => (
                 <button
-                  key={overlay.id}
-                  onClick={() => setSelectedOverlay(overlay.id as any)}
-                  className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    selectedOverlay === overlay.id
+                  key={key}
+                  onClick={() => setSelectedOverlay(key as any)}
+                  className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                    selectedOverlay === key
                       ? 'bg-blue-600 text-white'
-                      : 'text-gray-300 hover:text-white'
+                      : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
                   }`}
                 >
-                  <span>{overlay.icon}</span>
-                  <span>{overlay.label}</span>
+                  {label} ({count})
                 </button>
               ))}
             </div>
           </div>
-          
-          {/* Map Type and Zoom Controls */}
-          <div className="flex items-center space-x-4">
+
+          {/* Map Type Selection */}
+          <div className="flex items-center space-x-2">
+            <label className="text-sm font-medium text-gray-300">Map Type:</label>
             <select
               value={mapType}
               onChange={(e) => setMapType(e.target.value as any)}
-              className="px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-3 py-1 rounded bg-gray-700 text-white text-sm border border-gray-600"
             >
-              <option value="roadmap">Roadmap</option>
+              <option value="roadmap">Road Map</option>
               <option value="satellite">Satellite</option>
-              <option value="hybrid">Hybrid</option>
               <option value="terrain">Terrain</option>
             </select>
-            
+          </div>
+
+          {/* Zoom Controls */}
+          <div className="flex items-center space-x-2">
+            <label className="text-sm font-medium text-gray-300">Zoom:</label>
             <div className="flex items-center space-x-1">
               <button
-                onClick={zoomOut}
-                className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg"
+                onClick={() => setZoom(Math.max(1, zoom - 1))}
+                className="w-8 h-8 bg-gray-600 text-white rounded hover:bg-gray-500 flex items-center justify-center"
               >
-                ➖
+                −
               </button>
-              <span className="px-2 py-1 text-sm text-gray-300 min-w-8 text-center">
-                {zoom}
-              </span>
+              <span className="text-sm text-gray-300 w-8 text-center">{zoom}</span>
               <button
-                onClick={zoomIn}
-                className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg"
+                onClick={() => setZoom(Math.min(18, zoom + 1))}
+                className="w-8 h-8 bg-gray-600 text-white rounded hover:bg-gray-500 flex items-center justify-center"
               >
-                ➕
+                +
               </button>
             </div>
-            
+          </div>
+
+          {/* Center Controls */}
+          <div className="flex items-center space-x-2">
             <button
-              onClick={resetView}
-              className="px-3 py-2 text-sm bg-gray-600 text-gray-300 rounded-lg hover:bg-gray-500"
+              onClick={() => setCenter([37.7749, -122.4194])}
+              className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700"
             >
               Reset View
             </button>
@@ -138,231 +199,130 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
       </div>
 
       {/* Map Container */}
-      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 overflow-hidden">
-        <div className="relative">
-          {/* Map Placeholder */}
-          <div 
-            ref={mapRef}
-            className="w-full h-96 bg-gray-900 flex items-center justify-center relative"
-          >
-            {/* Mock Map Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 opacity-50"></div>
-            
-            {/* Map Content */}
-            <div className="relative z-10 w-full h-full">
-              {/* Sites */}
-              {selectedOverlay === 'sites' && mockSites.map((site) => (
-                <div
-                  key={site.id}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-                  style={{
-                    left: `${((site.location.longitude + 180) / 360) * 100}%`,
-                    top: `${((90 - site.location.latitude) / 180) * 100}%`
-                  }}
-                  onClick={() => handleSiteClick(site)}
-                >
-                  <div className="bg-white rounded-full p-3 shadow-lg border-2 border-blue-500 hover:border-blue-700 transition-colors">
-                    <span className="text-2xl">{getSiteIcon()}</span>
+      <div className="flex-1 relative">
+        <MapContainer
+          center={center}
+          zoom={zoom}
+          style={{ height: '100%', width: '100%' }}
+          className="dark-map"
+        >
+          <TileLayer
+            url={getTileLayerUrl()}
+            attribution={getTileLayerAttribution()}
+          />
+
+          {/* Device Markers */}
+          {selectedOverlay === 'devices' && devicesWithCoords.map((device) => (
+            <Marker
+              key={device.id}
+              position={device.coordinates}
+              icon={createDeviceIcon(device.status, device.vendor)}
+              eventHandlers={{
+                click: () => handleDeviceClick(device)
+              }}
+            >
+              <Popup className="custom-popup">
+                <div className="p-2 min-w-[200px]">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className={`w-3 h-3 rounded-full ${
+                      device.status === 'up' ? 'bg-green-500' :
+                      device.status === 'down' ? 'bg-red-500' :
+                      device.status === 'warning' ? 'bg-yellow-500' : 'bg-gray-500'
+                    }`} />
+                    <h3 className="font-semibold text-gray-900">{device.hostname}</h3>
                   </div>
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap">
-                    {site.name}
-                  </div>
-                </div>
-              ))}
-              
-              {/* Devices */}
-              {selectedOverlay === 'devices' && mockDevices.map((device) => (
-                <div
-                  key={device.id}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-                  style={{
-                    left: `${((device.location!.longitude + 180) / 360) * 100}%`,
-                    top: `${((90 - device.location!.latitude) / 180) * 100}%`
-                  }}
-                  onClick={() => handleDeviceClick(device)}
-                >
-                  <div className={`bg-white rounded-full p-2 shadow-lg border-2 hover:border-blue-700 transition-colors ${
-                    selectedDevice?.id === device.id ? 'border-blue-500' : 'border-gray-300'
-                  }`}>
-                    <span className={`text-xl ${getDeviceColor(device)}`}>
-                      {getDeviceIcon(device)}
-                    </span>
-                  </div>
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap">
-                    {device.hostname}
+                  <div className="text-sm text-gray-600 space-y-1">
+                    <p><strong>Vendor:</strong> {device.vendor}</p>
+                    <p><strong>Model:</strong> {device.model}</p>
+                    <p><strong>IP:</strong> {device.ipAddresses[0] || 'N/A'}</p>
+                    <p><strong>Location:</strong> {device.location?.name || 'Unknown'}</p>
+                    <p><strong>Last Seen:</strong> {device.lastSeen?.toLocaleDateString()}</p>
                   </div>
                 </div>
-              ))}
-              
-              {/* Links */}
-              {selectedOverlay === 'links' && (
-                <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                  {mockDevices.map((device, index) => {
-                    if (index === 0) return null; // Skip first device to avoid self-connection
-                    const prevDevice = mockDevices[index - 1];
-                    const x1 = ((device.location!.longitude + 180) / 360) * 100;
-                    const y1 = ((90 - device.location!.latitude) / 180) * 100;
-                    const x2 = ((prevDevice.location!.longitude + 180) / 360) * 100;
-                    const y2 = ((90 - prevDevice.location!.latitude) / 180) * 100;
-                    
-                    return (
-                      <line
-                        key={`link-${index}`}
-                        x1={`${x1}%`}
-                        y1={`${y1}%`}
-                        x2={`${x2}%`}
-                        y2={`${y2}%`}
-                        stroke="#3B82F6"
-                        strokeWidth="2"
-                        strokeDasharray="5,5"
-                        opacity="0.7"
-                      />
-                    );
-                  })}
-                </svg>
-              )}
-            </div>
-            
-            {/* Map Info Overlay */}
-            <div className="absolute top-4 left-4 bg-gray-800 rounded-lg shadow-lg p-3 border border-gray-700">
-              <div className="text-sm text-gray-300">
-                <div>Center: {center.lat.toFixed(4)}, {center.lng.toFixed(4)}</div>
-                <div>Zoom: {zoom}</div>
-                <div>Type: {mapType}</div>
-              </div>
-            </div>
+              </Popup>
+            </Marker>
+          ))}
+
+          {/* Site Markers */}
+          {selectedOverlay === 'sites' && sitesWithCoords.map((site) => (
+            <Marker
+              key={site.id}
+              position={site.coordinates}
+              icon={siteIcon}
+              eventHandlers={{
+                click: () => handleSiteClick(site)
+              }}
+            >
+              <Popup className="custom-popup">
+                <div className="p-2 min-w-[200px]">
+                  <h3 className="font-semibold text-gray-900 mb-2">{site.name}</h3>
+                  <div className="text-sm text-gray-600 space-y-1">
+                    <p><strong>Description:</strong> {site.description}</p>
+                    <p><strong>Location:</strong> {site.location?.name}</p>
+                    <p><strong>Devices:</strong> {site.devices.length}</p>
+                    <p><strong>Created:</strong> {site.createdAt.toLocaleDateString()}</p>
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer>
+
+        {/* Map Info Overlay */}
+        <div className="absolute top-4 right-4 bg-gray-800 bg-opacity-90 rounded-lg p-4 text-white">
+          <h3 className="font-semibold mb-2">Map Information</h3>
+          <div className="text-sm space-y-1">
+            <p>Center: {center[0].toFixed(4)}, {center[1].toFixed(4)}</p>
+            <p>Zoom: {zoom}</p>
+            <p>Type: {mapType}</p>
+            <p>Showing: {selectedOverlay}</p>
           </div>
         </div>
       </div>
 
-      {/* Selected Device/Site Info */}
+      {/* Selected Item Info */}
       {(selectedDevice || selectedSite) && (
-        <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-white">
-              {selectedDevice ? 'Selected Device' : 'Selected Site'}
-            </h3>
-            <button
-              onClick={() => {
-                setSelectedDevice(null);
-                setSelectedSite(null);
-              }}
-              className="text-gray-400 hover:text-white"
-            >
-              ✕
-            </button>
-          </div>
-          
+        <div className="bg-gray-800 border-t border-gray-700 p-4">
           {selectedDevice && (
-            <div className="space-y-4">
+            <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <span className="text-3xl">{getDeviceIcon(selectedDevice)}</span>
+                <div className={`w-3 h-3 rounded-full ${
+                  selectedDevice.status === 'up' ? 'bg-green-500' :
+                  selectedDevice.status === 'down' ? 'bg-red-500' :
+                  selectedDevice.status === 'warning' ? 'bg-yellow-500' : 'bg-gray-500'
+                }`} />
                 <div>
-                  <div className="font-medium text-white">
-                    {selectedDevice.hostname}
-                  </div>
-                  <div className="text-sm text-gray-400">
-                    {selectedDevice.vendor} {selectedDevice.model}
-                  </div>
+                  <h3 className="font-semibold text-white">{selectedDevice.hostname}</h3>
+                  <p className="text-sm text-gray-400">
+                    {selectedDevice.vendor} {selectedDevice.model} • {selectedDevice.ipAddresses[0] || 'N/A'}
+                  </p>
                 </div>
               </div>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                <div>
-                  <span className="text-gray-400">Status:</span>
-                  <div className={`font-medium ${getDeviceColor(selectedDevice)}`}>
-                    {selectedDevice.status.toUpperCase()}
-                  </div>
-                </div>
-                <div>
-                  <span className="text-gray-400">IP Address:</span>
-                  <div className="text-white">
-                    {selectedDevice.ipAddresses[0]}
-                  </div>
-                </div>
-                <div>
-                  <span className="text-gray-400">Location:</span>
-                  <div className="text-white">
-                    {selectedDevice.location?.name || 'Unknown'}
-                  </div>
-                </div>
-                <div>
-                  <span className="text-gray-400">Last Seen:</span>
-                  <div className="text-white">
-                    {new Date(selectedDevice.lastSeen).toLocaleDateString()}
-                  </div>
-                </div>
-              </div>
+              <button
+                onClick={() => setSelectedDevice(null)}
+                className="text-gray-400 hover:text-white"
+              >
+                ×
+              </button>
             </div>
           )}
-          
+
           {selectedSite && (
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <span className="text-3xl">{getSiteIcon()}</span>
-                <div>
-                  <div className="font-medium text-white">
-                    {selectedSite.name}
-                  </div>
-                  <div className="text-sm text-gray-400">
-                    {selectedSite.description}
-                  </div>
-                </div>
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-white">{selectedSite.name}</h3>
+                <p className="text-sm text-gray-400">{selectedSite.description}</p>
               </div>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                <div>
-                  <span className="text-gray-400">Address:</span>
-                  <div className="text-white">
-                    {selectedSite.location.address}
-                  </div>
-                </div>
-                <div>
-                  <span className="text-gray-400">Coordinates:</span>
-                  <div className="text-white">
-                    {selectedSite.location.latitude.toFixed(4)}, {selectedSite.location.longitude.toFixed(4)}
-                  </div>
-                </div>
-                <div>
-                  <span className="text-gray-400">Devices:</span>
-                  <div className="text-white">
-                    {selectedSite.devices.length}
-                  </div>
-                </div>
-                <div>
-                  <span className="text-gray-400">Subnets:</span>
-                  <div className="text-white">
-                    {selectedSite.subnets.length}
-                  </div>
-                </div>
-              </div>
+              <button
+                onClick={() => setSelectedSite(null)}
+                className="text-gray-400 hover:text-white"
+              >
+                ×
+              </button>
             </div>
           )}
         </div>
       )}
-
-      {/* Map Legend */}
-      <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-4">
-        <h4 className="font-medium text-white mb-3">Legend</h4>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-          <div className="flex items-center space-x-2">
-            <span className="text-green-400">🟢</span>
-            <span className="text-gray-300">Device Up</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="text-red-400">🔴</span>
-            <span className="text-gray-300">Device Down</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="text-yellow-400">🟡</span>
-            <span className="text-gray-300">Device Warning</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="text-gray-400">⚪</span>
-            <span className="text-gray-300">Device Unknown</span>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
