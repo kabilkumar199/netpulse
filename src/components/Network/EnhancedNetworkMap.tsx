@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
-import type { Device, Site } from '../../types';
+import type { Device, Site, Link } from '../../types';
 import { mockDevices, mockLinks, mockSites } from '../../data/mockData';
 
 interface EnhancedNetworkMapProps {
   onDeviceSelect?: (device: Device) => void;
   onSiteSelect?: (site: Site) => void;
+  devices?: Device[];
+  links?: Link[];
 }
 
-const EnhancedNetworkMap: React.FC<EnhancedNetworkMapProps> = ({ onDeviceSelect, onSiteSelect }) => {
+const EnhancedNetworkMap: React.FC<EnhancedNetworkMapProps> = ({ 
+  onDeviceSelect, 
+  onSiteSelect,
+  devices = mockDevices,
+  links = mockLinks 
+}) => {
   const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
   const [, setSelectedSite] = useState<Site | null>(null);
   const [showDeviceNames, setShowDeviceNames] = useState(true);
@@ -105,8 +112,8 @@ const EnhancedNetworkMap: React.FC<EnhancedNetworkMapProps> = ({ onDeviceSelect,
   };
 
   const getHierarchicalCoordinates = (device: Device) => {
-    const coreDevices = mockDevices.filter(d => d.roles.some(r => r.name.includes('Core')));
-    const accessDevices = mockDevices.filter(d => d.roles.some(r => r.name.includes('Access')));
+    const coreDevices = devices.filter(d => d.roles.some(r => r.name.includes('Core')));
+    const accessDevices = devices.filter(d => d.roles.some(r => r.name.includes('Access')));
     
     if (coreDevices.includes(device)) {
       return { x: 0, y: 0 };
@@ -115,8 +122,8 @@ const EnhancedNetworkMap: React.FC<EnhancedNetworkMapProps> = ({ onDeviceSelect,
       const angle = (accessIndex / accessDevices.length) * 2 * Math.PI;
       return { x: 150 * Math.cos(angle), y: 150 * Math.sin(angle) };
     } else {
-      const otherIndex = mockDevices.filter(d => !coreDevices.includes(d) && !accessDevices.includes(d)).indexOf(device);
-      const angle = (otherIndex / (mockDevices.length - coreDevices.length - accessDevices.length)) * 2 * Math.PI;
+      const otherIndex = devices.filter(d => !coreDevices.includes(d) && !accessDevices.includes(d)).indexOf(device);
+      const angle = (otherIndex / (devices.length - coreDevices.length - accessDevices.length)) * 2 * Math.PI;
       return { x: 250 * Math.cos(angle), y: 250 * Math.sin(angle) };
     }
   };
@@ -124,15 +131,15 @@ const EnhancedNetworkMap: React.FC<EnhancedNetworkMapProps> = ({ onDeviceSelect,
   const getDeviceCoordinates = (device: Device, index: number) => {
     switch (layoutType) {
       case 'radial':
-        return getRadialCoordinates(index, mockDevices.length, 200);
+        return getRadialCoordinates(index, devices.length, 200);
       case 'hierarchical':
         return getHierarchicalCoordinates(device);
       case 'force-directed':
-        return getRadialCoordinates(index, mockDevices.length, 180);
+        return getRadialCoordinates(index, devices.length, 180);
       case 'geographic':
-        return getRadialCoordinates(index, mockDevices.length, 160);
+        return getRadialCoordinates(index, devices.length, 160);
       default:
-        return getRadialCoordinates(index, mockDevices.length, 200);
+        return getRadialCoordinates(index, devices.length, 200);
     }
   };
 
@@ -309,7 +316,7 @@ const EnhancedNetworkMap: React.FC<EnhancedNetworkMapProps> = ({ onDeviceSelect,
             <rect x="-300" y="-300" width="600" height="600" fill="url(#grid)" />
 
             {/* Security Zone Overlay */}
-            {showSecurityZones && mockDevices.map((device, index) => {
+            {showSecurityZones && devices.map((device, index) => {
               const { x, y } = getDeviceCoordinates(device, index);
               return (
                 <circle
@@ -327,7 +334,7 @@ const EnhancedNetworkMap: React.FC<EnhancedNetworkMapProps> = ({ onDeviceSelect,
             })}
 
             {/* VLAN Overlay */}
-            {showVLANs && mockDevices.map((device, index) => {
+            {showVLANs && devices.map((device, index) => {
               const { x, y } = getDeviceCoordinates(device, index);
               const vlanId = device.interfaces[0]?.vlanId || '1';
               return (
@@ -345,14 +352,14 @@ const EnhancedNetworkMap: React.FC<EnhancedNetworkMapProps> = ({ onDeviceSelect,
             })}
 
             {/* Links */}
-            {showLinks && mockLinks.map((link) => {
-              const sourceDevice = mockDevices.find(d => d.interfaces.some(i => i.id === link.sourceInterfaceId));
-              const targetDevice = mockDevices.find(d => d.interfaces.some(i => i.id === link.targetInterfaceId));
+            {showLinks && links.map((link) => {
+              const sourceDevice = devices.find(d => d.interfaces.some(i => i.id === link.sourceInterfaceId));
+              const targetDevice = devices.find(d => d.interfaces.some(i => i.id === link.targetInterfaceId));
 
               if (!sourceDevice || !targetDevice) return null;
 
-              const sourceIndex = mockDevices.indexOf(sourceDevice);
-              const targetIndex = mockDevices.indexOf(targetDevice);
+              const sourceIndex = devices.indexOf(sourceDevice);
+              const targetIndex = devices.indexOf(targetDevice);
               const sourceCoords = getDeviceCoordinates(sourceDevice, sourceIndex);
               const targetCoords = getDeviceCoordinates(targetDevice, targetIndex);
 
@@ -381,13 +388,13 @@ const EnhancedNetworkMap: React.FC<EnhancedNetworkMapProps> = ({ onDeviceSelect,
             })}
 
             {/* Dependencies */}
-            {showDependencies && mockDevices.map((device, deviceIndex) => {
+            {showDependencies && devices.map((device, deviceIndex) => {
               const { x, y } = getDeviceCoordinates(device, deviceIndex);
               return device.dependencies.map((dep, depIndex) => {
-                const parentDevice = mockDevices.find(d => d.id === dep.parentDeviceId);
+                const parentDevice = devices.find(d => d.id === dep.parentDeviceId);
                 if (!parentDevice) return null;
                 
-                const parentIndex = mockDevices.indexOf(parentDevice);
+                const parentIndex = devices.indexOf(parentDevice);
                 const parentCoords = getDeviceCoordinates(parentDevice, parentIndex);
                 
                 return (
@@ -407,7 +414,7 @@ const EnhancedNetworkMap: React.FC<EnhancedNetworkMapProps> = ({ onDeviceSelect,
             })}
 
             {/* Devices */}
-            {mockDevices.map((device, index) => {
+            {devices.map((device, index) => {
               const { x, y } = getDeviceCoordinates(device, index);
               const isSelected = selectedDevice?.id === device.id;
 

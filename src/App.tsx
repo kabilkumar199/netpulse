@@ -4,12 +4,13 @@ import Dashboard from './components/Dashboard/Dashboard';
 import DeviceList from './components/Devices/DeviceList';
 import DeviceDetails from './components/Devices/DeviceDetails';
 import DiscoveryWizard from './components/Discovery/DiscoveryWizard';
+import NetBoxImporter from './components/Discovery/NetBoxImporter';
 import PathAnalysis from './components/Analysis/PathAnalysis';
 import ReachabilityAnalysis from './components/Analysis/ReachabilityAnalysis';
 import MapView from './components/Maps/MapView';
 import GeotaggingManager from './components/Maps/GeotaggingManager';
 import NetworkProtocolIngestion from './components/Network/NetworkProtocolIngestion';
-import EnhancedNetworkMap from './components/Network/EnhancedNetworkMap';
+import TopologyScansView from './components/Network/TopologyScansView';
 import PerformanceDashboard from './components/Monitoring/PerformanceDashboard';
 import NetworkTrafficAnalysis from './components/Analysis/NetworkTrafficAnalysis';
 import WirelessNetworkMonitor from './components/Monitoring/WirelessNetworkMonitor';
@@ -24,13 +25,24 @@ import AlertManagement from './components/Management/AlertManagement';
 import UserList from './components/Management/UserList';
 import UserRole from './components/Management/UserRole';
 import UserProfile from './components/Management/UserProfile';
+import Regions from './components/Organization/Regions';
+import Sites from './components/Organization/Sites';
+import Locations from './components/Organization/Locations';
 import type { Device, Site, DiscoveryScan } from './types';
+import { mockDiscoveryScans } from './data/mockData';
+import { netboxTopologyData, scanMetadata } from './data/netboxMockData';
+import { adaptSlurpitTopology } from './services/netboxAdapter';
 
 function App() {
-  const [currentView, setCurrentView] = useState('nav-dashboard');
+  // Initialize with NetBox data converted to internal format
+  const netboxScan = adaptSlurpitTopology(netboxTopologyData, scanMetadata.scan_name);
+  
+  const [currentView, setCurrentView] = useState('nav-topology'); // Start with topology view
   const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
   const [, setSelectedSite] = useState<Site | null>(null);
   const [showDiscoveryWizard, setShowDiscoveryWizard] = useState(false);
+  const [showNetBoxImporter, setShowNetBoxImporter] = useState(false);
+  const [discoveryScans, setDiscoveryScans] = useState<DiscoveryScan[]>([netboxScan, ...mockDiscoveryScans]);
   const [showDeviceDetails, setShowDeviceDetails] = useState(false);
   const [showPathAnalysis, setShowPathAnalysis] = useState(false);
   const [showReachabilityAnalysis, setShowReachabilityAnalysis] = useState(false);
@@ -51,19 +63,22 @@ function App() {
 
   const handleDiscoveryComplete = (scan: DiscoveryScan) => {
     console.log('Discovery completed:', scan);
+    
+    // Add the new scan to the list of discovery scans
+    setDiscoveryScans(prev => [scan, ...prev]);
+    
     setShowDiscoveryWizard(false);
     
     // Navigate to topology view to show the discovered network
-    setCurrentView('nav-network-topology');
-    
-    // In a real app, this would update the state with new devices
-    // For now, we'll use the mock data to simulate discovered devices
+    setCurrentView('nav-topology');
   };
 
   // Handle discovery scan navigation
   useEffect(() => {
     if (currentView === 'nav-discover-scan') {
       setShowDiscoveryWizard(true);
+    } else if (currentView === 'nav-netbox-import') {
+      setShowNetBoxImporter(true);
     }
   }, [currentView]);
 
@@ -71,8 +86,17 @@ function App() {
     switch (currentView) {
       case 'nav-dashboard':
         return <Dashboard />;
+      case 'nav-organization-regions':
+        return <Regions />;
+      case 'nav-organization-sites':
+        return <Sites />;
+      case 'nav-organization-locations':
+        return <Locations />;
       case 'nav-discover-scan':
         // Discovery wizard will be opened via useEffect
+        return <Dashboard />;
+      case 'nav-netbox-import':
+        // NetBox importer will be opened via useEffect
         return <Dashboard />;
       case 'nav-discover-history':
         return (
@@ -92,9 +116,11 @@ function App() {
       case 'nav-inventory-devices':
         return <DeviceList onDeviceSelect={handleDeviceSelect} />;
       case 'nav-topology':
-        return <EnhancedNetworkMap onDeviceSelect={handleDeviceSelect} onSiteSelect={handleSiteSelect} />;
-      case 'nav-map':
-        return <MapView onDeviceSelect={handleDeviceSelect} onSiteSelect={handleSiteSelect} />;
+        return <TopologyScansView 
+          onDeviceSelect={handleDeviceSelect} 
+          onSiteSelect={handleSiteSelect}
+          scans={discoveryScans}
+        />;
       case 'nav-analyze-paths':
         return <PathAnalysis onClose={() => setCurrentView('nav-dashboard')} />;
       case 'nav-analyze-reachability':
@@ -199,11 +225,14 @@ function App() {
   const getPageTitle = () => {
     switch (currentView) {
       case 'nav-dashboard': return 'Dashboard';
+      case 'nav-organization-regions': return 'Regions';
+      case 'nav-organization-sites': return 'Sites';
+      case 'nav-organization-locations': return 'Locations';
       case 'nav-discover-scan': return 'New Scan';
+      case 'nav-netbox-import': return 'Import from NetBox';
       case 'nav-discover-history': return 'Scan History';
       case 'nav-inventory-devices': return 'Devices';
       case 'nav-topology': return 'Network Topology';
-      case 'nav-map': return 'Geographic Map';
       case 'nav-analyze-paths': return 'Path Analysis';
       case 'nav-analyze-reachability': return 'Reachability Analysis';
       case 'nav-lldp-ingestion': return 'Network Protocol Ingestion';
@@ -231,11 +260,14 @@ function App() {
   const getPageSubtitle = () => {
     switch (currentView) {
       case 'nav-dashboard': return '';
+      case 'nav-organization-regions': return 'Manage network regions and geographical areas';
+      case 'nav-organization-sites': return 'Manage network sites and data centers';
+      case 'nav-organization-locations': return 'Manage specific locations within sites';
       case 'nav-discover-scan': return 'Start a new network discovery scan';
+      case 'nav-netbox-import': return 'Import network topology from NetBox or Slurpit';
       case 'nav-discover-history': return 'View previous discovery scans and results';
       case 'nav-inventory-devices': return 'Manage network devices';
       case 'nav-topology': return 'Visualize network topology and connections';
-      case 'nav-map': return 'View devices and sites on geographic maps';
       case 'nav-analyze-paths': return 'Analyze network paths';
       case 'nav-analyze-reachability': return 'Test device reachability';
       case 'nav-lldp-ingestion': return 'Discover network topology using multiple protocols';
@@ -277,6 +309,13 @@ function App() {
         <DiscoveryWizard
           onComplete={handleDiscoveryComplete}
           onCancel={() => setShowDiscoveryWizard(false)}
+        />
+      )}
+
+      {showNetBoxImporter && (
+        <NetBoxImporter
+          onComplete={handleDiscoveryComplete}
+          onCancel={() => setShowNetBoxImporter(false)}
         />
       )}
 

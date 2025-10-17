@@ -1,5 +1,13 @@
-import React, { useState } from 'react';
-import { Menu, Search, Bell, Settings, ChevronDown, User, LogOut } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  Menu,
+  Search,
+  Bell,
+  Settings,
+  ChevronDown,
+  User,
+  LogOut,
+} from "lucide-react";
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -8,7 +16,12 @@ interface HeaderProps {
   onProfileClick?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onMenuClick, title, subtitle, onProfileClick }) => {
+const Header: React.FC<HeaderProps> = ({
+  onMenuClick,
+  title,
+  subtitle,
+  onProfileClick,
+}) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   return (
@@ -22,13 +35,13 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, title, subtitle, onProfile
             <span className="sr-only">Open sidebar</span>
             <Menu className="w-5 h-5" />
           </button>
-          
-          <div>
+
+          {/* <div>
             <h1 className="text-xl font-semibold text-white">{title}</h1>
             {subtitle && <p className="text-sm text-gray-400">{subtitle}</p>}
-          </div>
+          </div> */}
         </div>
-        
+
         <div className="flex items-center space-x-4">
           {/* Search */}
           <div className="hidden md:block">
@@ -43,23 +56,23 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, title, subtitle, onProfile
               </div>
             </div>
           </div>
-          
+
           {/* Notifications */}
           <button className="relative p-2 text-gray-400 hover:text-white transition-colors">
             <span className="sr-only">Notifications</span>
             <Bell className="w-5 h-5" />
             <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-gray-900"></span>
           </button>
-          
+
           {/* Settings */}
           <button className="p-2 text-gray-400 hover:text-white transition-colors">
             <span className="sr-only">Settings</span>
             <Settings className="w-5 h-5" />
           </button>
-          
+
           {/* User Menu */}
           <div className="relative">
-            <button 
+            <button
               onClick={() => setShowUserMenu(!showUserMenu)}
               className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-800 transition-colors"
             >
@@ -71,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, title, subtitle, onProfile
               </span>
               <ChevronDown className="w-4 h-4 text-gray-400" />
             </button>
-            
+
             {/* User Dropdown */}
             {showUserMenu && (
               <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg border border-gray-700 py-1 z-50">
@@ -104,4 +117,3 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, title, subtitle, onProfile
 };
 
 export default Header;
-

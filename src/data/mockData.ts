@@ -561,6 +561,34 @@ export const mockMetrics: Metric[] = [
   }
 ];
 
+// Mock Regions
+export const mockRegions = [
+  {
+    id: 1,
+    name: "North Region",
+    sites: "5 Sites",
+    description: "Handles data centers and branches in the northern zone."
+  },
+  {
+    id: 2,
+    name: "South Region", 
+    sites: "3 Sites",
+    description: "Covers coastal and southern metro locations."
+  },
+  {
+    id: 3,
+    name: "East Region",
+    sites: "4 Sites", 
+    description: "Responsible for industrial hub connections and cloud edge nodes."
+  },
+  {
+    id: 4,
+    name: "West Region",
+    sites: "2 Sites",
+    description: "Focuses on rural deployments and IoT gateways."
+  }
+];
+
 // Mock Discovery Scans
 export const mockDiscoveryScans: DiscoveryScan[] = [
   {
@@ -732,6 +760,32 @@ export const mockNavigationItems: NavigationItem[] = [
     path: '/dashboard'
   },
   {
+    id: 'nav-organization',
+    label: 'Organization',
+    icon: 'building',
+    path: '/organization',
+    children: [
+      {
+        id: 'nav-organization-regions',
+        label: 'Regions',
+        icon: 'map',
+        path: '/organization/regions'
+      },
+      {
+        id: 'nav-organization-sites',
+        label: 'Sites',
+        icon: 'building',
+        path: '/organization/sites'
+      },
+      {
+        id: 'nav-organization-locations',
+        label: 'Locations',
+        icon: 'map-pin',
+        path: '/organization/locations'
+      }
+    ]
+  },
+  {
     id: 'nav-discover',
     label: 'Discover',
     icon: 'search',
@@ -743,6 +797,12 @@ export const mockNavigationItems: NavigationItem[] = [
         icon: 'play',
         path: '/discover/scan'
       },
+      // {
+      //   id: 'nav-netbox-import',
+      //   label: 'Import from NetBox',
+      //   icon: 'cloud',
+      //   path: '/discover/netbox'
+      // },
       {
         id: 'nav-discover-history',
         label: 'Scan History',
@@ -776,12 +836,6 @@ export const mockNavigationItems: NavigationItem[] = [
         label: 'Topology',
         icon: 'share',
         path: '/topology-manager/topology'
-      },
-      {
-        id: 'nav-map',
-        label: 'Map',
-        icon: 'map',
-        path: '/topology-manager/map'
       },
       {
         id: 'nav-lldp-ingestion',

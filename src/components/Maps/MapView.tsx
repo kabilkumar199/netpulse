@@ -8,6 +8,7 @@ import 'leaflet/dist/leaflet.css';
 interface MapViewProps {
   onDeviceSelect?: (device: Device) => void;
   onSiteSelect?: (site: Site) => void;
+  devices?: Device[];
 }
 
 // Custom icons for devices
@@ -60,7 +61,11 @@ const siteIcon = new Icon({
   popupAnchor: [0, -20]
 });
 
-const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
+const MapView: React.FC<MapViewProps> = ({ 
+  onDeviceSelect, 
+  onSiteSelect,
+  devices = mockDevices 
+}) => {
   const [selectedOverlay, setSelectedOverlay] = useState<'devices' | 'sites' | 'links' | 'alerts'>('devices');
   const [mapType, setMapType] = useState<'roadmap' | 'satellite' | 'hybrid' | 'terrain'>('roadmap');
   const [zoom, setZoom] = useState(10);
@@ -106,7 +111,7 @@ const MapView: React.FC<MapViewProps> = ({ onDeviceSelect, onSiteSelect }) => {
   };
 
   // Add some mock coordinates for devices and sites
-  const devicesWithCoords = mockDevices.map((device) => ({
+  const devicesWithCoords = devices.map((device) => ({
     ...device,
     coordinates: [
       37.7749 + (Math.random() - 0.5) * 0.1,
