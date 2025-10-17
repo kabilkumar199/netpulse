@@ -17,7 +17,6 @@ interface ConfigStats {
 
 const ConfigurationManager: React.FC<ConfigurationManagerProps> = ({ onClose }) => {
   const [selectedView, setSelectedView] = useState<'overview' | 'backups' | 'policies' | 'changes' | 'compliance'>('overview');
-  const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
   const [configStats, setConfigStats] = useState<ConfigStats | null>(null);
   const [deviceConfigs, setDeviceConfigs] = useState<DeviceConfiguration[]>([]);
   const [policies, setPolicies] = useState<ConfigurationPolicy[]>([]);

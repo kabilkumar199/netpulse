@@ -3,7 +3,7 @@
  * Supports: LLDP, CDP, IS-IS, OSPF, BGP, VXLAN, EVPN
  */
 
-import type { Device, ISISInfo, OSPFInfo, BGPInfo, LLDPInfo, CDPInfo } from '../types';
+import type { Device, LLDPInfo, CDPInfo } from '../types';
 
 export interface ProtocolIngestionResult {
   deviceId: string;
@@ -615,37 +615,37 @@ export class ProtocolService {
 
   // ============= REAL QUERY METHODS (Placeholder) =============
 
-  private async queryLLDP(device: Device): Promise<LLDPInfo[]> {
+  private async queryLLDP(_device: Device): Promise<LLDPInfo[]> {
     // Real implementation would use SNMP to query LLDP-MIB
     throw new Error('Real LLDP query not implemented - backend required');
   }
 
-  private async queryCDP(device: Device): Promise<CDPInfo[]> {
+  private async queryCDP(_device: Device): Promise<CDPInfo[]> {
     // Real implementation would use SNMP to query CDP-MIB
     throw new Error('Real CDP query not implemented - backend required');
   }
 
-  private async queryISIS(device: Device): Promise<any> {
+  private async queryISIS(_device: Device): Promise<any> {
     // Real implementation would use SNMP/SSH to query IS-IS
     throw new Error('Real IS-IS query not implemented - backend required');
   }
 
-  private async queryOSPF(device: Device): Promise<any> {
+  private async queryOSPF(_device: Device): Promise<any> {
     // Real implementation would use SNMP/SSH to query OSPF
     throw new Error('Real OSPF query not implemented - backend required');
   }
 
-  private async queryBGP(device: Device): Promise<any> {
+  private async queryBGP(_device: Device): Promise<any> {
     // Real implementation would use SNMP/SSH to query BGP
     throw new Error('Real BGP query not implemented - backend required');
   }
 
-  private async queryVXLAN(device: Device): Promise<any> {
+  private async queryVXLAN(_device: Device): Promise<any> {
     // Real implementation would use SSH/API to query VXLAN
     throw new Error('Real VXLAN query not implemented - backend required');
   }
 
-  private async queryEVPN(device: Device): Promise<any> {
+  private async queryEVPN(_device: Device): Promise<any> {
     // Real implementation would use SSH/API to query EVPN
     throw new Error('Real EVPN query not implemented - backend required');
   }

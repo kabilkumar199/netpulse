@@ -1,4 +1,5 @@
 import React from 'react';
+import { Search, AlertTriangle, Clock } from 'lucide-react';
 import StatsCard from './StatsCard';
 import DeviceStatusChart from './DeviceStatusChart';
 import RecentEvents from './RecentEvents';
@@ -96,21 +97,21 @@ const Dashboard: React.FC = () => {
         <StatsCard
           title="Active Scans"
           value={activeScans}
-          icon="🔍"
+          icon={Search}
           color="yellow"
           subtitle="Discovery in progress"
         />
         <StatsCard
           title="Critical Alerts"
           value={mockEvents.filter(e => e.severity === 'critical').length}
-          icon="🚨"
+          icon={AlertTriangle}
           color="red"
           subtitle="Require immediate attention"
         />
         <StatsCard
           title="Last Discovery"
           value="2 hours ago"
-          icon="⏰"
+          icon={Clock}
           color="blue"
           subtitle="Network scan completed"
         />

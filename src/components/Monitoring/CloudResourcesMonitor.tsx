@@ -225,14 +225,6 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
     }
   };
 
-  const getProviderColor = (provider: string) => {
-    switch (provider) {
-      case 'aws': return 'text-orange-400';
-      case 'azure': return 'text-blue-400';
-      case 'gcp': return 'text-green-400';
-      default: return 'text-gray-400';
-    }
-  };
 
   const getResourceIcon = (type: string) => {
     switch (type) {
@@ -245,14 +237,6 @@ const CloudResourcesMonitor: React.FC<CloudResourcesMonitorProps> = ({ onClose }
     }
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'running': return 'text-green-400';
-      case 'stopped': return 'text-gray-400';
-      case 'terminated': return 'text-red-400';
-      default: return 'text-gray-400';
-    }
-  };
 
   const getStatusBgColor = (status: string) => {
     switch (status) {

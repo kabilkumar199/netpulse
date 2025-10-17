@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import type { Device, Link } from '../../types';
 import { mockDevices, mockLinks } from '../../data/mockData';
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import type { FlowRecord, Device } from '../../types';
+import type { FlowRecord } from '../../types';
 
 interface NetworkTrafficAnalysisProps {
   onClose?: () => void;

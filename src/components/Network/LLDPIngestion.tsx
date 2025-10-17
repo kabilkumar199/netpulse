@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Device, Link, LLDPInfo } from '../../types';
+import type { Device } from '../../types';
 import { mockDevices, mockLinks } from '../../data/mockData';
 
 interface LLDPIngestionProps {
@@ -304,7 +304,7 @@ const LLDPIngestion: React.FC<LLDPIngestionProps> = ({ onClose }) => {
                         <div className="text-sm">
                           <span className="text-gray-600">Errors:</span>
                           <div className="mt-1 space-y-1">
-                            {result.errors.map((error, index) => (
+                            {result.errors.map((error: string, index: number) => (
                               <div key={index} className="text-red-600 text-xs">
                                 • {error}
                               </div>
@@ -328,7 +328,7 @@ const LLDPIngestion: React.FC<LLDPIngestionProps> = ({ onClose }) => {
         </h3>
         
         <div className="space-y-3">
-          {mockLinks.map((link) => {
+          {mockLinks.map((link: any) => {
             const sourceDevice = mockDevices.find(d => d.id === link.sourceDeviceId);
             const targetDevice = mockDevices.find(d => d.id === link.targetDeviceId);
             

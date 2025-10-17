@@ -17,7 +17,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
   title, 
   value, 
   change, 
-  icon, 
+  icon: Icon, 
   color, 
   subtitle 
 }) => {
@@ -66,7 +66,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
           )}
         </div>
         <div className={`w-12 h-12 rounded-xl ${colorClasses[color]} flex items-center justify-center shadow-lg`}>
-          <icon className="w-6 h-6" />
+          <Icon className="w-6 h-6" />
         </div>
       </div>
     </div>

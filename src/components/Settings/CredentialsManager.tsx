@@ -85,7 +85,13 @@ const CredentialsManager: React.FC<CredentialsManagerProps> = ({ onClose }) => {
       vlanContextPattern: credential.vlanContextPattern || '',
       priority: credential.priority,
       isActive: credential.isActive,
-      scoping: credential.scoping
+      scoping: {
+        ipRanges: credential.scoping.ipRanges || [],
+        deviceTypes: credential.scoping.deviceTypes || [],
+        vendors: credential.scoping.vendors || [],
+        osTypes: credential.scoping.osTypes || [],
+        roles: credential.scoping.roles || []
+      }
     });
   };
 

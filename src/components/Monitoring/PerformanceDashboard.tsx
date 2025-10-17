@@ -24,7 +24,6 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ device, onC
   });
   const [selectedMetric, setSelectedMetric] = useState<keyof PerformanceData>('cpu');
   const [timeRange, setTimeRange] = useState<'1h' | '6h' | '24h' | '7d'>('1h');
-  const [isLoading, setIsLoading] = useState(false);
 
   // Mock performance data - in real implementation, this would come from API
   useEffect(() => {
@@ -233,7 +232,6 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ device, onC
         <div className="bg-gray-800 rounded p-4 h-64 flex items-end justify-between">
           {performanceData[selectedMetric].slice(-20).map((metric, index) => {
             const height = (metric.value / 100) * 200; // Scale to chart height
-            const color = getMetricColor(metric.value, metric.threshold);
             
             return (
               <div
@@ -274,15 +272,6 @@ const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ device, onC
         </div>
       )}
 
-      {/* Loading State */}
-      {isLoading && (
-        <div className="absolute inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto"></div>
-            <p className="mt-2 text-gray-300">Loading performance data...</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

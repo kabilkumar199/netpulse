@@ -380,7 +380,10 @@ export const netboxTopologyData: SlurpitTopology = {
         "display": "Cable #1"
       },
       "created": "2024-01-01T00:00:00Z",
-      "last_updated": "2025-01-15T10:30:00Z"
+      "last_updated": "2025-01-15T10:30:00Z",
+      "count_ipaddresses": 1,
+      "count_fhrp_groups": 0,
+      "occupied": true
     },
     {
       "id": 2,
@@ -413,7 +416,10 @@ export const netboxTopologyData: SlurpitTopology = {
         "display": "Cable #2"
       },
       "created": "2024-01-01T00:00:00Z",
-      "last_updated": "2025-01-15T10:30:00Z"
+      "last_updated": "2025-01-15T10:30:00Z",
+      "count_ipaddresses": 0,
+      "count_fhrp_groups": 0,
+      "occupied": false
     },
     {
       "id": 3,
@@ -446,7 +452,10 @@ export const netboxTopologyData: SlurpitTopology = {
         "display": "Cable #3"
       },
       "created": "2024-01-01T00:00:00Z",
-      "last_updated": "2025-01-15T10:30:00Z"
+      "last_updated": "2025-01-15T10:30:00Z",
+      "count_ipaddresses": 0,
+      "count_fhrp_groups": 0,
+      "occupied": false
     },
     {
       "id": 4,
@@ -479,7 +488,10 @@ export const netboxTopologyData: SlurpitTopology = {
         "display": "Cable #1"
       },
       "created": "2024-01-01T00:00:00Z",
-      "last_updated": "2025-01-15T10:30:00Z"
+      "last_updated": "2025-01-15T10:30:00Z",
+      "count_ipaddresses": 1,
+      "count_fhrp_groups": 0,
+      "occupied": true
     },
     {
       "id": 5,
@@ -512,7 +524,10 @@ export const netboxTopologyData: SlurpitTopology = {
         "display": "Cable #2"
       },
       "created": "2024-01-01T00:00:00Z",
-      "last_updated": "2025-01-15T10:30:00Z"
+      "last_updated": "2025-01-15T10:30:00Z",
+      "count_ipaddresses": 0,
+      "count_fhrp_groups": 0,
+      "occupied": false
     },
     {
       "id": 6,
@@ -545,7 +560,10 @@ export const netboxTopologyData: SlurpitTopology = {
         "display": "Cable #3"
       },
       "created": "2024-01-01T00:00:00Z",
-      "last_updated": "2025-01-15T10:30:00Z"
+      "last_updated": "2025-01-15T10:30:00Z",
+      "count_ipaddresses": 0,
+      "count_fhrp_groups": 0,
+      "occupied": false
     },
     {
       "id": 7,
@@ -578,7 +596,10 @@ export const netboxTopologyData: SlurpitTopology = {
         "display": "Cable #4"
       },
       "created": "2024-01-01T00:00:00Z",
-      "last_updated": "2025-01-15T10:30:00Z"
+      "last_updated": "2025-01-15T10:30:00Z",
+      "count_ipaddresses": 0,
+      "count_fhrp_groups": 0,
+      "occupied": false
     }
   ],
   "cables": [
@@ -863,7 +884,11 @@ export const netboxTopologyData: SlurpitTopology = {
       "created": "2024-01-01T00:00:00Z",
       "last_updated": "2025-01-15T10:30:00Z",
       "device_count": 5,
-      "rack_count": 2
+      "rack_count": 2,
+      "circuit_count": 0,
+      "prefix_count": 0,
+      "virtualmachine_count": 0,
+      "vlan_count": 0
     }
   ],
   "ip_addresses": [],
