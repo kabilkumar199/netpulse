@@ -758,3 +758,10 @@ export interface ImportOptions {
   updateExisting: boolean;
   createMissing: boolean;
 }
+
+export interface Region {
+  id: number;
+  name: string;
+  sites: string;
+  description: string;
+}

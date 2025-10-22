@@ -1,263 +1,245 @@
-import React, { useState, useEffect } from "react";
-import { Save, X } from "lucide-react";
-
-interface Location {
-  id: number;
-  name: string;
-  slug: string;
-  parent?: string;
-  status?: "Active" | "Inactive";
-  facility?: string;
-  description?: string;
-  tags?: string[];
-  tenantGroup?: string;
-  tenant?: string;
-}
-
-interface LocationFormModalProps {
+import React, { useState } from "react";
+import type { Location } from "../../../types";
+ 
+interface Props {
   location?: Location | null;
   onClose: () => void;
   onSave: (location: Location) => void;
 }
 
-const LocationFormModal: React.FC<LocationFormModalProps> = ({ location, onClose, onSave }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    slug: "",
-    parent: "",
-    status: "Active" as "Active" | "Inactive",
-    facility: "",
-    description: "",
-    tags: "",
-    tenantGroup: "",
-    tenant: "",
+const LocationFormModal: React.FC<Props> = ({ location, onClose, onSave }) => {
+  const [formData, setFormData] = useState<Location>({
+    id: location?.id || Date.now().toString(),
+    name: location?.name || "",
+    latitude: location?.latitude || 0,
+    longitude: location?.longitude || 0,
+    address: location?.address || "",
+    city: location?.city || "",
+    state: location?.state || "",
+    country: location?.country || "",
+    postalCode: location?.postalCode || "",
+    siteHierarchy: location?.siteHierarchy || [],
+    mapZoom: location?.mapZoom || 10,
+    mapTileReference: location?.mapTileReference || "",
+    createdAt: location?.createdAt || new Date(),
+    updatedAt: location?.updatedAt || new Date(),
   });
 
-  useEffect(() => {
-    if (location) {
-      setFormData({
-        name: location.name,
-        slug: location.slug,
-        parent: location.parent || "",
-        status: location.status || "Active",
-        facility: location.facility || "",
-        description: location.description || "",
-        tags: location.tags?.join(", ") || "",
-        tenantGroup: location.tenantGroup || "",
-        tenant: location.tenant || "",
-      });
-    }
-  }, [location]);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const locationData: Location = {
-      id: location?.id || Date.now(),
-      name: formData.name,
-      slug: formData.slug,
-      parent: formData.parent,
-      status: formData.status,
-      facility: formData.facility,
-      description: formData.description,
-      tags: formData.tags ? formData.tags.split(",").map(tag => tag.trim()) : [],
-      tenantGroup: formData.tenantGroup,
-      tenant: formData.tenant,
-    };
-    onSave(locationData);
+    setFormData((prev:any) => ({
+      ...prev,
+      [name]:
+        name === "latitude" || name === "longitude" || name === "mapZoom"
+          ? parseFloat(value)
+          : value,
+    }));
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
+  const handleSubmit = () => {
+    if (!formData.name) {
+      alert("Name is required!");
+      return;
+    }
+
+    const updatedData = {
       ...formData,
-      [e.target.name]: e.target.value,
-    });
+      updatedAt: new Date(),
+    };
+
+    onSave(updatedData);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg w-full max-w-3xl relative">
+      <div className="bg-slate-900 p-6 rounded-xl border border-slate-700 shadow-lg w-full max-w-lg relative">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors"
+          className="absolute top-3 right-3 text-gray-400 hover:text-gray-100"
         >
           ✖
         </button>
 
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-white">
-              {location ? "Edit Location" : "Add New Location"}
-            </h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          {location ? "Edit Location" : "Add Location"}
+        </h2>
+
+        <div className="space-y-3">
+          {/* Name */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Name *</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Location Name"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+            />
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                  Location Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition-colors"
-                  placeholder="Enter location name"
-                />
-              </div>
+          {/* Address */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Address</label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address || ""}
+              onChange={handleChange}
+              placeholder="Street Address"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+            />
+          </div>
 
-              <div>
-                <label htmlFor="slug" className="block text-sm font-medium text-gray-300 mb-2">
-                  Slug
-                </label>
-                <input
-                  type="text"
-                  id="slug"
-                  name="slug"
-                  value={formData.slug}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition-colors"
-                  placeholder="Enter location slug"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="parent" className="block text-sm font-medium text-gray-300 mb-2">
-                  Parent Site
-                </label>
-                <select
-                  id="parent"
-                  name="parent"
-                  value={formData.parent}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-emerald-500 transition-colors"
-                >
-                  <option value="">Select Parent Site</option>
-                  <option value="New York DC">New York DC</option>
-                  <option value="London DC">London DC</option>
-                  <option value="Tokyo DC">Tokyo DC</option>
-                  <option value="Sydney DC">Sydney DC</option>
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="status" className="block text-sm font-medium text-gray-300 mb-2">
-                  Status
-                </label>
-                <select
-                  id="status"
-                  name="status"
-                  value={formData.status}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-emerald-500 transition-colors"
-                >
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="facility" className="block text-sm font-medium text-gray-300 mb-2">
-                  Facility
-                </label>
-                <input
-                  type="text"
-                  id="facility"
-                  name="facility"
-                  value={formData.facility}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition-colors"
-                  placeholder="Enter facility name"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="tenantGroup" className="block text-sm font-medium text-gray-300 mb-2">
-                  Tenant Group
-                </label>
-                <select
-                  id="tenantGroup"
-                  name="tenantGroup"
-                  value={formData.tenantGroup}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-emerald-500 transition-colors"
-                >
-                  <option value="">Select Tenant Group</option>
-                  <option value="Corporate">Corporate</option>
-                  <option value="Development">Development</option>
-                  <option value="Testing">Testing</option>
-                </select>
-              </div>
-            </div>
-
+          {/* City / State / Country */}
+          <div className="grid grid-cols-3 gap-3">
             <div>
-              <label htmlFor="tenant" className="block text-sm font-medium text-gray-300 mb-2">
-                Tenant
-              </label>
+              <label className="block text-sm font-medium mb-1">City</label>
               <input
                 type="text"
-                id="tenant"
-                name="tenant"
-                value={formData.tenant}
+                name="city"
+                value={formData.city || ""}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition-colors"
-                placeholder="Enter tenant name"
+                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
               />
             </div>
-
             <div>
-              <label htmlFor="tags" className="block text-sm font-medium text-gray-300 mb-2">
-                Tags (comma-separated)
-              </label>
+              <label className="block text-sm font-medium mb-1">State</label>
               <input
                 type="text"
-                id="tags"
-                name="tags"
-                value={formData.tags}
+                name="state"
+                value={formData.state || ""}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition-colors"
-                placeholder="e.g., primary, critical, production"
+                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
               />
             </div>
-
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-2">
-                Description
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
+              <label className="block text-sm font-medium mb-1">Country</label>
+              <input
+                type="text"
+                name="country"
+                value={formData.country || ""}
                 onChange={handleChange}
-                rows={3}
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition-colors resize-none"
-                placeholder="Enter location description"
+                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
               />
             </div>
+          </div>
 
-            <div className="flex justify-end gap-3 pt-4">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-md transition-colors flex items-center gap-2"
-              >
-                <X size={16} /> Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition-colors flex items-center gap-2"
-              >
-                <Save size={16} /> {location ? "Update Location" : "Save Location"}
-              </button>
+          {/* Postal Code */}
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Postal Code
+            </label>
+            <input
+              type="text"
+              name="postalCode"
+              value={formData.postalCode || ""}
+              onChange={handleChange}
+              placeholder="ZIP / PIN Code"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+            />
+          </div>
+
+          {/* Coordinates */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Latitude
+              </label>
+              <input
+                type="number"
+                name="latitude"
+                value={formData.latitude}
+                step="0.0001"
+                onChange={handleChange}
+                placeholder="Latitude"
+                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+              />
             </div>
-          </form>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Longitude
+              </label>
+              <input
+                type="number"
+                name="longitude"
+                value={formData.longitude}
+                step="0.0001"
+                onChange={handleChange}
+                placeholder="Longitude"
+                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+              />
+            </div>
+          </div>
+
+          {/* Map Zoom */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Map Zoom</label>
+            <input
+              type="number"
+              name="mapZoom"
+              value={formData.mapZoom || 10}
+              onChange={handleChange}
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+            />
+          </div>
+
+          {/* Map Tile Reference */}
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Map Tile Reference
+            </label>
+            <input
+              type="text"
+              name="mapTileReference"
+              value={formData.mapTileReference || ""}
+              onChange={handleChange}
+              placeholder="Map Tile Info"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+            />
+          </div>
+
+          {/* Site Hierarchy */}
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Site Hierarchy (comma-separated)
+            </label>
+            <input
+              type="text"
+              name="siteHierarchy"
+              value={formData.siteHierarchy?.join(", ") || ""}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  siteHierarchy: e.target.value
+                    .split(",")
+                    .map((v) => v.trim())
+                    .filter(Boolean),
+                }))
+              }
+              placeholder="e.g. Region1, ZoneA, SiteX"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+            />
+          </div>
+        </div>
+
+        {/* Footer Buttons */}
+        <div className="flex justify-end gap-3 mt-6">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSubmit}
+            className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 rounded-lg"
+          >
+            Save
+          </button>
         </div>
       </div>
     </div>

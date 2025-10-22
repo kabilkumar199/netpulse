@@ -1,159 +1,148 @@
-import React, { useState, useEffect } from "react";
-import { Save, X } from "lucide-react";
+import React, { useState } from "react";
+import { RefreshCw } from "lucide-react";
+import type { Site, Location, Device, Subnet, VLAN } from "../../../types";
 
-interface Site {
-  id: number;
-  name: string;
-  slug: string;
-  region?: string;
-  description?: string;
-}
+// Mock locations
+const mockLocations: Location[] = [
+  { id: "1", name: "HQ", latitude: 0, longitude: 0, createdAt: new Date(), updatedAt: new Date() },
+  { id: "2", name: "Branch 1", latitude: 0, longitude: 0, createdAt: new Date(), updatedAt: new Date() },
+];
 
-interface SiteFormModalProps {
+interface Props {
   site?: Site | null;
   onClose: () => void;
   onSave: (site: Site) => void;
 }
 
-const SiteFormModal: React.FC<SiteFormModalProps> = ({ site, onClose, onSave }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    slug: "",
-    region: "",
-    description: "",
+const SiteFormModal: React.FC<Props> = ({ site, onClose, onSave }) => {
+  const [formData, setFormData] = useState<Site>({
+    id: site?.id || Date.now().toString(),
+    name: site?.name || "",
+    description: site?.description || "",
+    location: site?.location || mockLocations[0],
+    devices: site?.devices || [],
+    subnets: site?.subnets || [],
+    vlans: site?.vlans || [],
+    createdAt: site?.createdAt || new Date(),
+    updatedAt: site?.updatedAt || new Date(),
   });
 
-  useEffect(() => {
-    if (site) {
-      setFormData({
-        name: site.name,
-        slug: site.slug,
-        region: site.region || "",
-        description: site.description || "",
-      });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    if (name === "location") {
+      const loc = mockLocations.find((l) => l.id === value);
+      if (loc) setFormData((prev) => ({ ...prev, location: loc }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
-  }, [site]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const siteData: Site = {
-      id: site?.id || Date.now(),
-      name: formData.name,
-      slug: formData.slug,
-      region: formData.region,
-      description: formData.description,
-    };
-    onSave(siteData);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleGenerateSlug = () => {
+    if (formData.name) {
+      const slug = formData.name.toLowerCase().replace(/\s+/g, "-");
+      setFormData((prev) => ({ ...prev, name: formData.name })); // name stays the same
+    }
+  };
+
+  const handleSubmit = () => {
+    onSave({ ...formData, updatedAt: new Date() });
+    onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg w-full max-w-2xl relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+      <div className="bg-slate-900 rounded-xl border border-slate-700 shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
+        {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors"
+          className="absolute top-3 right-3 text-gray-400 hover:text-gray-100"
         >
           ✖
         </button>
 
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-white">
-              {site ? "Edit Site" : "Add New Site"}
-            </h2>
+        <div className="p-6 space-y-4">
+          <h2 className="text-2xl font-semibold mb-2">
+            {site ? "Edit Site" : "Add Site"}
+          </h2>
+
+          {/* Name */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Name *</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Site Name"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+            />
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                Site Name
-              </label>
+          {/* Slug (just for demonstration, optional) */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Slug</label>
+            <div className="flex items-center">
               <input
                 type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition-colors"
-                placeholder="Enter site name"
+                value={formData.name.toLowerCase().replace(/\s+/g, "-")}
+                readOnly
+                className="flex-1 bg-slate-800 border border-slate-700 rounded-l-lg px-3 py-2"
               />
-            </div>
-
-            <div>
-              <label htmlFor="slug" className="block text-sm font-medium text-gray-300 mb-2">
-                Slug
-              </label>
-              <input
-                type="text"
-                id="slug"
-                name="slug"
-                value={formData.slug}
-                onChange={handleChange}
-                required
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition-colors"
-                placeholder="Enter site slug"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="region" className="block text-sm font-medium text-gray-300 mb-2">
-                Region
-              </label>
-              <select
-                id="region"
-                name="region"
-                value={formData.region}
-                onChange={handleChange}
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:border-emerald-500 transition-colors"
-              >
-                <option value="">Select Region</option>
-                <option value="North America">North America</option>
-                <option value="Europe">Europe</option>
-                <option value="Asia Pacific">Asia Pacific</option>
-                <option value="South America">South America</option>
-                <option value="Africa">Africa</option>
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-2">
-                Description
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                rows={3}
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition-colors resize-none"
-                placeholder="Enter site description"
-              />
-            </div>
-
-            <div className="flex justify-end gap-3 pt-4">
               <button
                 type="button"
-                onClick={onClose}
-                className="px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-md transition-colors flex items-center gap-2"
+                onClick={handleGenerateSlug}
+                className="bg-slate-700 hover:bg-slate-600 border border-slate-700 rounded-r-lg px-3 py-2 flex items-center"
               >
-                <X size={16} /> Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition-colors flex items-center gap-2"
-              >
-                <Save size={16} /> {site ? "Update Site" : "Save Site"}
+                <RefreshCw size={16} />
               </button>
             </div>
-          </form>
+          </div>
+
+          {/* Location selection */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Location</label>
+            <select
+              name="location"
+              value={formData.location.id}
+              onChange={handleChange}
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+            >
+              {mockLocations.map((loc) => (
+                <option key={loc.id} value={loc.id}>
+                  {loc.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Description */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Description</label>
+            <input
+              type="text"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Description"
+              className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+            />
+          </div>
+
+          {/* Actions */}
+          <div className="flex justify-end gap-3 pt-4 sticky bottom-0 bg-slate-900 pb-2">
+            <button
+              onClick={onClose}
+              className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSubmit}
+              className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 rounded-lg"
+            >
+              {site ? "Update" : "Create"}
+            </button>
+          </div>
         </div>
       </div>
     </div>

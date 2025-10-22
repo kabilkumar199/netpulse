@@ -1,111 +1,241 @@
 import React, { useState } from "react";
-import { Save, X } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 
 interface Region {
   id: number;
   name: string;
-  sites?: string;
+  slug: string;
   description?: string;
+  parent?: string;
+  tags?: string[];
+  comments?: string;
 }
 
 interface AddRegionProps {
-  onAddRegion: (region: Region) => void;
+  onAddRegion?: (region: Region) => void;
 }
 
+// Mock parent region options
+const mockRegions = [
+  { id: 1, name: "North America" },
+  { id: 2, name: "Europe" },
+  { id: 3, name: "Asia Pacific" },
+];
+
 const AddRegion: React.FC<AddRegionProps> = ({ onAddRegion }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Region>({
+    id: Date.now(),
     name: "",
-    sites: "",
+    slug: "",
     description: "",
+    parent: "",
+    tags: [],
+    comments: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newRegion: Region = {
-      id: Date.now(),
-      name: formData.name,
-      sites: formData.sites,
-      description: formData.description,
-    };
-    onAddRegion(newRegion);
-    setFormData({ name: "", sites: "", description: "" });
+  const [regions, setRegions] = useState<Region[]>([]);
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleGenerateSlug = () => {
+    if (formData.name) {
+      const slug = formData.name.toLowerCase().replace(/\s+/g, "-");
+      setFormData((prev) => ({ ...prev, slug }));
+    }
+  };
+  const handleCreate = () => {
+    // Validation
+    if (!formData.name || !formData.slug) {
+      alert("Name and Slug are required!");
+      return;
+    }
+
+    // Pass the new region to the parent (RegionsPage)
+    if (onAddRegion) {
+      onAddRegion(formData);
+    } else {
+      // Fallback for local state (if not used in modal)
+      setRegions((prev) => [...prev, formData]);
+      alert(`✅ Region "${formData.name}" added successfully!`);
+    }
+
+    // Reset form
     setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+      id: Date.now(),
+      name: "",
+      slug: "",
+      description: "",
+      parent: "",
+      tags: [],
+      comments: "",
     });
   };
 
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-white">Add New Region</h2>
-      </div>
+  const handleCreateAndAddAnother = () => {
+    handleCreate();
+  };
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+  return (
+    <div className="max-w-3xl mx-auto p-6 bg-slate-900 text-gray-100 rounded-xl ">
+      <h1 className="text-2xl font-semibold mb-6">Add Region</h1>
+
+      <div className="space-y-5">
+        {/* Parent */}
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-            Region Name
+          <label className="block text-sm font-medium mb-1">Parent</label>
+          <select
+            name="parent"
+            value={formData.parent}
+            onChange={handleChange}
+            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+          >
+            <option value="">-------</option>
+            {mockRegions.map((region) => (
+              <option key={region.id} value={region.name}>
+                {region.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Name */}
+        <div>
+          <label className="block text-sm font-medium mb-1 text-red-400">
+            Name *
           </label>
           <input
             type="text"
-            id="name"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            required
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition-colors"
-            placeholder="Enter region name"
+            placeholder="Region Name"
+            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
           />
         </div>
 
+        {/* Slug */}
         <div>
-          <label htmlFor="sites" className="block text-sm font-medium text-gray-300 mb-2">
-            Sites
+          <label className="block text-sm font-medium mb-1 text-red-400">
+            Slug *
           </label>
+          <div className="flex items-center">
+            <input
+              type="text"
+              name="slug"
+              value={formData.slug}
+              onChange={handleChange}
+              placeholder="URL-friendly shorthand"
+              className="flex-1 bg-slate-800 border border-slate-700 rounded-l-lg px-3 py-2"
+            />
+            <button
+              onClick={handleGenerateSlug}
+              type="button"
+              className="bg-slate-700 hover:bg-slate-600 border border-slate-700 rounded-r-lg px-3 py-2 flex items-center"
+            >
+              <RefreshCw size={16} />
+            </button>
+          </div>
+          <p className="text-xs text-gray-400 mt-1">
+            URL-friendly unique shorthand
+          </p>
+        </div>
+
+        {/* Description */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Description</label>
           <input
             type="text"
-            id="sites"
-            name="sites"
-            value={formData.sites}
-            onChange={handleChange}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition-colors"
-            placeholder="e.g., 5 Sites"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-2">
-            Description
-          </label>
-          <textarea
-            id="description"
             name="description"
             value={formData.description}
             onChange={handleChange}
-            rows={3}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition-colors resize-none"
-            placeholder="Enter region description"
+            placeholder="Description"
+            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
           />
         </div>
 
-        <div className="flex justify-end gap-3 pt-4">
+        {/* Tags */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Tags</label>
+          <input
+            type="text"
+            name="tags"
+            value={formData.tags?.join(", ")}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                tags: e.target.value.split(",").map((tag) => tag.trim()),
+              }))
+            }
+            placeholder="Comma separated tags"
+            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+          />
+        </div>
+
+        {/* Comments */}
+        <div>
+          <label className="block text-sm font-medium mb-2">Comments</label>
+          <textarea
+            name="comments"
+            rows={4}
+            value={formData.comments}
+            onChange={handleChange}
+            placeholder="Add comments here..."
+            className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2"
+          ></textarea>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex justify-end items-center gap-3 pt-4">
           <button
-            type="button"
-            className="px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-md transition-colors flex items-center gap-2"
+            onClick={() => console.log("Cancelled")}
+            className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg"
           >
-            <X size={16} /> Cancel
+            Cancel
           </button>
           <button
-            type="submit"
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition-colors flex items-center gap-2"
+            onClick={handleCreate}
+            className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 rounded-lg"
           >
-            <Save size={16} /> Save Region
+            Create
+          </button>
+          <button
+            onClick={handleCreateAndAddAnother}
+            className="px-4 py-2 bg-teal-600 hover:bg-teal-700 rounded-lg"
+          >
+            Create & Add Another
           </button>
         </div>
-      </form>
+      </div>
+
+      {/* Mock data preview */}
+      {regions.length > 0 && (
+        <div className="mt-8 bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <h2 className="font-semibold mb-3 text-gray-200">
+            Mock Regions List
+          </h2>
+          <ul className="space-y-2">
+            {regions.map((r) => (
+              <li
+                key={r.id}
+                className="border border-slate-700 rounded-md p-3 bg-slate-900"
+              >
+                <p className="text-sm font-medium text-emerald-400">{r.name}</p>
+                <p className="text-xs text-gray-400">Slug: {r.slug}</p>
+                {r.description && (
+                  <p className="text-xs text-gray-400 mt-1">{r.description}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

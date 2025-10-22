@@ -3,46 +3,8 @@ import { Plus, Edit, Trash2 } from "lucide-react";
 import SiteFormModal from "./Site/SiteFormModal";
 import RegionsToolbar from "./regions/RegionsToolbar";
 import RegionsActions from "./regions/RegionsActions";
-
-// Mock data
-export interface Site {
-  id: number;
-  name: string;
-  slug: string;
-  region?: string;
-  description?: string;
-}
-
-export const mockSites: Site[] = [
-  {
-    id: 1,
-    name: "New York DC",
-    slug: "new-york-dc",
-    region: "North America",
-    description: "Primary data center in New York",
-  },
-  {
-    id: 2,
-    name: "London DC",
-    slug: "london-dc",
-    region: "Europe",
-    description: "Main London data center",
-  },
-  {
-    id: 3,
-    name: "Tokyo DC",
-    slug: "tokyo-dc",
-    region: "Asia Pacific",
-    description: "Tokyo data center for APAC region",
-  },
-  {
-    id: 4,
-    name: "Sydney DC",
-    slug: "sydney-dc",
-    region: "Asia Pacific",
-    description: "Secondary APAC site",
-  },
-];
+import { mockSites } from "../../data/mockData";
+import type { Site } from "../../types";
 
 const Sites: React.FC = () => {
   const [sites, setSites] = useState<Site[]>(mockSites);
@@ -59,18 +21,19 @@ const Sites: React.FC = () => {
     setShowModal(true);
   };
 
-  const handleDelete = (siteId: number) => {
+  const handleDelete = (siteId: string) => {
     if (!confirm("Are you sure you want to delete this site?")) return;
-    setSites(sites.filter((s) => s.id !== siteId));
+    setSites((prev) => prev.filter((s) => s.id !== siteId));
   };
 
   const handleSave = (site: Site) => {
     const exists = sites.find((s) => s.id === site.id);
     if (exists) {
-      setSites(sites.map((s) => (s.id === site.id ? site : s)));
+      setSites((prev) => prev.map((s) => (s.id === site.id ? site : s)));
     } else {
-      setSites([site, ...sites]);
+      setSites((prev) => [site, ...prev]);
     }
+    setEditingSite(null);
     setShowModal(false);
   };
 
@@ -86,6 +49,8 @@ const Sites: React.FC = () => {
           <Plus size={16} /> Add Site
         </button>
       </div>
+
+      {/* Toolbar */}
       <RegionsToolbar />
 
       {/* Table */}
@@ -97,16 +62,17 @@ const Sites: React.FC = () => {
                 <input type="checkbox" className="accent-emerald-500" />
               </th>
               <th className="px-4 py-2">Name</th>
-              <th className="px-4 py-2">Slug</th>
-              <th className="px-4 py-2">Region</th>
+              <th className="px-4 py-2">Location</th>
+              <th className="px-4 py-2">Devices</th>
+              <th className="px-4 py-2">Subnets</th>
+              <th className="px-4 py-2">VLANs</th>
               <th className="px-4 py-2">Description</th>
-              <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {sites.length === 0 ? (
               <tr>
-                <td colSpan={6} className="text-center py-6 text-gray-400">
+                <td colSpan={8} className="text-center py-6 text-gray-400">
                   — No sites found —
                 </td>
               </tr>
@@ -120,22 +86,20 @@ const Sites: React.FC = () => {
                     <input type="checkbox" className="accent-emerald-500" />
                   </td>
                   <td className="px-4 py-3 text-white">{site.name}</td>
-                  <td className="px-4 py-3 text-gray-300">{site.slug}</td>
-                  <td className="px-4 py-3 text-gray-300">{site.region}</td>
-                  <td className="px-4 py-3 text-gray-300">{site.description}</td>
-                  <td className="px-4 py-3 flex gap-2">
-                    <button
-                      onClick={() => handleEdit(site)}
-                      className="bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded transition-colors"
-                    >
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(site.id)}
-                      className="bg-red-600 hover:bg-red-700 px-2 py-1 rounded transition-colors"
-                    >
-                      <Trash2 size={16} />
-                    </button>
+                  <td className="px-4 py-3 text-gray-300">
+                    {site.location?.name || "—"}
+                  </td>
+                  <td className="px-4 py-3 text-gray-300">
+                    {site.devices?.length ?? 0}
+                  </td>
+                  <td className="px-4 py-3 text-gray-300">
+                    {site.subnets?.length ?? 0}
+                  </td>
+                  <td className="px-4 py-3 text-gray-300">
+                    {site.vlans?.length ?? 0}
+                  </td>
+                  <td className="px-4 py-3 text-gray-300">
+                    {site.description || "—"}
                   </td>
                 </tr>
               ))
@@ -143,6 +107,8 @@ const Sites: React.FC = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Footer Actions */}
       <RegionsActions />
 
       {/* Modal */}
