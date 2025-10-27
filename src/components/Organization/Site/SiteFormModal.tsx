@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { RefreshCw } from "lucide-react";
-import type { Site, Location, Device, Subnet, VLAN } from "../../../types";
-
-// Mock locations
-const mockLocations: Location[] = [
-  { id: "1", name: "HQ", latitude: 0, longitude: 0, createdAt: new Date(), updatedAt: new Date() },
-  { id: "2", name: "Branch 1", latitude: 0, longitude: 0, createdAt: new Date(), updatedAt: new Date() },
-];
+import type { Site } from "../../../types";
+import { mockLocations } from "../../../data/mockData";
 
 interface Props {
   site?: Site | null;
@@ -27,7 +22,9 @@ const SiteFormModal: React.FC<Props> = ({ site, onClose, onSave }) => {
     updatedAt: site?.updatedAt || new Date(),
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     if (name === "location") {
       const loc = mockLocations.find((l) => l.id === value);
@@ -117,7 +114,9 @@ const SiteFormModal: React.FC<Props> = ({ site, onClose, onSave }) => {
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-medium mb-1">Description</label>
+            <label className="block text-sm font-medium mb-1">
+              Description
+            </label>
             <input
               type="text"
               name="description"

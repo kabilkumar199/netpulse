@@ -6,34 +6,7 @@ import ManufacturersFormModal, {
   type ManufacturerData,
 } from "./Manufacturers/ManufacturersFormModal";
 import RegionsActions from "./regions/RegionsActions";
-
-// Mock data
-const mockManufacturers: ManufacturerData[] = [
-  {
-    id: 1,
-    name: "Cisco Systems",
-    slug: "cisco-systems",
-    description: "Leading manufacturer of networking equipment",
-  },
-  {
-    id: 2,
-    name: "Juniper Networks",
-    slug: "juniper-networks",
-    description: "Enterprise-grade routers and switches",
-  },
-  {
-    id: 3,
-    name: "Arista Networks",
-    slug: "arista-networks",
-    description: "Cloud networking hardware manufacturer",
-  },
-  {
-    id: 4,
-    name: "Extreme Networks",
-    slug: "extreme-networks",
-    description: "Provider of high-performance network solutions",
-  },
-];
+import { mockManufacturers } from "../../data/mockData";
 
 const ManufacturersPage: React.FC = () => {
   const [manufacturers, setManufacturers] =

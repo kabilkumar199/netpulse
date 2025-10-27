@@ -3,6 +3,7 @@ import { Plus, Edit, Trash2 } from "lucide-react";
 import RackFormModal from "./Rack/RackFormModal";
 import RegionsActions from "./regions/RegionsActions";
 import RegionsToolbar from "./regions/RegionsToolbar";
+import { mockRacks } from "../../data/mockData";
 
 export interface Rack {
   id: number;
@@ -34,39 +35,6 @@ export interface Rack {
   weightUnit?: string;
   mountingDepth?: string;
 }
-
-const mockRacks: Rack[] = [
-  {
-    id: 1,
-    site: "New York DC",
-    location: "Row A",
-    name: "Rack-001",
-    status: "Active",
-    role: "Compute",
-    rackType: "Standard 42U",
-    description: "Primary compute rack",
-    airflow: "Front-to-Back",
-    tags: ["core", "production"],
-    facilityId: "FAC-001",
-    serialNumber: "SN12345",
-    assetTag: "AST-001",
-    tenantGroup: "Finance",
-    tenant: "Accounts",
-    formFactor: "19 inches",
-    width: "600mm",
-    railWidth: "19 inches",
-    startUnit: "1",
-    height: "42",
-    outerWidth: "600mm",
-    outerHeight: "2000mm",
-    outerDepth: "1070mm",
-    outerUnit: "mm",
-    weight: "150kg",
-    maxWeight: "500kg",
-    weightUnit: "kg",
-    mountingDepth: "1000mm",
-  },
-];
 
 const RacksPage: React.FC = () => {
   const [racks, setRacks] = useState<Rack[]>(mockRacks);

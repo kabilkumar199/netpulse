@@ -1,38 +1,42 @@
-import React, { useState } from 'react';
-import { 
-  LayoutDashboard, 
-  Search, 
-  Play, 
-  History, 
-  Network, 
-  Server, 
-  Share2, 
-  Map, 
-  BarChart3, 
-  Route, 
-  CheckCircle, 
-  FileText, 
-  Settings, 
-  Key, 
-  Tag, 
-  Link, 
-  Clock, 
-  Activity, 
-  TrendingUp, 
-  Wifi, 
-  Layers, 
-  Cloud, 
-  Database, 
-  ChevronRight, 
+import React, { useState } from "react";
+import {
+  LayoutDashboard,
+  Search,
+  Play,
+  History,
+  Network,
+  Server,
+  Share2,
+  Map,
+  BarChart3,
+  Route,
+  CheckCircle,
+  FileText,
+  Settings,
+  Key,
+  Tag,
+  Link,
+  Clock,
+  Activity,
+  TrendingUp,
+  Wifi,
+  Layers,
+  Cloud,
+  Database,
+  ChevronRight,
   X,
   HardDrive,
   Wrench,
   Bell,
   Users,
-  Shield
-} from 'lucide-react';
-import type { NavigationItem } from '../../types';
-import { mockNavigationItems } from '../../data/mockData';
+  Shield,
+  MapPin,
+  Building2,
+  Factory,
+  UserCheck,
+} from "lucide-react";
+import type { NavigationItem } from "../../types";
+import { mockNavigationItems } from "../../data/mockData";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -41,49 +45,62 @@ interface SidebarProps {
   onNavigate: (view: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle, currentView, onNavigate }) => {
-  const [expandedItems, setExpandedItems] = useState<string[]>(['nav-dashboard']);
+const Sidebar: React.FC<SidebarProps> = ({
+  isOpen,
+  onToggle,
+  currentView,
+  onNavigate,
+}) => {
+  const [expandedItems, setExpandedItems] = useState<string[]>([
+    "nav-dashboard",
+  ]);
 
   const getIcon = (iconName: string) => {
-    const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = {
-      'dashboard': LayoutDashboard,
-      'search': Search,
-      'play': Play,
-      'history': History,
-      'network': Network,
-      'server': Server,
-      'share': Share2,
-      'map': Map,
-      'chart': BarChart3,
-      'route': Route,
-      'check-circle': CheckCircle,
-      'file-text': FileText,
-      'settings': Settings,
-      'key': Key,
-      'tag': Tag,
-      'link': Link,
-      'clock': Clock,
-      'activity': Activity,
-      'trending-up': TrendingUp,
-      'bar-chart': BarChart3,
-      'wifi': Wifi,
-      'layers': Layers,
-      'cloud': Cloud,
-      'database': Database,
-      'harddrive': HardDrive,
-      'wrench': Wrench,
-      'bell': Bell,
-      'users': Users,
-      'shield': Shield,
+    const iconMap: {
+      [key: string]: React.ComponentType<{ className?: string }>;
+    } = {
+      dashboard: LayoutDashboard,
+      search: Search,
+      play: Play,
+      history: History,
+      network: Network,
+      server: Server,
+      share: Share2,
+      map: Map,
+      chart: BarChart3,
+      route: Route,
+      "check-circle": CheckCircle,
+      "file-text": FileText,
+      settings: Settings,
+      key: Key,
+      tag: Tag,
+      link: Link,
+      clock: Clock,
+      activity: Activity,
+      "trending-up": TrendingUp,
+      "bar-chart": BarChart3,
+      wifi: Wifi,
+      layers: Layers,
+      cloud: Cloud,
+      database: Database,
+      harddrive: HardDrive,
+      wrench: Wrench,
+      bell: Bell,
+      users: Users,
+      shield: Shield,
+      "map-pin": MapPin,
+      "building-2": Building2,
+      factory: Factory,
+      "server-rack": Server,
+      "user-check": UserCheck,
     };
     return iconMap[iconName] || Settings;
   };
 
-
   const toggleExpanded = (itemId: string) => {
-    setExpandedItems(prev => 
-      prev.includes(itemId) 
-        ? prev.filter(id => id !== itemId)
+    setExpandedItems((prev) =>
+      prev.includes(itemId)
+        ? prev.filter((id) => id !== itemId)
         : [...prev, itemId]
     );
   };
@@ -105,17 +122,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle, currentView, onNavi
             }
           }}
           className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-            level === 0 ? 'mb-1' : 'ml-4 mb-1'
+            level === 0 ? "mb-1" : "ml-4 mb-1"
           } ${
-            isActive 
-              ? 'bg-blue-600 text-white' 
-              : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+            isActive
+              ? "bg-blue-600 text-white"
+              : "text-gray-300 hover:bg-gray-800 hover:text-white"
           }`}
         >
           <IconComponent className="w-4 h-4 mr-3" />
           <span className="flex-1 text-left">{item.label}</span>
           {hasChildren && (
-            <ChevronRight className={`w-4 h-4 ml-2 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+            <ChevronRight
+              className={`w-4 h-4 ml-2 transition-transform ${
+                isExpanded ? "rotate-90" : ""
+              }`}
+            />
           )}
           {item.badge && (
             <span className="ml-2 px-2 py-1 text-xs bg-red-900 text-red-300 rounded-full">
@@ -123,10 +144,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle, currentView, onNavi
             </span>
           )}
         </button>
-        
+
         {hasChildren && isExpanded && (
           <div className="mt-1">
-            {item.children!.map(child => renderNavigationItem(child, level + 1))}
+            {item.children!.map((child) =>
+              renderNavigationItem(child, level + 1)
+            )}
           </div>
         )}
       </div>
@@ -134,9 +157,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle, currentView, onNavi
   };
 
   return (
-    <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 shadow-lg transform transition-transform duration-300 ease-in-out flex flex-col border-r border-gray-700 ${
-      isOpen ? 'translate-x-0' : '-translate-x-full'
-    } lg:translate-x-0 lg:relative lg:inset-auto`}>
+    <div
+      className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 shadow-lg transform transition-transform duration-300 ease-in-out flex flex-col border-r border-gray-700 ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      } lg:translate-x-0 lg:relative lg:inset-auto`}
+    >
       <div className="flex items-center justify-between h-16 px-4 border-b border-gray-700">
         <div className="flex items-center space-x-3">
           {/* Logo */}
@@ -145,9 +170,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle, currentView, onNavi
               <div className="w-3 h-3 bg-blue-500 rounded-sm"></div>
             </div>
           </div>
-          <h1 className="text-xl font-bold text-white">
-            Netpulse
-          </h1>
+          <h1 className="text-xl font-bold text-white">Netpulse</h1>
         </div>
         <button
           onClick={onToggle}
@@ -157,13 +180,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle, currentView, onNavi
           <X className="w-5 h-5" />
         </button>
       </div>
-      
+
       <nav className="flex-1 overflow-y-auto px-3 py-4">
         <div className="space-y-1">
-          {mockNavigationItems.map(item => renderNavigationItem(item))}
+          {mockNavigationItems.map((item) => renderNavigationItem(item))}
         </div>
       </nav>
-      
+
       <div className="p-4 border-t border-gray-700">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-medium">

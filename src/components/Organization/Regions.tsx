@@ -61,7 +61,7 @@ const Regions: React.FC = () => {
       {/* AddRegion Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-slate-900 p-6 rounded-xl border border-slate-700 shadow-lg w-full max-w-3xl relative">
+          <div className="bg-slate-900 p-6 rounded-xl border border-slate-700 shadow-lg w-full max-w-3xl relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={handleCloseModal}
               className="absolute top-3 right-3 text-gray-400 hover:text-gray-100"

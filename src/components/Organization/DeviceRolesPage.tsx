@@ -4,34 +4,24 @@ import { Plus, Edit, Trash2 } from "lucide-react";
 import DeviceRolesActions from "./DeviceRolesActions";
 import DeviceRoleFormModal, { type DeviceRoleData } from "./DeviceRoleFormModal";
 import RegionsActions from "./regions/RegionsActions";
+import { mockDeviceRoles } from "../../data/mockData";
+import type { DeviceRole } from "../../types";
 
-// Mock data
-const mockDeviceRoles: DeviceRoleData[] = [
-  {
-    id: 1,
-    name: "Core Router",
-    slug: "core-router",
-    color: "#2563eb",
-    description: "High-performance backbone routing device",
-  },
-  {
-    id: 2,
-    name: "Access Switch",
-    slug: "access-switch",
-    color: "#10b981",
-    description: "Layer 2 switch connecting end devices",
-  },
-  {
-    id: 3,
-    name: "Firewall",
-    slug: "firewall",
-    color: "#ef4444",
-    description: "Security device for network perimeter",
-  },
-];
+// Convert mockDeviceRoles to DeviceRoleData format
+const convertDeviceRoles = (deviceRoles: DeviceRole[]): DeviceRoleData[] => {
+  return deviceRoles.map((role, index) => ({
+    id: index + 1,
+    name: role.name,
+    slug: role.name.toLowerCase().replace(/\s+/g, '-'),
+    color: role.name === 'Core Router' ? '#2563eb' : 
+           role.name === 'Access Switch' ? '#10b981' : 
+           role.name === 'Server' ? '#ef4444' : '#6b7280',
+    description: role.description || '',
+  }));
+};
 
 const DeviceRolesPage: React.FC = () => {
-  const [roles, setRoles] = useState<DeviceRoleData[]>(mockDeviceRoles);
+  const [roles, setRoles] = useState<DeviceRoleData[]>(convertDeviceRoles(mockDeviceRoles));
   const [search, setSearch] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [editingRole, setEditingRole] = useState<DeviceRoleData | null>(null);

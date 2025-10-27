@@ -39,7 +39,7 @@ const DeviceRoleFormModal: React.FC<Props> = ({ open, onClose, onSubmit, editDat
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-gray-800 w-96 rounded-lg p-6 text-white space-y-4 border border-gray-700">
+      <div className="bg-gray-800 w-96 rounded-lg p-6 text-white space-y-4 border border-gray-700 max-h-[90vh] overflow-y-auto">
         <h2 className="text-xl font-semibold">
           {editData ? "Edit Device Role" : "Add Device Role"}
         </h2>

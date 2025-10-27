@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { LogEntry } from '../../types';
+import { mockLogEntries } from '../../data/mockData';
 
 interface LogManagementProps {
   onClose?: () => void;
@@ -27,99 +28,7 @@ const LogManagement: React.FC<LogManagementProps> = ({ onClose }) => {
     const generateMockData = () => {
       setIsLoading(true);
       
-      const mockLogs: LogEntry[] = [
-        {
-          id: 'log-1',
-          timestamp: new Date(Date.now() - 300000),
-          source: '192.168.1.10',
-          facility: 'kernel',
-          severity: 'warning',
-          message: 'Interface eth0: link up',
-          rawMessage: 'Jan 15 10:25:00 router kernel: [12345.678] eth0: link up',
-          parsedFields: {
-            timestamp: 'Jan 15 10:25:00',
-            hostname: 'router',
-            process: 'kernel',
-            pid: '12345.678',
-            interface: 'eth0',
-            event: 'link up'
-          },
-          tags: ['network', 'interface', 'link']
-        },
-        {
-          id: 'log-2',
-          timestamp: new Date(Date.now() - 600000),
-          source: '192.168.1.20',
-          facility: 'auth',
-          severity: 'error',
-          message: 'Failed login attempt from 192.168.1.100',
-          rawMessage: 'Jan 15 10:20:00 server sshd[1234]: Failed password for user admin from 192.168.1.100',
-          parsedFields: {
-            timestamp: 'Jan 15 10:20:00',
-            hostname: 'server',
-            process: 'sshd',
-            pid: '1234',
-            user: 'admin',
-            source_ip: '192.168.1.100',
-            event: 'Failed password'
-          },
-          tags: ['security', 'authentication', 'ssh']
-        },
-        {
-          id: 'log-3',
-          timestamp: new Date(Date.now() - 900000),
-          source: '192.168.1.30',
-          facility: 'mail',
-          severity: 'info',
-          message: 'Email delivered successfully',
-          rawMessage: 'Jan 15 10:15:00 mailserver postfix/smtp[5678]: 1234567890: to=<user@example.com>',
-          parsedFields: {
-            timestamp: 'Jan 15 10:15:00',
-            hostname: 'mailserver',
-            process: 'postfix/smtp',
-            pid: '5678',
-            message_id: '1234567890',
-            recipient: 'user@example.com'
-          },
-          tags: ['mail', 'delivery', 'smtp']
-        },
-        {
-          id: 'log-4',
-          timestamp: new Date(Date.now() - 1200000),
-          source: '192.168.1.40',
-          facility: 'daemon',
-          severity: 'critical',
-          message: 'Service httpd failed to start',
-          rawMessage: 'Jan 15 10:10:00 webserver systemd[1]: httpd.service: Failed to start',
-          parsedFields: {
-            timestamp: 'Jan 15 10:10:00',
-            hostname: 'webserver',
-            process: 'systemd',
-            pid: '1',
-            service: 'httpd.service',
-            event: 'Failed to start'
-          },
-          tags: ['service', 'httpd', 'systemd']
-        },
-        {
-          id: 'log-5',
-          timestamp: new Date(Date.now() - 1500000),
-          source: '192.168.1.50',
-          facility: 'syslog',
-          severity: 'alert',
-          message: 'High CPU usage detected',
-          rawMessage: 'Jan 15 10:05:00 monitor snmpd[9012]: High CPU usage: 95%',
-          parsedFields: {
-            timestamp: 'Jan 15 10:05:00',
-            hostname: 'monitor',
-            process: 'snmpd',
-            pid: '9012',
-            metric: 'CPU usage',
-            value: '95%'
-          },
-          tags: ['monitoring', 'cpu', 'performance']
-        }
-      ];
+      const mockLogs: LogEntry[] = mockLogEntries;
       
       // Calculate statistics
       const totalLogs = mockLogs.length;
