@@ -60,7 +60,6 @@ const UserProfile: React.FC<UserProfileProps> = ({ onClose }) => {
 
   const tabs = [
     { id: 'profile', label: 'Profile', icon: User },
-    { id: 'settings', label: 'Settings', icon: Settings },
     { id: 'security', label: 'Security', icon: Key },
     { id: 'notifications', label: 'Notifications', icon: Bell }
   ];
@@ -291,48 +290,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ onClose }) => {
                 </div>
               )}
 
-              {/* Settings Tab */}
-              {activeTab === 'settings' && (
-                <div>
-                  <h2 className="text-xl font-semibold text-white mb-6">Account Settings</h2>
-                  
-                  <div className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Timezone
-                      </label>
-                      <select
-                        value={editProfile.timezone}
-                        onChange={(e) => setEditProfile({ ...editProfile, timezone: e.target.value })}
-                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      >
-                        <option value="Pacific Time (UTC-8)">Pacific Time (UTC-8)</option>
-                        <option value="Mountain Time (UTC-7)">Mountain Time (UTC-7)</option>
-                        <option value="Central Time (UTC-6)">Central Time (UTC-6)</option>
-                        <option value="Eastern Time (UTC-5)">Eastern Time (UTC-5)</option>
-                        <option value="UTC">UTC</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Language
-                      </label>
-                      <select
-                        value={editProfile.language}
-                        onChange={(e) => setEditProfile({ ...editProfile, language: e.target.value })}
-                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      >
-                        <option value="English">English</option>
-                        <option value="Spanish">Spanish</option>
-                        <option value="French">French</option>
-                        <option value="German">German</option>
-                        <option value="Chinese">Chinese</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              )}
+             
 
               {/* Security Tab */}
               {activeTab === 'security' && (

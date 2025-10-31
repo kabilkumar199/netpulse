@@ -64,12 +64,6 @@ const Header: React.FC<HeaderProps> = ({
             <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-gray-900"></span>
           </button>
 
-          {/* Settings */}
-          <button className="p-2 text-gray-400 hover:text-white transition-colors">
-            <span className="sr-only">Settings</span>
-            <Settings className="w-5 h-5" />
-          </button>
-
           {/* User Menu */}
           <div className="relative">
             <button
@@ -98,10 +92,10 @@ const Header: React.FC<HeaderProps> = ({
                   <User className="w-4 h-4" />
                   <span>Profile</span>
                 </button>
-                <button className="flex items-center space-x-3 w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">
+                {/* <button className="flex items-center space-x-3 w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">
                   <Settings className="w-4 h-4" />
                   <span>Settings</span>
-                </button>
+                </button> */}
                 <hr className="my-1 border-gray-700" />
                 <button className="flex items-center space-x-3 w-full px-4 py-2 text-sm text-red-400 hover:bg-gray-700 hover:text-red-300 transition-colors">
                   <LogOut className="w-4 h-4" />

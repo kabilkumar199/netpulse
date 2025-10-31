@@ -50,6 +50,16 @@ export interface Device {
   interfaces: Interface[];
   dependencies: Dependency[];
   monitors: Monitor[];
+  // Enhanced inventory fields
+  serialNumber?: string;
+  macAddress?: string;
+  hardwareVersion?: string;
+  softwareVersion?: string;
+  firmwareVersion?: string;
+  uptime?: number;
+  deviceType?: 'router' | 'switch' | 'firewall' | 'access-point' | 'cpe' | 'server' | 'other';
+  isCTC?: boolean; // CTC CPE indicator
+  ctcInfo?: CTCInfo;
   createdAt: Date;
   updatedAt: Date;
 }

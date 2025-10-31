@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { User, Plus, Edit, Trash2, Shield, Mail, Phone, Calendar, Search, Filter, MoreVertical } from 'lucide-react';
+import { mockUsers } from '../../data/mockData';
 
 interface User {
   id: string;
@@ -20,72 +21,7 @@ interface UserListProps {
 }
 
 const UserList: React.FC<UserListProps> = ({ onClose }) => {
-  const [users, setUsers] = useState<User[]>([
-    {
-      id: '1',
-      firstName: 'John',
-      lastName: 'Carter',
-      email: 'john.carter@company.com',
-      role: 'Super Admin',
-      status: 'active',
-      lastLogin: new Date('2024-01-15T10:30:00Z'),
-      phone: '+1 (555) 123-4567',
-      department: 'IT',
-      createdAt: new Date('2024-01-01'),
-      updatedAt: new Date('2024-01-15')
-    },
-    {
-      id: '2',
-      firstName: 'Sarah',
-      lastName: 'Johnson',
-      email: 'sarah.johnson@company.com',
-      role: 'Network Admin',
-      status: 'active',
-      lastLogin: new Date('2024-01-15T09:15:00Z'),
-      phone: '+1 (555) 234-5678',
-      department: 'Network Operations',
-      createdAt: new Date('2024-01-02'),
-      updatedAt: new Date('2024-01-15')
-    },
-    {
-      id: '3',
-      firstName: 'Mike',
-      lastName: 'Chen',
-      email: 'mike.chen@company.com',
-      role: 'Network Operator',
-      status: 'active',
-      lastLogin: new Date('2024-01-14T16:45:00Z'),
-      phone: '+1 (555) 345-6789',
-      department: 'Network Operations',
-      createdAt: new Date('2024-01-03'),
-      updatedAt: new Date('2024-01-14')
-    },
-    {
-      id: '4',
-      firstName: 'Emily',
-      lastName: 'Davis',
-      email: 'emily.davis@company.com',
-      role: 'Network Operator',
-      status: 'inactive',
-      lastLogin: new Date('2024-01-10T14:20:00Z'),
-      phone: '+1 (555) 456-7890',
-      department: 'Network Operations',
-      createdAt: new Date('2024-01-04'),
-      updatedAt: new Date('2024-01-10')
-    },
-    {
-      id: '5',
-      firstName: 'David',
-      lastName: 'Wilson',
-      email: 'david.wilson@company.com',
-      role: 'Guest',
-      status: 'pending',
-      phone: '+1 (555) 567-8901',
-      department: 'External',
-      createdAt: new Date('2024-01-15'),
-      updatedAt: new Date('2024-01-15')
-    }
-  ]);
+  const [users, setUsers] = useState<User[]>(mockUsers);
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
@@ -366,7 +302,7 @@ const UserList: React.FC<UserListProps> = ({ onClose }) => {
         {/* Create/Edit Modal */}
         {showCreateModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md mx-4">
+            <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
               <h2 className="text-xl font-semibold text-white mb-6">
                 {editingUser ? 'Edit User' : 'Create New User'}
               </h2>
