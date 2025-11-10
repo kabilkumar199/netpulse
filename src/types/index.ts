@@ -50,6 +50,16 @@ export interface Device {
   interfaces: Interface[];
   dependencies: Dependency[];
   monitors: Monitor[];
+  // Enhanced inventory fields
+  serialNumber?: string;
+  macAddress?: string;
+  hardwareVersion?: string;
+  softwareVersion?: string;
+  firmwareVersion?: string;
+  uptime?: number;
+  deviceType?: 'router' | 'switch' | 'firewall' | 'access-point' | 'cpe' | 'server' | 'other';
+  isCTC?: boolean; // CTC CPE indicator
+  ctcInfo?: CTCInfo;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -764,4 +774,278 @@ export interface Region {
   name: string;
   sites: string;
   description: string;
+}
+
+// L2 Services Configuration Types
+export interface L2ServiceConfig {
+  id: string;
+  deviceId: string;
+  serviceType: 'vlan' | 'stp' | 'lldp' | 'cdp' | 'lacp' | 'vpc' | 'port-channel' | 'trunk';
+  name: string;
+  description?: string;
+  configuration: L2ServiceConfiguration;
+  status: 'active' | 'inactive' | 'pending' | 'error';
+  lastApplied?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface L2ServiceConfiguration {
+  vlan?: VLANConfig;
+  stp?: STPConfig;
+  lldp?: LLDPConfig;
+  cdp?: CDPConfig;
+  lacp?: LACPConfig;
+  vpc?: VPCConfig;
+  portChannel?: PortChannelConfig;
+  trunk?: TrunkConfig;
+}
+
+export interface VLANConfig {
+  vlanId: number;
+  name: string;
+  description?: string;
+  state: 'active' | 'suspend';
+  interfaces: string[];
+  ipAddress?: string;
+  subnet?: string;
+  gateway?: string;
+}
+
+export interface STPConfig {
+  mode: 'pvst' | 'rapid-pvst' | 'mst' | 'rstp' | 'disabled';
+  priority: number;
+  helloTime: number;
+  forwardDelay: number;
+  maxAge: number;
+  bridgeId: string;
+  rootBridge: boolean;
+  interfaces: STPInterfaceConfig[];
+}
+
+export interface STPInterfaceConfig {
+  interfaceId: string;
+  cost: number;
+  priority: number;
+  state: 'forwarding' | 'blocking' | 'listening' | 'learning' | 'disabled';
+  role: 'root' | 'designated' | 'alternate' | 'backup' | 'disabled';
+}
+
+export interface LLDPConfig {
+  enabled: boolean;
+  holdTime: number;
+  timer: number;
+  reinit: number;
+  interfaces: LLDPInterfaceConfig[];
+}
+
+export interface LLDPInterfaceConfig {
+  interfaceId: string;
+  enabled: boolean;
+  transmit: boolean;
+  receive: boolean;
+  tlvSelect: string[];
+}
+
+export interface CDPConfig {
+  enabled: boolean;
+  timer: number;
+  holdTime: number;
+  interfaces: CDPInterfaceConfig[];
+}
+
+export interface CDPInterfaceConfig {
+  interfaceId: string;
+  enabled: boolean;
+}
+
+export interface LACPConfig {
+  enabled: boolean;
+  systemPriority: number;
+  interfaces: LACPInterfaceConfig[];
+}
+
+export interface LACPInterfaceConfig {
+  interfaceId: string;
+  channelGroup: number;
+  mode: 'active' | 'passive' | 'on';
+  priority: number;
+}
+
+export interface VPCConfig {
+  enabled: boolean;
+  domainId: number;
+  systemPriority: number;
+  peerKeepalive: {
+    destination: string;
+    source: string;
+    vrf: string;
+  };
+  peerLink: string;
+  interfaces: VPCInterfaceConfig[];
+}
+
+export interface VPCInterfaceConfig {
+  interfaceId: string;
+  vpcId: number;
+  priority: number;
+}
+
+export interface PortChannelConfig {
+  channelId: number;
+  name: string;
+  mode: 'active' | 'passive' | 'on' | 'auto' | 'desirable';
+  minLinks: number;
+  maxLinks: number;
+  interfaces: string[];
+  loadBalance: 'src-dst-ip' | 'src-dst-port' | 'src-ip' | 'dst-ip';
+}
+
+export interface TrunkConfig {
+  encapsulation: 'dot1q' | 'isl' | 'negotiate';
+  nativeVlan: number;
+  allowedVlans: number[];
+  interfaces: TrunkInterfaceConfig[];
+}
+
+export interface TrunkInterfaceConfig {
+  interfaceId: string;
+  mode: 'access' | 'trunk' | 'dynamic-auto' | 'dynamic-desirable';
+  nativeVlan: number;
+  allowedVlans: number[];
+}
+
+// Device Performance and Statistics Types
+export interface DevicePerformance {
+  deviceId: string;
+  cpu: {
+    usage: number;
+    cores: number;
+    temperature?: number;
+    loadAverage: number[];
+  };
+  memory: {
+    total: number;
+    used: number;
+    free: number;
+    usage: number;
+  };
+  uptime: number;
+  lastUpdated: Date;
+}
+
+export interface DevicePortLayout {
+  deviceId: string;
+  ports: DevicePort[];
+  totalPorts: number;
+  usedPorts: number;
+  availablePorts: number;
+}
+
+export interface DevicePort {
+  id: string;
+  name: string;
+  type: 'ethernet' | 'fiber' | 'console' | 'aux' | 'management';
+  status: 'up' | 'down' | 'disabled' | 'error';
+  speed?: number;
+  duplex?: 'half' | 'full' | 'auto';
+  vlan?: number;
+  description?: string;
+  connectedTo?: string;
+  utilization?: number;
+  // Enhanced port statistics
+  bytesIn?: number;
+  bytesOut?: number;
+  packetsIn?: number;
+  packetsOut?: number;
+  errorsIn?: number;
+  errorsOut?: number;
+  discardsIn?: number;
+  discardsOut?: number;
+  lastUpdated?: Date;
+}
+
+export interface CTCInfo {
+  cpeId: string;
+  customerId: string;
+  serviceType: string;
+  circuitId: string;
+  installationDate: Date;
+  lastMaintenance?: Date;
+  serviceLevel: 'bronze' | 'silver' | 'gold' | 'platinum';
+  contactInfo: {
+    customerName: string;
+    phone: string;
+    email: string;
+    address: string;
+  };
+}
+
+export interface ConfigFile {
+  id: string;
+  deviceId: string;
+  filename: string;
+  content: string;
+  size: number;
+  checksum: string;
+  uploadedAt: Date;
+  uploadedBy: string;
+  description?: string;
+  isActive: boolean;
+}
+
+export interface VPLSConfig {
+  name: string;
+  state: 'up' | 'down' | 'admin-down';
+  veId: number;
+  routeDistinguisher: string;
+  macLimit: number;
+  macLock: 'enable' | 'disable';
+  blockSize: number;
+  mtu: number;
+  dhcpSnoopingEnable: 'v4' | 'v6' | 'v4,v6' | 'disable';
+  acInterfaces: VPLSACInterface[];
+  pseudowires: VPLSPseudowire[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface VPLSACInterface {
+  interfaceId: string;
+  state: 'up' | 'down' | 'admin-down';
+  splitHorizonGroup?: string;
+  dhcpSnoopingTrusted: 'v4' | 'v6' | 'v4,v6' | 'N';
+  dhcpSnReceive: 'v4' | 'v6' | 'v4,v6' | 'N';
+  dhcpSnOptionInsert: 'v4' | 'v6' | 'v4,v6' | 'N';
+}
+
+export interface VPLSPseudowire {
+  id: string;
+  state: 'up' | 'down' | 'admin-down';
+  remotePeer: string;
+  vcId: number;
+  label: number;
+  mtu: number;
+  encapsulation: 'mpls' | 'l2tpv3';
+}
+
+export interface DHCPSnoopingConfig {
+  enabled: boolean;
+  version: 'v4' | 'v6' | 'both';
+  trustedInterfaces: string[];
+  untrustedInterfaces: string[];
+  optionInsert: boolean;
+  rateLimit: number;
+  maxBindings: number;
+  bindingTable: DHCPSnoopingBinding[];
+}
+
+export interface DHCPSnoopingBinding {
+  macAddress: string;
+  ipAddress: string;
+  vlan: number;
+  interface: string;
+  leaseTime: number;
+  bindingType: 'dynamic' | 'static';
+  createdAt: Date;
 }

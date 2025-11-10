@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Theme CSS Variables */
+:root {
+  --theme-primary: #2563eb;
+  --theme-primary-dark: #1e40af;
+  --theme-primary-light: #3b82f6;
+}
+
 /* Dark theme base styles */
 * {
   box-sizing: border-box;
